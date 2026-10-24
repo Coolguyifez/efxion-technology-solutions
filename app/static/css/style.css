@@ -5478,6 +5478,25 @@ img {
     color: rgba(255, 255, 255, 0.68);
 }
 
+/* =========================================================
+   CONTACT PAGE MOBILE OVERFLOW FIX
+========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .contact-section .row.g-5 {
+        margin-left: 0;
+        margin-right: 0;
+        row-gap: 3rem;
+    }
+
+    .contact-section .row.g-5 > [class*="col-"] {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+}
+
 
 /* =========================================================
    CONTACT RESPONSIVE
