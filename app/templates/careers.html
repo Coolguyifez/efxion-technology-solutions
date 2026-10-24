@@ -1,0 +1,364 @@
+{% extends "base.html" %}
+
+{% block title %}
+Careers | Efxion Technology Solutions
+{% endblock %}
+
+{% block content %}
+
+<!-- =====================================================
+     CAREERS HERO
+====================================================== -->
+
+<section class="careers-hero">
+
+    <div class="container">
+
+        <div class="careers-hero-content reveal">
+
+            <div class="section-label light">
+                CAREERS AT EFXION
+            </div>
+
+            <h1>
+                Build the
+                <span>Future With Us.</span>
+            </h1>
+
+            <p>
+                We're looking for talented, curious and
+                motivated people who want to use technology
+                to solve meaningful problems.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CAREER POSITIONS
+====================================================== -->
+
+<section class="careers-section">
+
+    <div class="container">
+
+        <div class="section-heading centered reveal">
+
+            <div class="section-label">
+                OPEN POSITIONS
+            </div>
+
+            <h2>
+                Find your next
+                <span>opportunity.</span>
+            </h2>
+
+            <p>
+                Explore our current openings and find a role
+                where your skills can make an impact.
+            </p>
+
+        </div>
+
+
+        {% if positions %}
+
+            <div class="career-list">
+
+                {% for position in positions %}
+
+                    <article class="career-card reveal">
+
+                        <div class="career-main">
+
+                            <div class="career-icon">
+                                <i class="bi bi-briefcase"></i>
+                            </div>
+
+                            <div>
+
+                                {% if position.department %}
+
+                                    <div class="career-department">
+                                        {{ position.department }}
+                                    </div>
+
+                                {% endif %}
+
+                                <h3>
+                                    {{ position.title }}
+                                </h3>
+
+                                {% if position.short_description %}
+
+                                    <p>
+                                        {{ position.short_description }}
+                                    </p>
+
+                                {% endif %}
+
+                                <div class="career-meta">
+
+                                    {% if position.employment_type %}
+
+                                        <span>
+                                            <i class="bi bi-clock"></i>
+                                            {{ position.employment_type }}
+                                        </span>
+
+                                    {% endif %}
+
+                                    {% if position.work_mode %}
+
+                                        <span>
+                                            <i class="bi bi-geo-alt"></i>
+                                            {{ position.work_mode }}
+                                        </span>
+
+                                    {% endif %}
+
+                                    {% if position.location %}
+
+                                        <span>
+                                            <i class="bi bi-pin-map"></i>
+                                            {{ position.location }}
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="career-action">
+
+                            <a
+                                href="{{ url_for(
+                                    'main.career_detail',
+                                    slug=position.slug
+                                ) }}"
+                                class="btn btn-efxion"
+                            >
+                                View Position
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="careers-empty reveal">
+
+                <div class="careers-empty-icon">
+                    <i class="bi bi-briefcase"></i>
+                </div>
+
+                <h3>
+                    No open positions right now.
+                </h3>
+
+                <p>
+                    We don't currently have any published
+                    vacancies, but we're always interested
+                    in meeting talented people.
+                </p>
+
+                <a
+                    href="{{ url_for('main.contact') }}"
+                    class="btn btn-efxion"
+                >
+                    Contact Efxion
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     WHY WORK WITH US
+====================================================== -->
+
+<section class="careers-benefits">
+
+    <div class="container">
+
+        <div class="section-heading centered reveal">
+
+            <div class="section-label">
+                LIFE AT EFXION
+            </div>
+
+            <h2>
+                More than a
+                <span>job.</span>
+            </h2>
+
+            <p>
+                We're building an environment where people
+                can learn, contribute and grow.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="career-benefit reveal">
+
+                    <div class="career-benefit-icon">
+                        <i class="bi bi-lightbulb"></i>
+                    </div>
+
+                    <h3>
+                        Innovation
+                    </h3>
+
+                    <p>
+                        Work on practical technology ideas
+                        and explore better ways to solve
+                        problems.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="career-benefit reveal">
+
+                    <div class="career-benefit-icon">
+                        <i class="bi bi-graph-up-arrow"></i>
+                    </div>
+
+                    <h3>
+                        Growth
+                    </h3>
+
+                    <p>
+                        Develop your technical and professional
+                        skills through meaningful work.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="career-benefit reveal">
+
+                    <div class="career-benefit-icon">
+                        <i class="bi bi-people"></i>
+                    </div>
+
+                    <h3>
+                        Collaboration
+                    </h3>
+
+                    <p>
+                        Work with people across different
+                        technology and business disciplines.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="career-benefit reveal">
+
+                    <div class="career-benefit-icon">
+                        <i class="bi bi-rocket-takeoff"></i>
+                    </div>
+
+                    <h3>
+                        Impact
+                    </h3>
+
+                    <p>
+                        Build solutions that can create
+                        measurable value for businesses and
+                        their customers.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CAREER CTA
+====================================================== -->
+
+<section class="careers-cta">
+
+    <div class="container">
+
+        <div class="careers-cta-inner reveal">
+
+            <div>
+
+                <div class="section-label light">
+                    DON'T SEE YOUR ROLE?
+                </div>
+
+                <h2>
+                    We may still want
+                    <span>to hear from you.</span>
+                </h2>
+
+                <p>
+                    If you believe your skills can contribute
+                    to Efxion, send us a message and introduce
+                    yourself.
+                </p>
+
+            </div>
+
+            <a
+                href="{{ url_for('main.contact') }}"
+                class="btn btn-efxion-light"
+            >
+                Contact Us
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

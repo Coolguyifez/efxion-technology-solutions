@@ -1,0 +1,714 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Frequently Asked Questions | Efxion Technology Solutions
+{% endblock %}
+
+
+{% block meta_description %}
+Find answers to common questions about Efxion Technology Solutions, our software development, business systems, websites, AI, cybersecurity and IT services.
+{% endblock %}
+
+
+{% block content %}
+
+<!-- =========================================================
+     FAQ HERO
+========================================================= -->
+
+<section class="faq-page-hero">
+
+    <div class="container">
+
+        <div class="faq-page-hero-content">
+
+            <span class="section-eyebrow">
+                FREQUENTLY ASKED QUESTIONS
+            </span>
+
+            <h1>
+                Answers to the questions
+                <span>you may have.</span>
+            </h1>
+
+            <p>
+                Learn more about our technology services,
+                project process, business solutions and how
+                Efxion Technology Solutions can help your
+                organization move forward.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FAQ CONTENT
+========================================================= -->
+
+<section class="faq-page-section">
+
+    <div class="container">
+
+
+        <!-- =================================================
+             SEARCH
+        ================================================== -->
+
+        <div class="faq-search-wrapper">
+
+            <div class="faq-search-box">
+
+                <i class="bi bi-search"></i>
+
+                <input
+                    type="search"
+                    id="faqSearch"
+                    class="faq-search-input"
+                    placeholder="Search frequently asked questions..."
+                    autocomplete="off"
+                >
+
+                <button
+                    type="button"
+                    id="faqSearchClear"
+                    class="faq-search-clear"
+                    aria-label="Clear search"
+                    title="Clear search"
+                >
+                    <i class="bi bi-x-lg"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             CATEGORY FILTERS
+        ================================================== -->
+
+        {% if categories %}
+
+        <div class="faq-category-filters">
+
+            <button
+                type="button"
+                class="faq-filter-button active"
+                data-category="all"
+            >
+                All Questions
+            </button>
+
+            {% for category in categories %}
+
+                <button
+                    type="button"
+                    class="faq-filter-button"
+                    data-category="{{ category|lower }}"
+                >
+                    {{ category }}
+                </button>
+
+            {% endfor %}
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- =================================================
+             DEBUG / RECORD COUNT
+        ================================================== -->
+
+        <div
+            class="faq-results-info"
+            id="faqResultsInfo"
+        >
+            {% if faqs %}
+
+                <span>
+                    <strong>{{ faqs|length }}</strong>
+                    question{% if faqs|length != 1 %}s{% endif %}
+                </span>
+
+            {% endif %}
+        </div>
+
+
+        <!-- =================================================
+             FAQ LIST
+        ================================================== -->
+
+        {% if faqs %}
+
+            <div
+                class="faq-page-list"
+                id="faqList"
+            >
+
+                {% for faq in faqs %}
+
+                    <article
+                        class="faq-page-item"
+                        data-category="{{ (faq.category or 'general')|lower }}"
+                        data-question="{{ faq.question|lower }}"
+                        data-answer="{{ faq.answer|lower }}"
+                    >
+
+                        <div class="faq-page-item-header">
+
+
+                            <!-- NUMBER -->
+
+                            <div class="faq-page-number">
+
+                                <span>
+                                    {{ "%02d"|format(loop.index) }}
+                                </span>
+
+                            </div>
+
+
+                            <!-- QUESTION CONTENT -->
+
+                            <div class="faq-page-title-area">
+
+                                <div class="faq-page-badges">
+
+                                    {% if faq.category %}
+
+                                        <span class="faq-page-category">
+
+                                            {{ faq.category }}
+
+                                        </span>
+
+                                    {% endif %}
+
+
+                                    {% if faq.is_featured %}
+
+                                        <span class="faq-page-featured">
+
+                                            <i class="bi bi-star-fill"></i>
+
+                                            Featured
+
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <h2>
+                                    {{ faq.question }}
+                                </h2>
+
+                            </div>
+
+
+                            <!-- ICON -->
+
+                            <div class="faq-page-toggle">
+
+                                <i class="bi bi-plus-lg"></i>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ANSWER -->
+
+                        <div class="faq-page-answer">
+
+                            <p>
+                                {{ faq.answer }}
+                            </p>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- =================================================
+                 NO SEARCH RESULTS
+            ================================================== -->
+
+            <div
+                class="faq-no-results"
+                id="faqNoResults"
+                hidden
+            >
+
+                <div class="faq-no-results-icon">
+
+                    <i class="bi bi-search"></i>
+
+                </div>
+
+                <h2>
+                    No matching questions found
+                </h2>
+
+                <p>
+                    Try a different search term or select
+                    another FAQ category.
+                </p>
+
+                <button
+                    type="button"
+                    class="btn btn-efxion"
+                    id="faqResetSearch"
+                >
+                    <i class="bi bi-arrow-counterclockwise me-2"></i>
+                    Reset Search
+                </button>
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- =================================================
+                 EMPTY STATE
+            ================================================== -->
+
+            <div class="faq-empty-state">
+
+                <div class="faq-empty-icon">
+
+                    <i class="bi bi-question-circle"></i>
+
+                </div>
+
+                <h2>
+                    Frequently asked questions are coming soon.
+                </h2>
+
+                <p>
+                    We are currently preparing answers to
+                    common questions about our services,
+                    technology solutions and project process.
+                </p>
+
+                <a
+                    href="{{ url_for('main.contact') }}"
+                    class="btn btn-efxion"
+                >
+                    Talk to Efxion
+                    <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CTA
+========================================================= -->
+
+<section class="faq-page-cta">
+
+    <div class="container">
+
+        <div class="faq-page-cta-inner">
+
+            <div>
+
+                <span class="section-eyebrow">
+                    STILL HAVE QUESTIONS?
+                </span>
+
+                <h2>
+                    Let's discuss what you need.
+                </h2>
+
+                <p>
+                    If you cannot find the answer you are
+                    looking for, contact Efxion Technology
+                    Solutions and let's talk about your
+                    technology needs.
+                </p>
+
+            </div>
+
+            <div>
+
+                <a
+                    href="{{ url_for('main.contact') }}"
+                    class="btn btn-efxion"
+                >
+                    Contact Us
+                    <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const searchInput =
+            document.getElementById(
+                "faqSearch"
+            );
+
+        const clearButton =
+            document.getElementById(
+                "faqSearchClear"
+            );
+
+        const resetButton =
+            document.getElementById(
+                "faqResetSearch"
+            );
+
+        const faqItems =
+            Array.from(
+                document.querySelectorAll(
+                    ".faq-page-item"
+                )
+            );
+
+        const filterButtons =
+            Array.from(
+                document.querySelectorAll(
+                    ".faq-filter-button"
+                )
+            );
+
+        const noResults =
+            document.getElementById(
+                "faqNoResults"
+            );
+
+        const resultsInfo =
+            document.getElementById(
+                "faqResultsInfo"
+            );
+
+        let activeCategory = "all";
+
+
+        /* =====================================================
+           UPDATE FAQ RESULTS
+        ===================================================== */
+
+        function updateFaqResults() {
+
+            const searchTerm =
+                searchInput
+                    ? searchInput.value
+                        .trim()
+                        .toLowerCase()
+                    : "";
+
+            let visibleCount = 0;
+
+
+            faqItems.forEach(
+                function (item) {
+
+                    const category =
+                        item.dataset.category || "";
+
+                    const question =
+                        item.dataset.question || "";
+
+                    const answer =
+                        item.dataset.answer || "";
+
+
+                    const matchesCategory =
+                        activeCategory === "all" ||
+                        category === activeCategory;
+
+
+                    const matchesSearch =
+                        !searchTerm ||
+                        question.includes(searchTerm) ||
+                        answer.includes(searchTerm);
+
+
+                    const shouldShow =
+                        matchesCategory &&
+                        matchesSearch;
+
+
+                    if (shouldShow) {
+
+                        item.style.display = "";
+
+                        visibleCount++;
+
+                    } else {
+
+                        item.style.display = "none";
+
+                    }
+
+                }
+            );
+
+
+            if (noResults) {
+
+                noResults.hidden =
+                    visibleCount !== 0;
+
+            }
+
+
+            if (resultsInfo) {
+
+                if (visibleCount > 0) {
+
+                    resultsInfo.innerHTML =
+                        "<span><strong>" +
+                        visibleCount +
+                        "</strong> question" +
+                        (
+                            visibleCount !== 1
+                                ? "s"
+                                : ""
+                        ) +
+                        "</span>";
+
+                } else {
+
+                    resultsInfo.innerHTML = "";
+
+                }
+
+            }
+
+        }
+
+
+        /* =====================================================
+           CATEGORY FILTERS
+        ===================================================== */
+
+        filterButtons.forEach(
+            function (button) {
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        filterButtons.forEach(
+                            function (item) {
+
+                                item.classList.remove(
+                                    "active"
+                                );
+
+                            }
+                        );
+
+
+                        button.classList.add(
+                            "active"
+                        );
+
+
+                        activeCategory =
+                            (
+                                button.dataset.category ||
+                                "all"
+                            ).toLowerCase();
+
+
+                        updateFaqResults();
+
+                    }
+                );
+
+            }
+        );
+
+
+        /* =====================================================
+           SEARCH
+        ===================================================== */
+
+        if (searchInput) {
+
+            searchInput.addEventListener(
+                "input",
+                function () {
+
+                    updateFaqResults();
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           CLEAR SEARCH
+        ===================================================== */
+
+        function clearSearch() {
+
+            if (searchInput) {
+
+                searchInput.value = "";
+
+            }
+
+            activeCategory = "all";
+
+
+            filterButtons.forEach(
+                function (button) {
+
+                    button.classList.remove(
+                        "active"
+                    );
+
+
+                    if (
+                        button.dataset.category ===
+                        "all"
+                    ) {
+
+                        button.classList.add(
+                            "active"
+                        );
+
+                    }
+
+                }
+            );
+
+
+            updateFaqResults();
+
+
+            if (searchInput) {
+
+                searchInput.focus();
+
+            }
+
+        }
+
+
+        if (clearButton) {
+
+            clearButton.addEventListener(
+                "click",
+                clearSearch
+            );
+
+        }
+
+
+        if (resetButton) {
+
+            resetButton.addEventListener(
+                "click",
+                clearSearch
+            );
+
+        }
+
+
+        /* =====================================================
+           FAQ ACCORDION
+        ===================================================== */
+
+        faqItems.forEach(
+            function (item) {
+
+                const header =
+                    item.querySelector(
+                        ".faq-page-item-header"
+                    );
+
+
+                if (!header) {
+                    return;
+                }
+
+
+                header.addEventListener(
+                    "click",
+                    function () {
+
+                        const wasOpen =
+                            item.classList.contains(
+                                "open"
+                            );
+
+
+                        faqItems.forEach(
+                            function (otherItem) {
+
+                                otherItem.classList.remove(
+                                    "open"
+                                );
+
+                            }
+                        );
+
+
+                        if (!wasOpen) {
+
+                            item.classList.add(
+                                "open"
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+        /* =====================================================
+           INITIAL STATE
+        ===================================================== */
+
+        updateFaqResults();
+
+    }
+);
+
+</script>
+
+{% endblock %}

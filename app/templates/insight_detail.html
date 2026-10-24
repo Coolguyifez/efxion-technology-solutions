@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ article.title }} | Efxion Technology Solutions
+{% endblock %}
+
+{% block content %}
+
+<section class="article-hero">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-9 reveal">
+
+                <a
+                    href="{{ url_for('main.insights') }}"
+                    class="article-back"
+                >
+                    <i class="bi bi-arrow-left"></i>
+                    Back to Insights
+                </a>
+
+                <div class="article-category">
+                    {{ article.category.name }}
+                </div>
+
+                <h1>
+                    {{ article.title }}
+                </h1>
+
+                {% if article.excerpt %}
+
+                    <p class="article-excerpt">
+                        {{ article.excerpt }}
+                    </p>
+
+                {% endif %}
+
+                <div class="article-meta">
+
+                    {% if article.published_at %}
+
+                        <span>
+                            <i class="bi bi-calendar3"></i>
+                            {{ article.published_at.strftime(
+                                "%d %B %Y"
+                            ) }}
+                        </span>
+
+                    {% endif %}
+
+                    <span>
+                        <i class="bi bi-person"></i>
+                        {{ article.author }}
+                    </span>
+
+                    {% if article.reading_time %}
+
+                        <span>
+                            <i class="bi bi-clock"></i>
+                            {{ article.reading_time }} min read
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="article-section">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-8">
+
+                {% if article.featured_image %}
+
+                    <div class="article-featured-image reveal">
+
+                        <img
+                            src="{{ article.featured_image }}"
+                            alt="{{ article.title }}"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+                {% endif %}
+
+
+                <article class="article-content reveal">
+
+                    {{ article.content | safe }}
+
+                </article>
+
+
+                <div class="article-end">
+
+                    <a
+                        href="{{ url_for('main.insights') }}"
+                        class="btn btn-outline-efxion-dark"
+                    >
+                        <i class="bi bi-arrow-left"></i>
+                        More Insights
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="article-cta">
+
+    <div class="container">
+
+        <div class="article-cta-inner reveal">
+
+            <div>
+
+                <div class="section-label light">
+                    HAVE A TECHNOLOGY PROJECT?
+                </div>
+
+                <h2>
+                    Let's build something useful.
+                </h2>
+
+            </div>
+
+            <a
+                href="{{ url_for('main.contact') }}"
+                class="btn btn-efxion-light"
+            >
+                Start a Conversation
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

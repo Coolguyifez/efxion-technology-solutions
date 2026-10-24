@@ -1,0 +1,430 @@
+{% extends "base.html" %}
+
+{% block title %}
+Portfolio Management | Efxion Admin
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-management-page">
+
+    <div class="container">
+
+        <div class="admin-management-top">
+
+            <div>
+
+                <a
+                    href="{{ url_for('admin.dashboard') }}"
+                    class="admin-back-link"
+                >
+                    <i class="bi bi-arrow-left"></i>
+                    Dashboard
+                </a>
+
+                <span class="admin-label">
+                    PORTFOLIO
+                </span>
+
+                <h1>
+                    Portfolio
+                </h1>
+
+                <p>
+                    Create and manage projects displayed
+                    across the Efxion portfolio.
+                </p>
+
+            </div>
+
+            <a
+                href="{{ url_for('admin.portfolio_create') }}"
+                class="btn btn-efxion"
+            >
+                <i class="bi bi-plus-lg"></i>
+                Add Project
+            </a>
+
+        </div>
+
+        {% with messages = get_flashed_messages(
+            with_categories=true
+        ) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="alert alert-{{ category }}"
+                        role="alert"
+                    >
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+        {% if categories %}
+
+            <div class="admin-category-summary">
+
+                {% for category in categories %}
+
+                    <div class="admin-category-summary-card">
+
+                        <div class="admin-category-summary-icon">
+
+                            <i class="bi bi-folder2-open"></i>
+
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                {{ category.name }}
+                            </strong>
+
+                            <span>
+                                {{
+                                    category.projects
+                                    | length
+                                }}
+
+                                project{{ 
+                                    ""
+                                    if category.projects|length == 1
+                                    else "s"
+                                }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+        {% if projects %}
+
+            <div class="admin-portfolio-grid">
+
+                {% for project in projects %}
+
+                    <div class="admin-portfolio-card">
+
+                        {% if project.image %}
+
+                            <div class="admin-portfolio-image">
+
+                                <img
+                                    src="{{ project.image }}"
+                                    alt="{{ project.title }}"
+                                    loading="lazy"
+                                >
+
+                            </div>
+
+                        {% else %}
+
+                            <div class="admin-portfolio-image admin-portfolio-image-placeholder">
+
+                                <i class="bi bi-grid-1x2"></i>
+
+                            </div>
+
+                        {% endif %}
+
+                        <div class="admin-portfolio-card-body">
+
+                            <div class="admin-portfolio-card-top">
+
+                                <div>
+
+                                    {% if project.is_featured %}
+
+                                        <span class="admin-featured-badge">
+
+                                            <i class="bi bi-star-fill"></i>
+
+                                            Featured
+
+                                        </span>
+
+                                    {% endif %}
+
+                                    <h2>
+                                        {{ project.title }}
+                                    </h2>
+
+                                    <p>
+                                        {{ project.category.name }}
+
+                                        {% if project.client_name %}
+
+                                            · {{ project.client_name }}
+
+                                        {% endif %}
+
+                                    </p>
+
+                                </div>
+
+                                <div>
+
+                                    {% if project.is_active %}
+
+                                        <span
+                                            class="
+                                                application-badge
+                                                status-hired
+                                            "
+                                        >
+                                            Active
+                                        </span>
+
+                                    {% else %}
+
+                                        <span
+                                            class="
+                                                application-badge
+                                                status-rejected
+                                            "
+                                        >
+                                            Inactive
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                            <p class="admin-portfolio-description">
+
+                                {% if project.short_description %}
+
+                                    {{ project.short_description }}
+
+                                {% elif project.description %}
+
+                                    {{
+                                        project.description
+                                        | striptags
+                                        | truncate(180)
+                                    }}
+
+                                {% else %}
+
+                                    No description provided.
+
+                                {% endif %}
+
+                            </p>
+
+                            <div class="admin-portfolio-meta">
+
+                                {% if project.year %}
+
+                                    <span>
+
+                                        <i class="bi bi-calendar-event"></i>
+
+                                        {{ project.year }}
+
+                                    </span>
+
+                                {% endif %}
+
+                                {% if project.technologies %}
+
+                                    <span>
+
+                                        <i class="bi bi-code-slash"></i>
+
+                                        {{ project.technologies }}
+
+                                    </span>
+
+                                {% endif %}
+
+                                {% if project.project_url %}
+
+                                    <a
+                                        href="{{ project.project_url }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+
+                                        <i class="bi bi-box-arrow-up-right"></i>
+
+                                        Live Project
+
+                                    </a>
+
+                                {% endif %}
+
+                            </div>
+
+                            <div class="admin-portfolio-actions">
+
+                                <a
+                                    href="{{ url_for(
+                                        'admin.portfolio_edit',
+                                        project_id=project.id
+                                    ) }}"
+                                    class="btn btn-efxion"
+                                >
+
+                                    <i class="bi bi-pencil-square"></i>
+
+                                    Edit
+
+                                </a>
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin.portfolio_toggle_active',
+                                        project_id=project.id
+                                    ) }}"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-outline-secondary"
+                                    >
+
+                                        {% if project.is_active %}
+
+                                            <i class="bi bi-pause-circle"></i>
+
+                                            Deactivate
+
+                                        {% else %}
+
+                                            <i class="bi bi-check-circle"></i>
+
+                                            Activate
+
+                                        {% endif %}
+
+                                    </button>
+
+                                </form>
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin.portfolio_toggle_featured',
+                                        project_id=project.id
+                                    ) }}"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-outline-secondary"
+                                    >
+
+                                        {% if project.is_featured %}
+
+                                            <i class="bi bi-star"></i>
+
+                                            Unfeature
+
+                                        {% else %}
+
+                                            <i class="bi bi-star"></i>
+
+                                            Feature
+
+                                        {% endif %}
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                            <div class="admin-portfolio-secondary-actions">
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin.portfolio_delete',
+                                        project_id=project.id
+                                    ) }}"
+                                    onsubmit="
+                                        return confirm(
+                                            'Are you sure you want to delete this portfolio project? This action cannot be undone.'
+                                        );
+                                    "
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="admin-text-button admin-delete-button"
+                                    >
+
+                                        <i class="bi bi-trash3"></i>
+
+                                        Delete project
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="admin-form-card text-center">
+
+                <div class="admin-form-icon mx-auto mb-3">
+
+                    <i class="bi bi-grid-1x2"></i>
+
+                </div>
+
+                <h2>
+                    No Portfolio Projects Found
+                </h2>
+
+                <p class="text-muted">
+                    No portfolio projects have been created yet.
+                </p>
+
+                <a
+                    href="{{ url_for('admin.portfolio_create') }}"
+                    class="btn btn-efxion"
+                >
+
+                    <i class="bi bi-plus-lg"></i>
+
+                    Add Project
+
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

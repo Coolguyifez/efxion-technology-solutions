@@ -1,0 +1,762 @@
+{% extends "base.html" %}
+
+
+{% if service %}
+    {% set page_heading = "Edit Service" %}
+{% else %}
+    {% set page_heading = "Create Service" %}
+{% endif %}
+
+
+{% block title %}
+{{ page_heading }} | Efxion Admin
+{% endblock %}
+
+
+{% block content %}
+
+<section class="admin-management-page">
+
+    <div class="container">
+
+        <!-- =================================================
+             BACK LINK
+        ================================================== -->
+
+        <a
+            href="{{ url_for('admin.services') }}"
+            class="admin-back-link"
+        >
+            <i class="bi bi-arrow-left"></i>
+            Services
+        </a>
+
+
+        <!-- =================================================
+             PAGE HEADER
+        ================================================== -->
+
+        <div class="admin-form-header">
+
+            <span class="admin-label">
+                SERVICE MANAGEMENT
+            </span>
+
+            <h1>
+                {{ page_heading }}
+            </h1>
+
+            <p>
+
+                {% if service %}
+
+                    Update this service's information,
+                    pricing and visibility settings.
+
+                {% else %}
+
+                    Create a new service for the Efxion
+                    website.
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             FLASH MESSAGES
+        ================================================== -->
+
+        {% with messages = get_flashed_messages(
+            with_categories=true
+        ) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="alert alert-{{ category }}"
+                        role="alert"
+                    >
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- =================================================
+             SERVICE FORM
+        ================================================== -->
+
+        <form
+            method="POST"
+            class="admin-service-form"
+        >
+
+            <!-- =================================================
+                 BASIC INFORMATION
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+
+                        <i class="bi bi-code-slash"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Basic Information
+                        </h2>
+
+                        <p>
+                            Define the main details of the service.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row g-4">
+
+
+                    <!-- SERVICE NAME -->
+
+                    <div class="col-md-8">
+
+                        <label
+                            for="name"
+                            class="form-label"
+                        >
+                            Service Name
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            class="form-control"
+                            required
+                            value="{{
+                                form_data.get('name')
+                                if form_data
+                                else (
+                                    service.name
+                                    if service
+                                    else ''
+                                )
+                            }}"
+                            placeholder="e.g. Web Development"
+                        >
+
+                    </div>
+
+
+                    <!-- SLUG -->
+
+                    <div class="col-md-4">
+
+                        <label
+                            for="slug"
+                            class="form-label"
+                        >
+                            URL Slug
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="slug"
+                            name="slug"
+                            class="form-control"
+                            required
+                            value="{{
+                                form_data.get('slug')
+                                if form_data
+                                else (
+                                    service.slug
+                                    if service
+                                    else ''
+                                )
+                            }}"
+                            placeholder="web-development"
+                        >
+
+                        <small class="admin-form-help">
+                            Use lowercase letters and hyphens.
+                        </small>
+
+                    </div>
+
+
+                    <!-- CATEGORY -->
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="category_id"
+                            class="form-label"
+                        >
+                            Service Category
+                            <span>*</span>
+                        </label>
+
+                        {% set category_value =
+                            form_data.get('category_id')
+                            if form_data
+                            else (
+                                service.category_id
+                                if service
+                                else ''
+                            )
+                        %}
+
+                        <select
+                            id="category_id"
+                            name="category_id"
+                            class="form-select"
+                            required
+                        >
+
+                            <option value="">
+                                Select category
+                            </option>
+
+                            {% for category in categories %}
+
+                                <option
+                                    value="{{ category.id }}"
+                                    {% if category_value|string == category.id|string %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ category.name }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- CURRENCY -->
+
+                    <div class="col-md-3">
+
+                        <label
+                            for="currency"
+                            class="form-label"
+                        >
+                            Currency
+                        </label>
+
+                        {% set currency_value =
+                            form_data.get('currency')
+                            if form_data
+                            else (
+                                service.currency
+                                if service
+                                else 'NGN'
+                            )
+                        %}
+
+                        <select
+                            id="currency"
+                            name="currency"
+                            class="form-select"
+                        >
+
+                            <option
+                                value="NGN"
+                                {% if currency_value == "NGN" %}
+                                    selected
+                                {% endif %}
+                            >
+                                NGN
+                            </option>
+
+                            <option
+                                value="USD"
+                                {% if currency_value == "USD" %}
+                                    selected
+                                {% endif %}
+                            >
+                                USD
+                            </option>
+
+                            <option
+                                value="GBP"
+                                {% if currency_value == "GBP" %}
+                                    selected
+                                {% endif %}
+                            >
+                                GBP
+                            </option>
+
+                            <option
+                                value="EUR"
+                                {% if currency_value == "EUR" %}
+                                    selected
+                                {% endif %}
+                            >
+                                EUR
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- STARTING PRICE -->
+
+                    <div class="col-md-3">
+
+                        <label
+                            for="starting_price"
+                            class="form-label"
+                        >
+                            Starting Price
+                        </label>
+
+                        <input
+                            type="number"
+                            id="starting_price"
+                            name="starting_price"
+                            class="form-control"
+                            min="0"
+                            step="0.01"
+                            value="{{
+                                form_data.get('starting_price')
+                                if form_data
+                                else (
+                                    service.starting_price
+                                    if service
+                                    else ''
+                                )
+                            }}"
+                            placeholder="0.00"
+                        >
+
+                        <small class="admin-form-help">
+                            Leave blank for custom pricing.
+                        </small>
+
+                    </div>
+
+
+                    <!-- SHORT DESCRIPTION -->
+
+                    <div class="col-12">
+
+                        <label
+                            for="short_description"
+                            class="form-label"
+                        >
+                            Short Description
+                        </label>
+
+                        <input
+                            type="text"
+                            id="short_description"
+                            name="short_description"
+                            class="form-control"
+                            maxlength="300"
+                            value="{{
+                                form_data.get('short_description')
+                                if form_data
+                                else (
+                                    service.short_description
+                                    if service
+                                    else ''
+                                )
+                            }}"
+                            placeholder="Briefly describe this service."
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 SERVICE DESCRIPTION
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+
+                        <i class="bi bi-file-text"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Service Description
+                        </h2>
+
+                        <p>
+                            Provide detailed information about
+                            what the service offers.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row g-4">
+
+                    <div class="col-12">
+
+                        <label
+                            for="description"
+                            class="form-label"
+                        >
+                            Full Description
+                        </label>
+
+                        <textarea
+                            id="description"
+                            name="description"
+                            class="form-control"
+                            rows="8"
+                            placeholder="Describe the service, its benefits and what customers can expect."
+                        >{{ form_data.get('description') if form_data else (service.description if service else '') }}</textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 SERVICE APPEARANCE
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+
+                        <i class="bi bi-palette"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Service Appearance
+                        </h2>
+
+                        <p>
+                            Configure the icon used to represent
+                            this service.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row g-4">
+
+                    <div class="col-md-8">
+
+                        <label
+                            for="icon"
+                            class="form-label"
+                        >
+                            Bootstrap Icon
+                        </label>
+
+                        <input
+                            type="text"
+                            id="icon"
+                            name="icon"
+                            class="form-control"
+                            value="{{
+                                form_data.get('icon')
+                                if form_data
+                                else (
+                                    service.icon
+                                    if service
+                                    else 'bi-code-slash'
+                                )
+                            }}"
+                            placeholder="bi-code-slash"
+                        >
+
+                        <small class="admin-form-help">
+                            Example:
+                            bi-code-slash,
+                            bi-shield-check,
+                            bi-phone.
+                        </small>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">
+                            Icon Preview
+                        </label>
+
+                        <div
+                            class="admin-icon-preview"
+                            id="serviceIconPreview"
+                        >
+
+                            <i
+                                class="{{
+                                    form_data.get('icon')
+                                    if form_data
+                                    else (
+                                        service.icon
+                                        if service
+                                        else 'bi-code-slash'
+                                    )
+                                }}"
+                            ></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 VISIBILITY SETTINGS
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+
+                        <i class="bi bi-eye"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Visibility Settings
+                        </h2>
+
+                        <p>
+                            Control how this service appears
+                            across the website.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                {% set active_value =
+                    form_data.get('is_active')
+                    if form_data
+                    else (
+                        service.is_active
+                        if service
+                        else True
+                    )
+                %}
+
+
+                {% set featured_value =
+                    form_data.get('is_featured')
+                    if form_data
+                    else (
+                        service.is_featured
+                        if service
+                        else False
+                    )
+                %}
+
+
+                <div class="admin-checkbox-grid">
+
+
+                    <!-- ACTIVE -->
+
+                    <label class="admin-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="is_active"
+                            {% if active_value %}
+                                checked
+                            {% endif %}
+                        >
+
+                        <span>
+
+                            <strong>
+                                Active Service
+                            </strong>
+
+                            <small>
+                                Make this service available
+                                on the public website.
+                            </small>
+
+                        </span>
+
+                    </label>
+
+
+                    <!-- FEATURED -->
+
+                    <label class="admin-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="is_featured"
+                            {% if featured_value %}
+                                checked
+                            {% endif %}
+                        >
+
+                        <span>
+
+                            <strong>
+                                Featured Service
+                            </strong>
+
+                            <small>
+                                Highlight this service in
+                                featured service sections.
+                            </small>
+
+                        </span>
+
+                    </label>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FORM ACTIONS
+            ================================================== -->
+
+            <div class="admin-form-actions">
+
+                <a
+                    href="{{ url_for('admin.services') }}"
+                    class="btn btn-outline-secondary"
+                >
+                    <i class="bi bi-x-lg"></i>
+                    Cancel
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-efxion"
+                >
+
+                    {% if service %}
+
+                        <i class="bi bi-check2-circle"></i>
+                        Save Changes
+
+                    {% else %}
+
+                        <i class="bi bi-plus-lg"></i>
+                        Create Service
+
+                    {% endif %}
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ICON PREVIEW
+========================================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const iconInput =
+            document.getElementById("icon");
+
+        const iconPreview =
+            document.getElementById(
+                "serviceIconPreview"
+            );
+
+
+        if (!iconInput || !iconPreview) {
+            return;
+        }
+
+
+        function updateIconPreview() {
+
+            const iconClass =
+                iconInput.value.trim()
+                || "bi-code-slash";
+
+
+            iconPreview.innerHTML =
+                `<i class="${iconClass}"></i>`;
+
+        }
+
+
+        iconInput.addEventListener(
+            "input",
+            updateIconPreview
+        );
+
+
+        updateIconPreview();
+
+    }
+);
+
+</script>
+
+{% endblock %}

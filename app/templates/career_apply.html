@@ -1,0 +1,542 @@
+{% extends "base.html" %}
+
+{% block title %}
+Apply for {{ position.title }} | Efxion Technology Solutions
+{% endblock %}
+
+{% block content %}
+
+<section class="application-hero">
+
+    <div class="container">
+
+        <div class="application-hero-content reveal">
+
+            <a
+                href="{{ url_for('main.career_detail', slug=position.slug) }}"
+                class="application-back"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Back to Position
+            </a>
+
+            <div class="section-label light">
+                CAREER APPLICATION
+            </div>
+
+            <h1>
+                Apply for {{ position.title }}
+            </h1>
+
+            <p>
+                Join Efxion Technology Solutions and help us
+                build practical technology solutions that create
+                meaningful business impact.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="application-section">
+
+    <div class="container">
+
+        {% with messages = get_flashed_messages(
+            with_categories=true
+        ) %}
+
+            {% if messages %}
+
+                <div class="application-alerts">
+
+                    {% for category, message in messages %}
+
+                        <div
+                            class="alert alert-{{ category }}"
+                            role="alert"
+                        >
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <div class="application-layout">
+
+            <!-- =========================================
+                 APPLICATION FORM
+            ========================================== -->
+
+            <div class="application-form-card reveal">
+
+                <div class="application-card-heading">
+
+                    <span class="application-icon">
+                        <i class="bi bi-person-lines-fill"></i>
+                    </span>
+
+                    <div>
+
+                        <h2>
+                            Your Application
+                        </h2>
+
+                        <p>
+                            Please provide accurate information
+                            about yourself and your experience.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <form
+                    method="POST"
+                    enctype="multipart/form-data"
+                    class="application-form"
+                >
+
+                    <!-- PERSONAL INFORMATION -->
+
+                    <div class="application-form-section">
+
+                        <h3>
+                            Personal Information
+                        </h3>
+
+                        <div class="row g-4">
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="full_name"
+                                    class="form-label"
+                                >
+                                    Full Name
+                                    <span>*</span>
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="full_name"
+                                    name="full_name"
+                                    class="form-control"
+                                    placeholder="Your full name"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="email"
+                                    class="form-label"
+                                >
+                                    Email Address
+                                    <span>*</span>
+                                </label>
+
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    class="form-control"
+                                    placeholder="you@example.com"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="phone"
+                                    class="form-label"
+                                >
+                                    Phone Number
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    id="phone"
+                                    name="phone"
+                                    class="form-control"
+                                    placeholder="Your phone number"
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="location"
+                                    class="form-label"
+                                >
+                                    Location
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="location"
+                                    name="location"
+                                    class="form-control"
+                                    placeholder="City, Country"
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PROFESSIONAL INFORMATION -->
+
+                    <div class="application-form-section">
+
+                        <h3>
+                            Professional Information
+                        </h3>
+
+                        <div class="row g-4">
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="current_job_title"
+                                    class="form-label"
+                                >
+                                    Current Job Title
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="current_job_title"
+                                    name="current_job_title"
+                                    class="form-control"
+                                    placeholder="e.g. Software Developer"
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="years_of_experience"
+                                    class="form-label"
+                                >
+                                    Years of Experience
+                                </label>
+
+                                <select
+                                    id="years_of_experience"
+                                    name="years_of_experience"
+                                    class="form-select"
+                                >
+
+                                    <option value="">
+                                        Select experience
+                                    </option>
+
+                                    <option value="Less than 1 year">
+                                        Less than 1 year
+                                    </option>
+
+                                    <option value="1-2 years">
+                                        1–2 years
+                                    </option>
+
+                                    <option value="3-5 years">
+                                        3–5 years
+                                    </option>
+
+                                    <option value="6-10 years">
+                                        6–10 years
+                                    </option>
+
+                                    <option value="10+ years">
+                                        10+ years
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="col-md-4">
+
+                                <label
+                                    for="linkedin_url"
+                                    class="form-label"
+                                >
+                                    LinkedIn
+                                </label>
+
+                                <input
+                                    type="url"
+                                    id="linkedin_url"
+                                    name="linkedin_url"
+                                    class="form-control"
+                                    placeholder="https://linkedin.com/in/..."
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-4">
+
+                                <label
+                                    for="portfolio_url"
+                                    class="form-label"
+                                >
+                                    Portfolio
+                                </label>
+
+                                <input
+                                    type="url"
+                                    id="portfolio_url"
+                                    name="portfolio_url"
+                                    class="form-control"
+                                    placeholder="https://..."
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-4">
+
+                                <label
+                                    for="github_url"
+                                    class="form-label"
+                                >
+                                    GitHub
+                                </label>
+
+                                <input
+                                    type="url"
+                                    id="github_url"
+                                    name="github_url"
+                                    class="form-control"
+                                    placeholder="https://github.com/..."
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- COVER LETTER -->
+
+                    <div class="application-form-section">
+
+                        <h3>
+                            Cover Letter
+                        </h3>
+
+                        <label
+                            for="cover_letter"
+                            class="form-label"
+                        >
+                            Tell us why you are a good fit
+                            <span>*</span>
+                        </label>
+
+                        <textarea
+                            id="cover_letter"
+                            name="cover_letter"
+                            class="form-control"
+                            rows="8"
+                            placeholder="Tell us about yourself, your experience, your interest in this role, and what you can bring to Efxion."
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- RESUME -->
+
+                    <div class="application-form-section">
+
+                        <h3>
+                            CV / Resume
+                        </h3>
+
+                        <label
+                            for="resume"
+                            class="form-label"
+                        >
+                            Upload your CV
+                            <span>*</span>
+                        </label>
+
+                        <div class="resume-upload">
+
+                            <input
+                                type="file"
+                                id="resume"
+                                name="resume"
+                                class="form-control"
+                                accept=".pdf,.doc,.docx"
+                                required
+                            >
+
+                            <div class="resume-help">
+
+                                <i class="bi bi-file-earmark-text"></i>
+
+                                <span>
+                                    Accepted formats:
+                                    PDF, DOC, DOCX.
+                                    Maximum size: 5 MB.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SUBMIT -->
+
+                    <div class="application-submit">
+
+                        <button
+                            type="submit"
+                            class="btn btn-efxion"
+                        >
+
+                            <i class="bi bi-send-fill"></i>
+
+                            Submit Application
+
+                        </button>
+
+                        <p>
+                            By submitting this application,
+                            you confirm that the information
+                            provided is accurate.
+                        </p>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <!-- =========================================
+                 POSITION SIDEBAR
+            ========================================== -->
+
+            <aside class="application-sidebar reveal">
+
+                <div class="application-side-card">
+
+                    <div class="application-side-icon">
+
+                        <i class="bi bi-briefcase-fill"></i>
+
+                    </div>
+
+                    <span class="application-side-label">
+                        APPLYING FOR
+                    </span>
+
+                    <h2>
+                        {{ position.title }}
+                    </h2>
+
+                    {% if position.department %}
+
+                        <p>
+                            <i class="bi bi-diagram-3"></i>
+                            {{ position.department }}
+                        </p>
+
+                    {% endif %}
+
+                    {% if position.location %}
+
+                        <p>
+                            <i class="bi bi-geo-alt"></i>
+                            {{ position.location }}
+                        </p>
+
+                    {% endif %}
+
+                    {% if position.employment_type %}
+
+                        <p>
+                            <i class="bi bi-clock"></i>
+                            {{ position.employment_type }}
+                        </p>
+
+                    {% endif %}
+
+                    {% if position.work_mode %}
+
+                        <p>
+                            <i class="bi bi-laptop"></i>
+                            {{ position.work_mode }}
+                        </p>
+
+                    {% endif %}
+
+                    <a
+                        href="{{ url_for(
+                            'main.career_detail',
+                            slug=position.slug
+                        ) }}"
+                        class="application-position-link"
+                    >
+                        View Full Job Description
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+
+                </div>
+
+
+                <div class="application-side-card application-side-note">
+
+                    <i class="bi bi-shield-check"></i>
+
+                    <h3>
+                        Your Information
+                    </h3>
+
+                    <p>
+                        Your application information will be
+                        reviewed by the Efxion team for recruitment
+                        purposes.
+                    </p>
+
+                </div>
+
+            </aside>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

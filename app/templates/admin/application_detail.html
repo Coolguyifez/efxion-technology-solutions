@@ -1,0 +1,487 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ application.full_name }} | Job Application
+{% endblock %}
+
+
+{% block content %}
+
+<section class="admin-management-page">
+
+    <div class="container">
+
+        <!-- =========================================
+             HEADER
+        ========================================== -->
+
+        <div class="application-admin-heading">
+
+            <div>
+
+                <a
+                    href="{{ url_for('admin.applications') }}"
+                    class="admin-back-link"
+                >
+                    <i class="bi bi-arrow-left"></i>
+                    Applications
+                </a>
+
+                <span class="admin-label">
+                    APPLICATION
+                </span>
+
+                <h1>
+                    {{ application.full_name }}
+                </h1>
+
+                <p>
+
+                    Applied for
+
+                    <strong>
+
+                        {% if application.position %}
+
+                            {{ application.position.title }}
+
+                        {% else %}
+
+                            Unknown position
+
+                        {% endif %}
+
+                    </strong>
+
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <span
+                    class="
+                        application-badge
+                        application-badge-large
+                        status-{{ application.status }}
+                    "
+                >
+                    {{
+                        application.status
+                        | replace("_", " ")
+                        | title
+                    }}
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="application-admin-layout">
+
+            <!-- =========================================
+                 MAIN CONTENT
+            ========================================== -->
+
+            <div>
+
+                <!-- APPLICANT -->
+
+                <div class="admin-detail-card">
+
+                    <div class="admin-detail-heading">
+
+                        <i class="bi bi-person"></i>
+
+                        <h2>
+                            Applicant Information
+                        </h2>
+
+                    </div>
+
+
+                    <div class="admin-detail-grid">
+
+                        <div>
+                            <span>Full Name</span>
+                            <strong>
+                                {{ application.full_name }}
+                            </strong>
+                        </div>
+
+
+                        <div>
+                            <span>Email</span>
+
+                            <a
+                                href="mailto:{{ application.email }}"
+                            >
+                                {{ application.email }}
+                            </a>
+                        </div>
+
+
+                        <div>
+                            <span>Phone</span>
+
+                            <strong>
+                                {{ application.phone or "—" }}
+                            </strong>
+                        </div>
+
+
+                        <div>
+                            <span>Location</span>
+
+                            <strong>
+                                {{ application.location or "—" }}
+                            </strong>
+                        </div>
+
+
+                        <div>
+                            <span>Current Job Title</span>
+
+                            <strong>
+                                {{
+                                    application.current_job_title
+                                    or "—"
+                                }}
+                            </strong>
+                        </div>
+
+
+                        <div>
+                            <span>Experience</span>
+
+                            <strong>
+                                {{
+                                    application.years_of_experience
+                                    or "—"
+                                }}
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PROFESSIONAL LINKS -->
+
+                {% if (
+                    application.linkedin_url
+                    or application.portfolio_url
+                    or application.github_url
+                ) %}
+
+                    <div class="admin-detail-card">
+
+                        <div class="admin-detail-heading">
+
+                            <i class="bi bi-link-45deg"></i>
+
+                            <h2>
+                                Professional Links
+                            </h2>
+
+                        </div>
+
+
+                        <div class="professional-link-grid">
+
+                            {% if application.linkedin_url %}
+
+                                <a
+                                    href="{{ application.linkedin_url }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <i class="bi bi-linkedin"></i>
+
+                                    LinkedIn
+                                </a>
+
+                            {% endif %}
+
+
+                            {% if application.github_url %}
+
+                                <a
+                                    href="{{ application.github_url }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <i class="bi bi-github"></i>
+
+                                    GitHub
+                                </a>
+
+                            {% endif %}
+
+
+                            {% if application.portfolio_url %}
+
+                                <a
+                                    href="{{ application.portfolio_url }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <i class="bi bi-globe"></i>
+
+                                    Portfolio
+                                </a>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- COVER LETTER -->
+
+                <div class="admin-detail-card">
+
+                    <div class="admin-detail-heading">
+
+                        <i class="bi bi-file-text"></i>
+
+                        <h2>
+                            Cover Letter
+                        </h2>
+
+                    </div>
+
+
+                    <div class="application-cover-letter">
+
+                        {% if application.cover_letter %}
+
+                            {{
+                                application.cover_letter
+                                | e
+                                | replace('\n', '<br>')
+                                | safe
+                            }}
+
+                        {% else %}
+
+                            <p>
+                                No cover letter provided.
+                            </p>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 SIDEBAR
+            ========================================== -->
+
+            <aside>
+
+                <!-- APPLICATION INFO -->
+
+                <div class="admin-detail-card">
+
+                    <div class="admin-detail-heading">
+
+                        <i class="bi bi-info-circle"></i>
+
+                        <h2>
+                            Application
+                        </h2>
+
+                    </div>
+
+
+                    <div class="application-meta-list">
+
+                        <div>
+
+                            <span>
+                                Position
+                            </span>
+
+                            <strong>
+
+                                {% if application.position %}
+
+                                    {{ application.position.title }}
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Applied
+                            </span>
+
+                            <strong>
+
+                                {% if application.created_at %}
+
+                                    {{
+                                        application.created_at.strftime(
+                                            "%d %B %Y, %H:%M"
+                                        )
+                                    }}
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    {% if application.resume_path %}
+
+                        <a
+                            href="{{ url_for(
+                                'admin.application_resume',
+                                application_id=application.id
+                            ) }}"
+                            class="btn btn-outline-efxion w-100 mt-4"
+                        >
+                            <i class="bi bi-download"></i>
+                            Download CV
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- MANAGEMENT -->
+
+                <div class="admin-detail-card">
+
+                    <div class="admin-detail-heading">
+
+                        <i class="bi bi-pencil-square"></i>
+
+                        <h2>
+                            Manage Application
+                        </h2>
+
+                    </div>
+
+
+                    <form
+                        method="POST"
+                        action="{{ url_for(
+                            'admin.update_application',
+                            application_id=application.id
+                        ) }}"
+                    >
+
+                        <div class="mb-4">
+
+                            <label
+                                for="status"
+                                class="form-label"
+                            >
+                                Status
+                            </label>
+
+                            <select
+                                id="status"
+                                name="status"
+                                class="form-select"
+                                required
+                            >
+
+                                {% for value, label in [
+                                    ('new', 'New'),
+                                    ('reviewing', 'Reviewing'),
+                                    ('shortlisted', 'Shortlisted'),
+                                    ('hired', 'Hired'),
+                                    ('rejected', 'Rejected')
+                                ] %}
+
+                                    <option
+                                        value="{{ value }}"
+                                        {% if application.status == value %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        {{ label }}
+                                    </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="mb-4">
+
+                            <label
+                                for="notes"
+                                class="form-label"
+                            >
+                                Private Admin Notes
+                            </label>
+
+                            <textarea
+                                id="notes"
+                                name="notes"
+                                class="form-control"
+                                rows="7"
+                                placeholder="Add private recruitment notes..."
+                            >{{ application.notes or "" }}</textarea>
+
+                            <small class="admin-form-help">
+                                Applicants cannot see these notes.
+                            </small>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-efxion w-100"
+                        >
+                            <i class="bi bi-check2-circle"></i>
+                            Save Changes
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </aside>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

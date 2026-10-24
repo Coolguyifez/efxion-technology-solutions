@@ -1,0 +1,439 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if admin_user %}
+        Edit Administrator | Efxion Admin
+    {% else %}
+        Create Administrator | Efxion Admin
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+<section class="admin-management-page">
+
+    <div class="container">
+
+        <div class="admin-form-header">
+
+            <a
+                href="{{ url_for('admin.users') }}"
+                class="admin-back-link"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Admin Users
+            </a>
+
+            <span class="admin-label">
+                ADMINISTRATION
+            </span>
+
+            <h1>
+                {% if admin_user %}
+                    Edit Administrator
+                {% else %}
+                    Create Administrator
+                {% endif %}
+            </h1>
+
+            <p>
+                {% if admin_user %}
+                    Update the administrator's account information
+                    and access details.
+                {% else %}
+                    Create a new administrator account for the
+                    Efxion administration portal.
+                {% endif %}
+            </p>
+
+        </div>
+
+
+        {% with messages = get_flashed_messages(
+            with_categories=true
+        ) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="alert alert-{{ category }}"
+                        role="alert"
+                    >
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <form
+            method="POST"
+            class="admin-career-form"
+        >
+
+            <!-- ==================================================
+                 ACCOUNT INFORMATION
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+                        <i class="bi bi-person-badge"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Account Information
+                        </h2>
+
+                        <p>
+                            Basic information used to identify
+                            the administrator.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row g-4">
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="full_name"
+                            class="form-label"
+                        >
+                            Full Name
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="full_name"
+                            name="full_name"
+                            value="{{
+                                admin_user.full_name
+                                if admin_user
+                                else ''
+                            }}"
+                            placeholder="Enter full name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="username"
+                            class="form-label"
+                        >
+                            Username
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="username"
+                            name="username"
+                            value="{{
+                                admin_user.username
+                                if admin_user
+                                else ''
+                            }}"
+                            placeholder="Enter username"
+                            required
+                            autocomplete="username"
+                        >
+
+                    </div>
+
+
+                    <div class="col-12">
+
+                        <label
+                            for="email"
+                            class="form-label"
+                        >
+                            Email Address
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="email"
+                            class="form-control"
+                            id="email"
+                            name="email"
+                            value="{{
+                                admin_user.email
+                                if admin_user
+                                else ''
+                            }}"
+                            placeholder="admin@example.com"
+                            required
+                            autocomplete="email"
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 PASSWORD
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+                        <i class="bi bi-shield-lock"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            {% if admin_user %}
+                                Password
+                            {% else %}
+                                Login Password
+                            {% endif %}
+                        </h2>
+
+                        <p>
+                            {% if admin_user %}
+                                Set a new password only if you want
+                                to change the administrator's password.
+                            {% else %}
+                                Create a secure password for the
+                                administrator account.
+                            {% endif %}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row g-4">
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="password"
+                            class="form-label"
+                        >
+                            {% if admin_user %}
+                                New Password
+                            {% else %}
+                                Password
+                            {% endif %}
+
+                            {% if not admin_user %}
+                                <span>*</span>
+                            {% endif %}
+                        </label>
+
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="password"
+                            name="password"
+                            {% if not admin_user %}
+                                required
+                            {% endif %}
+                            minlength="8"
+                            autocomplete="new-password"
+                            placeholder="Minimum 8 characters"
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="confirm_password"
+                            class="form-label"
+                        >
+                            Confirm Password
+
+                            {% if not admin_user %}
+                                <span>*</span>
+                            {% endif %}
+                        </label>
+
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="confirm_password"
+                            name="confirm_password"
+                            {% if not admin_user %}
+                                required
+                            {% endif %}
+                            minlength="8"
+                            autocomplete="new-password"
+                            placeholder="Confirm password"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                {% if admin_user %}
+
+                    <div class="admin-form-note">
+
+                        <i class="bi bi-info-circle"></i>
+
+                        <span>
+                            Leave the password fields empty if you
+                            do not want to change the administrator's
+                            current password.
+                        </span>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- ==================================================
+                 ACCOUNT STATUS
+            ================================================== -->
+
+            {% if admin_user %}
+
+                <div class="admin-form-card">
+
+                    <div class="admin-form-card-heading">
+
+                        <div class="admin-form-icon">
+                            <i class="bi bi-person-check"></i>
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                Account Status
+                            </h2>
+
+                            <p>
+                                Manage the administrator's access
+                                to the administration portal.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <label class="admin-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="is_active"
+                            value="1"
+                            {% if admin_user.is_active %}
+                                checked
+                            {% endif %}
+                            {% if admin_user.id == current_user.id %}
+                                disabled
+                            {% endif %}
+                        >
+
+                        <span>
+
+                            <strong>
+                                Active Administrator
+                            </strong>
+
+                            <small>
+                                Allow this administrator to log in
+                                to the administration portal.
+                            </small>
+
+                        </span>
+
+                    </label>
+
+
+                    {% if admin_user.id == current_user.id %}
+
+                        <div class="admin-form-note">
+
+                            <i class="bi bi-shield-check"></i>
+
+                            <span>
+                                Your own administrator account cannot
+                                be deactivated from this page.
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- ==================================================
+                 FORM ACTIONS
+            ================================================== -->
+
+            <div class="admin-form-actions">
+
+                <a
+                    href="{{ url_for('admin.users') }}"
+                    class="btn btn-outline-efxion"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn btn-efxion"
+                >
+
+                    {% if admin_user %}
+
+                        <i class="bi bi-check-lg"></i>
+                        Save Changes
+
+                    {% else %}
+
+                        <i class="bi bi-person-plus"></i>
+                        Create Administrator
+
+                    {% endif %}
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}

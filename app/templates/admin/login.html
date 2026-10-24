@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}
+Admin Login | Efxion Technology Solutions
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-login-page">
+
+    <div class="admin-login-card">
+
+        <div class="admin-login-brand">
+
+
+            <div class="admin-login-logo">
+                <img
+                    src="{{ url_for('static', filename='images/my logo.png') }}"
+                    alt="EI"
+                    class="brand-logo"
+                >
+            </div>
+
+            <div>
+                <strong>
+                    EFXION
+                </strong>
+
+                <span>
+                    TECHNOLOGY SOLUTIONS
+                </span>
+            </div>
+
+        </div>
+
+
+        <div class="admin-login-heading">
+
+            <span class="admin-label">
+                ADMINISTRATION
+            </span>
+
+            <h1>
+                Welcome Back
+            </h1>
+
+            <p>
+                Sign in to manage the Efxion website.
+            </p>
+
+        </div>
+
+
+        {% with messages = get_flashed_messages(
+            with_categories=true
+        ) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="alert alert-{{ category }}"
+                        role="alert"
+                    >
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <form
+            method="POST"
+            class="admin-login-form"
+        >
+
+            <div class="mb-3">
+
+                <label
+                    for="username"
+                    class="form-label"
+                >
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    class="form-control"
+                    autocomplete="username"
+                    required
+                    autofocus
+                >
+
+            </div>
+
+
+            <div class="mb-4">
+
+                <label
+                    for="password"
+                    class="form-label"
+                >
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    class="form-control"
+                    autocomplete="current-password"
+                    required
+                >
+
+            </div>
+
+            <div class="admin-login-forgot">
+
+                <a
+                    href="{{ url_for('admin.forgot_password') }}"
+                >
+                    Forgot Password?
+                </a>
+
+            </div>
+
+            <button
+                type="submit"
+                class="btn btn-efxion w-100"
+            >
+                <i class="bi bi-box-arrow-in-right"></i>
+                Sign In
+            </button>
+
+        </form>
+
+
+        <div class="admin-login-footer">
+
+            <a
+                href="{{ url_for('main.home') }}"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Return to website
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

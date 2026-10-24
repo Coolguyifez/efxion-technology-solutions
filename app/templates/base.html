@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Efxion Technology Solutions provides software development, web solutions, IT support, AI solutions, business systems and technology consulting."
+    >
+
+    <meta
+        name="theme-color"
+        content="#071a2b"
+    >
+
+    <title>
+        {% block title %}
+        Efxion Technology Solutions
+        {% endblock %}
+    </title>
+
+
+    <!-- Bootstrap -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- Bootstrap Icons -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    >
+
+
+    <!-- Google Font -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- Custom CSS -->
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+    {% block extra_css %}
+    {% endblock %}
+
+</head>
+
+
+<body>
+
+
+<!-- ================================================
+                    NAVBAR
+================================================ -->
+
+
+<nav
+    id="mainNavbar"
+    class="navbar navbar-expand-lg navbar-dark fixed-top"
+>
+
+    <div class="container">
+
+
+        <!-- Brand -->
+
+        <a
+            class="navbar-brand d-flex align-items-center"
+            href="{{ url_for('main.home') }}"
+        >
+
+            <div class="brand-mark">
+                <img
+                    src="{{ url_for('static', filename='images/my logo.png') }}"
+                    alt="Efxion Technology Solutions Logo"
+                    class="brand-logo"
+                >
+            </div>
+
+            <div class="brand-text">
+
+                <span class="brand-name">
+                    EFXION
+                </span>
+
+                <span class="brand-subtitle">
+                    TECHNOLOGY SOLUTIONS
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <!-- Mobile toggle -->
+
+        <button
+            class="navbar-toggler border-0 shadow-none"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarMenu"
+            aria-controls="navbarMenu"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+
+        <!-- Menu -->
+
+        <div
+            class="collapse navbar-collapse"
+            id="navbarMenu"
+        >
+
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{{ url_for('main.home') }}"
+                    >
+                        Home
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{{ url_for('main.about') }}"
+                    >
+                        About
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{{ url_for('main.services') }}"
+                    >
+                        Services
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{{ url_for('main.portfolio') }}"
+                    >
+                        Portfolio
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="{{ url_for('main.team') }}"
+                    >
+                        Team
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="{{ url_for('main.careers') }}"
+                    >
+                        Careers
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{{ url_for('main.insights') }}"
+                    >
+                        Insights
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{{ url_for('main.faq') }}"
+                    >
+                        FAQ
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item ms-lg-3">
+
+                    <a
+                        class="btn nav-cta"
+                        href="{{ url_for('main.contact') }}"
+                    >
+
+                        Let's Talk
+
+                        <i class="bi bi-arrow-up-right ms-1"></i>
+
+                    </a>
+
+                </li>
+
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- ================================================
+                    PAGE CONTENT
+================================================ -->
+
+
+<main>
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+
+<!-- ================================================
+                       FOOTER
+================================================ -->
+
+
+<footer class="site-footer">
+
+    <div class="container">
+
+        <div class="row gy-5">
+
+
+            <!-- Company -->
+
+            <div class="col-lg-5">
+
+                <div class="footer-brand">
+
+                    <div class="brand-mark">
+                        <img
+                            src="{{ url_for('static', filename='images/my logo.png') }}"
+                            alt="Efxion Technology Solutions Logo"
+                            class="brand-logo"
+                        >
+                    </div>
+
+                    <div>
+
+                        <div class="brand-name">
+                            EFXION
+                        </div>
+
+                        <div class="brand-subtitle">
+                            TECHNOLOGY SOLUTIONS
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <p class="footer-description">
+
+                    Modern technology solutions designed to help
+                    businesses operate smarter, improve efficiency
+                    and grow in an increasingly digital world.
+
+                </p>
+
+
+                <div class="social-links">
+
+                    <a href="#" aria-label="LinkedIn">
+                        <i class="bi bi-linkedin"></i>
+                    </a>
+
+                    <a href="#" aria-label="Facebook">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+
+                    <a href="#" aria-label="Instagram">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+
+                    <a href="#" aria-label="X">
+                        <i class="bi bi-twitter-x"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Company -->
+
+            <div class="col-6 col-lg-2">
+
+                <h5>Company</h5>
+
+                <ul>
+
+                    <li>
+                        <a href="{{ url_for('main.about') }}">
+                            About Us
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ url_for('main.portfolio') }}">
+                            Portfolio
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="{{ url_for('main.team') }}">
+                            Team
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="{{ url_for('main.careers') }}">
+                            Careers
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ url_for('main.insights') }}">
+                            Insights
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ url_for('main.contact') }}">
+                            Contact
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- Services -->
+
+            <div class="col-6 col-lg-2">
+
+                <h5>Solutions</h5>
+
+                <ul>
+
+                    <li>
+                        <a href="{{ url_for('main.services') }}">
+                            Web Development
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ url_for('main.services') }}">
+                            Software Solutions
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ url_for('main.services') }}">
+                            IT Support
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ url_for('main.services') }}">
+                            AI Solutions
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- Contact -->
+
+        <div class="col-lg-3">
+
+            <h5>Start a Project</h5>
+
+            <p class="footer-small">
+
+                Have an idea or technology challenge?
+                Tell us what you're working on.
+
+            </p>
+
+            <a
+                href="{{ url_for('main.contact') }}"
+                class="footer-contact"
+            >
+
+                Contact Efxion
+
+                <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+
+            <div class="footer-location">
+
+                <i class="bi bi-geo-alt"></i>
+
+                <div>
+
+                    <span class="footer-location-label">
+                        Location
+                    </span>
+
+                    <span class="footer-location-text">
+                        Warri, Delta State, Nigeria
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            <div>
+
+                © <span id="currentYear"></span>
+                Efxion Technology Solutions.
+                All rights reserved.
+
+            </div>
+
+
+            <div class="footer-legal">
+
+                <a href="{{ url_for('main.privacy') }}">
+                    Privacy Policy
+                </a>
+
+                <a href="{{ url_for('main.terms') }}">
+                    Terms of Service
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- Bootstrap JS -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+></script>
+
+
+<!-- Custom JS -->
+
+<script
+    src="{{ url_for('static', filename='js/main.js') }}"
+></script>
+
+
+{% block extra_js %}
+{% endblock %}
+
+
+</body>
+
+</html>

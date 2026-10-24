@@ -1,0 +1,457 @@
+{% extends "base.html" %}
+
+{% block title %}
+Job Applications | Efxion Admin
+{% endblock %}
+
+
+{% block content %}
+
+<section class="admin-management-page">
+
+    <div class="container">
+
+        <!-- =========================================
+             HEADER
+        ========================================== -->
+
+        <div class="admin-management-header">
+
+            <div>
+
+                <a
+                    href="{{ url_for('admin.dashboard') }}"
+                    class="admin-back-link"
+                >
+                    <i class="bi bi-arrow-left"></i>
+                    Dashboard
+                </a>
+
+                <span class="admin-label">
+                    RECRUITMENT
+                </span>
+
+                <h1>
+                    Job Applications
+                </h1>
+
+                <p>
+                    Review and manage applications submitted
+                    through the Efxion careers portal.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             STATUS COUNTERS
+        ========================================== -->
+
+        <div class="application-status-grid">
+
+            <a
+                href="{{ url_for('admin.applications') }}"
+                class="application-status-card"
+            >
+                <span>All</span>
+                <strong>{{ counts.all }}</strong>
+            </a>
+
+
+            <a
+                href="{{ url_for(
+                    'admin.applications',
+                    status='new'
+                ) }}"
+                class="application-status-card"
+            >
+                <span>New</span>
+                <strong>{{ counts.new }}</strong>
+            </a>
+
+
+            <a
+                href="{{ url_for(
+                    'admin.applications',
+                    status='reviewing'
+                ) }}"
+                class="application-status-card"
+            >
+                <span>Reviewing</span>
+                <strong>{{ counts.reviewing }}</strong>
+            </a>
+
+
+            <a
+                href="{{ url_for(
+                    'admin.applications',
+                    status='shortlisted'
+                ) }}"
+                class="application-status-card"
+            >
+                <span>Shortlisted</span>
+                <strong>{{ counts.shortlisted }}</strong>
+            </a>
+
+
+            <a
+                href="{{ url_for(
+                    'admin.applications',
+                    status='hired'
+                ) }}"
+                class="application-status-card"
+            >
+                <span>Hired</span>
+                <strong>{{ counts.hired }}</strong>
+            </a>
+
+
+            <a
+                href="{{ url_for(
+                    'admin.applications',
+                    status='rejected'
+                ) }}"
+                class="application-status-card"
+            >
+                <span>Rejected</span>
+                <strong>{{ counts.rejected }}</strong>
+            </a>
+
+        </div>
+
+
+        <!-- =========================================
+             FILTERS
+        ========================================== -->
+
+        <div class="admin-filter-card">
+
+            <form
+                method="GET"
+                action="{{ url_for('admin.applications') }}"
+            >
+
+                <div class="row g-3">
+
+                    <div class="col-lg-5">
+
+                        <label
+                            for="search"
+                            class="form-label"
+                        >
+                            Search
+                        </label>
+
+                        <input
+                            type="text"
+                            id="search"
+                            name="search"
+                            class="form-control"
+                            value="{{ search }}"
+                            placeholder="Name, email or phone"
+                        >
+
+                    </div>
+
+
+                    <div class="col-lg-3">
+
+                        <label
+                            for="status"
+                            class="form-label"
+                        >
+                            Status
+                        </label>
+
+                        <select
+                            id="status"
+                            name="status"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                All statuses
+                            </option>
+
+                            {% for value, label in [
+                                ('new', 'New'),
+                                ('reviewing', 'Reviewing'),
+                                ('shortlisted', 'Shortlisted'),
+                                ('hired', 'Hired'),
+                                ('rejected', 'Rejected')
+                            ] %}
+
+                                <option
+                                    value="{{ value }}"
+                                    {% if selected_status == value %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ label }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="col-lg-4">
+
+                        <label
+                            for="position"
+                            class="form-label"
+                        >
+                            Position
+                        </label>
+
+                        <select
+                            id="position"
+                            name="position"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                All positions
+                            </option>
+
+                            {% for position in positions %}
+
+                                <option
+                                    value="{{ position.id }}"
+                                    {% if selected_position == position.id %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ position.title }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-filter-actions">
+
+                    <button
+                        type="submit"
+                        class="btn btn-efxion"
+                    >
+                        <i class="bi bi-funnel"></i>
+                        Apply Filters
+                    </button>
+
+
+                    <a
+                        href="{{ url_for('admin.applications') }}"
+                        class="btn btn-outline-efxion"
+                    >
+                        Clear
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- =========================================
+             APPLICATION LIST
+        ========================================== -->
+
+        <div class="admin-table-card">
+
+            {% if applications %}
+
+                <div class="table-responsive">
+
+                    <table class="table admin-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Applicant
+                                </th>
+
+                                <th>
+                                    Position
+                                </th>
+
+                                <th>
+                                    Experience
+                                </th>
+
+                                <th>
+                                    Applied
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th></th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for application in applications %}
+
+                                <tr>
+
+                                    <td>
+
+                                        <div class="applicant-cell">
+
+                                            <div class="applicant-avatar">
+
+                                                {{
+                                                    application.full_name[0]
+                                                    | upper
+                                                }}
+
+                                            </div>
+
+                                            <div>
+
+                                                <strong>
+                                                    {{ application.full_name }}
+                                                </strong>
+
+                                                <span>
+                                                    {{ application.email }}
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <td>
+
+                                        {% if application.position %}
+
+                                            {{ application.position.title }}
+
+                                        {% else %}
+
+                                            —
+
+                                        {% endif %}
+
+                                    </td>
+
+
+                                    <td>
+
+                                        {{
+                                            application.years_of_experience
+                                            or "—"
+                                        }}
+
+                                    </td>
+
+
+                                    <td>
+
+                                        {% if application.created_at %}
+
+                                            {{
+                                                application.created_at.strftime(
+                                                    "%d %b %Y"
+                                                )
+                                            }}
+
+                                        {% else %}
+
+                                            —
+
+                                        {% endif %}
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <span
+                                            class="
+                                                application-badge
+                                                status-{{ application.status }}
+                                            "
+                                        >
+                                            {{
+                                                application.status
+                                                | replace("_", " ")
+                                                | title
+                                            }}
+                                        </span>
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <a
+                                            href="{{ url_for(
+                                                'admin.application_detail',
+                                                application_id=application.id
+                                            ) }}"
+                                            class="admin-view-button"
+                                        >
+                                            View
+                                            <i class="bi bi-arrow-right"></i>
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <div class="admin-empty-state">
+
+                    <i class="bi bi-file-earmark-person"></i>
+
+                    <h2>
+                        No applications found
+                    </h2>
+
+                    <p>
+                        There are no applications matching
+                        your current filters.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

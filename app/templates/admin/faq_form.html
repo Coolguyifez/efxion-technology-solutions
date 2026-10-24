@@ -1,0 +1,375 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if faq %}
+Edit FAQ | Efxion Admin
+{% else %}
+Add FAQ | Efxion Admin
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-management-page">
+
+    <div class="container">
+
+        <!-- =================================================
+             FORM HEADER
+        ================================================== -->
+
+        <div class="admin-form-header">
+
+            <a
+                href="{{ url_for('admin.faq') }}"
+                class="admin-back-link"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Back to FAQ Management
+            </a>
+
+            <span class="admin-label">
+                FAQ MANAGEMENT
+            </span>
+
+            <h1>
+                {% if faq %}
+                    Edit Frequently Asked Question
+                {% else %}
+                    Add Frequently Asked Question
+                {% endif %}
+            </h1>
+
+            <p>
+                {% if faq %}
+                    Update the question, answer and visibility settings
+                    for this FAQ.
+                {% else %}
+                    Create a clear and useful frequently asked question
+                    for your website visitors.
+                {% endif %}
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             FLASH MESSAGES
+        ================================================== -->
+
+        {% with messages = get_flashed_messages(
+            with_categories=true
+        ) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="alert alert-{{ category }} alert-dismissible fade show"
+                        role="alert"
+                    >
+                        {{ message }}
+
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert"
+                            aria-label="Close"
+                        ></button>
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- =================================================
+             FAQ FORM
+        ================================================== -->
+
+        <form
+            method="POST"
+            class="admin-faq-form"
+        >
+
+            <!-- =================================================
+                 BASIC INFORMATION
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+                        <i class="bi bi-question-circle"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            FAQ Information
+                        </h2>
+
+                        <p>
+                            Add the question and answer that visitors
+                            will see on the website.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Question -->
+
+                <div class="mb-4">
+
+                    <label
+                        for="question"
+                        class="form-label"
+                    >
+                        Question
+                        <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="question"
+                        name="question"
+                        class="form-control"
+                        value="{{ request.form.get('question', faq.question if faq else '') }}"
+                        placeholder="e.g. What services does Efxion Technology Solutions provide?"
+                        maxlength="500"
+                        required
+                    >
+
+                    <div class="form-text">
+                        Keep the question clear, specific and easy to understand.
+                    </div>
+
+                </div>
+
+
+                <!-- Answer -->
+
+                <div class="mb-4">
+
+                    <label
+                        for="answer"
+                        class="form-label"
+                    >
+                        Answer
+                        <span>*</span>
+                    </label>
+
+                    <textarea
+                        id="answer"
+                        name="answer"
+                        class="form-control"
+                        rows="8"
+                        placeholder="Write a clear and helpful answer..."
+                        required
+                    >{{ request.form.get('answer', faq.answer if faq else '') }}</textarea>
+
+                    <div class="form-text">
+                        Provide enough information to answer the question
+                        without unnecessary repetition.
+                    </div>
+
+                </div>
+
+
+                <!-- Category + Display Order -->
+
+                <div class="row g-4">
+
+                    <div class="col-lg-8">
+
+                        <label
+                            for="category"
+                            class="form-label"
+                        >
+                            Category
+                        </label>
+
+                        <input
+                            type="text"
+                            id="category"
+                            name="category"
+                            class="form-control"
+                            value="{{ request.form.get('category', faq.category if faq else '') }}"
+                            placeholder="e.g. General, Services, Payments, Support"
+                            maxlength="150"
+                        >
+
+                        <div class="form-text">
+                            Optional. Use categories to organize related FAQs.
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-lg-4">
+
+                        <label
+                            for="display_order"
+                            class="form-label"
+                        >
+                            Display Order
+                        </label>
+
+                        <input
+                            type="number"
+                            id="display_order"
+                            name="display_order"
+                            class="form-control"
+                            value="{{ request.form.get('display_order', faq.display_order if faq else 0) }}"
+                            min="0"
+                            step="1"
+                        >
+
+                        <div class="form-text">
+                            Lower numbers appear first.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 VISIBILITY SETTINGS
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+                        <i class="bi bi-sliders"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Visibility Settings
+                        </h2>
+
+                        <p>
+                            Control whether this FAQ is active and featured.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-checkbox-grid">
+
+                    <!-- Active -->
+
+                    <label class="admin-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="is_active"
+                            value="1"
+                            {% if faq %}
+                                {% if faq.is_active %}
+                                    checked
+                                {% endif %}
+                            {% else %}
+                                checked
+                            {% endif %}
+                        >
+
+                        <span>
+
+                            <strong>
+                                Active
+                            </strong>
+
+                            <small>
+                                Allow this FAQ to appear on the public website.
+                            </small>
+
+                        </span>
+
+                    </label>
+
+
+                    <!-- Featured -->
+
+                    <label class="admin-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="is_featured"
+                            value="1"
+                            {% if faq and faq.is_featured %}
+                                checked
+                            {% endif %}
+                        >
+
+                        <span>
+
+                            <strong>
+                                Featured
+                            </strong>
+
+                            <small>
+                                Mark this FAQ as important or featured.
+                            </small>
+
+                        </span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FORM ACTIONS
+            ================================================== -->
+
+            <div class="admin-form-actions">
+
+                <a
+                    href="{{ url_for('admin.faq') }}"
+                    class="btn btn-outline-efxion"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn btn-efxion"
+                >
+
+                    <i class="bi bi-check-circle me-1"></i>
+
+                    {% if faq %}
+                        Save Changes
+                    {% else %}
+                        Create FAQ
+                    {% endif %}
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}

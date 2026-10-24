@@ -1,0 +1,625 @@
+{% extends "base.html" %}
+
+{% block title %}
+Contact Us | Efxion Technology Solutions
+{% endblock %}
+
+{% block content %}
+
+<!-- =====================================================
+     CONTACT HERO
+====================================================== -->
+
+<section class="contact-hero">
+    <div class="container">
+        <div class="contact-hero-content reveal">
+
+            <div class="section-label light">
+                LET'S BUILD SOMETHING
+            </div>
+
+            <h1>
+                Tell Us About
+                <span>Your Project.</span>
+            </h1>
+
+            <p>
+                Whether you need a website, business application,
+                digital transformation solution or technology
+                consulting, we're ready to discuss your needs.
+            </p>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================================
+     FLASH MESSAGES
+====================================================== -->
+
+<section class="contact-section">
+
+    <div class="container">
+
+        {% with messages = get_flashed_messages(
+            with_categories=true
+        ) %}
+
+            {% if messages %}
+
+                <div class="contact-alerts">
+
+                    {% for category, message in messages %}
+
+                        <div
+                            class="alert alert-{{ category }} alert-dismissible fade show"
+                            role="alert"
+                        >
+
+                            {% if category == "success" %}
+                                <i class="bi bi-check-circle-fill"></i>
+                            {% else %}
+                                <i class="bi bi-exclamation-circle-fill"></i>
+                            {% endif %}
+
+                            <span>
+                                {{ message }}
+                            </span>
+
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert"
+                                aria-label="Close"
+                            ></button>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- =================================================
+             CONTACT GRID
+        ================================================== -->
+
+        <div class="row g-5 align-items-start">
+
+            <!-- =============================================
+                 CONTACT INFORMATION
+            ============================================== -->
+
+            <div class="col-lg-5">
+
+                <div class="contact-info reveal">
+
+                    <div class="section-label">
+                        CONTACT EFXION
+                    </div>
+
+                    <h2>
+                        Let's discuss
+                        <span>your next idea.</span>
+                    </h2>
+
+                    <p class="contact-intro">
+                        Have a project in mind, need technical
+                        assistance, or looking for a technology
+                        partner?
+
+                        Send us a message and let's start a
+                        conversation.
+                    </p>
+
+
+                    <!-- CONTACT CARD -->
+
+                    <div class="contact-detail">
+
+                        <div class="contact-detail-icon">
+                            <i class="bi bi-envelope"></i>
+                        </div>
+
+                        <div>
+                            <span>Email</span>
+
+                            <strong>
+                                efxiontechnolgysolutions@gmail.com
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="contact-detail">
+
+                        <div class="contact-detail-icon">
+                            <i class="bi bi-whatsapp"></i>
+                        </div>
+
+                        <div>
+                            <span>WhatsApp</span>
+
+                            <strong>
+                                Start a conversation
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="contact-detail">
+
+                        <div class="contact-detail-icon">
+                            <i class="bi bi-clock"></i>
+                        </div>
+
+                        <div>
+                            <span>Availability</span>
+
+                            <strong>
+                                Monday – Friday
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <!-- WHATSAPP CTA -->
+
+                    <div class="contact-whatsapp">
+
+                        <div>
+
+                            <i class="bi bi-whatsapp"></i>
+
+                            <div>
+                                <strong>
+                                    Prefer WhatsApp?
+                                </strong>
+
+                                <p>
+                                    Start a direct conversation
+                                    with Efxion.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <!-- Replace the # with your
+                             official WhatsApp link later -->
+
+                        <a
+                            href="https://wa.me/+234815467547"
+                            class="btn btn-whatsapp"
+                        >
+                            Chat With Us
+                            <i class="bi bi-arrow-up-right"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 QUOTE FORM
+            ============================================== -->
+
+            <div class="col-lg-7">
+
+                <div class="quote-card reveal">
+
+                    <div class="quote-header">
+
+                        <div>
+                            <div class="section-label">
+                                REQUEST A QUOTE
+                            </div>
+
+                            <h2>
+                                Tell us what
+                                <span>you need.</span>
+                            </h2>
+                        </div>
+
+                        <div class="quote-icon">
+                            <i class="bi bi-chat-square-text"></i>
+                        </div>
+
+                    </div>
+
+
+                    <form
+                        method="POST"
+                        action="{{ url_for('main.contact') }}"
+                        class="quote-form"
+                    >
+
+                        <!-- NAME + EMAIL -->
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="name"
+                                    class="form-label"
+                                >
+                                    Full Name
+                                    <span>*</span>
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="name"
+                                    name="name"
+                                    placeholder="Your full name"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="email"
+                                    class="form-label"
+                                >
+                                    Email Address
+                                    <span>*</span>
+                                </label>
+
+                                <input
+                                    type="email"
+                                    class="form-control"
+                                    id="email"
+                                    name="email"
+                                    placeholder="you@example.com"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PHONE + COMPANY -->
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="phone"
+                                    class="form-label"
+                                >
+                                    Phone / WhatsApp
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    class="form-control"
+                                    id="phone"
+                                    name="phone"
+                                    placeholder="+234..."
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="company"
+                                    class="form-label"
+                                >
+                                    Company / Organization
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="company"
+                                    name="company"
+                                    placeholder="Company name"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- SERVICE + PROJECT TYPE -->
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="service"
+                                    class="form-label"
+                                >
+                                    Service
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    id="service"
+                                    name="service"
+                                >
+
+                                    <option value="">
+                                        Select a service
+                                    </option>
+
+                                    {% for service in services %}
+
+                                        <option
+                                            value="{{ service.name }}"
+                                        >
+                                            {{ service.name }}
+                                        </option>
+
+                                    {% endfor %}
+
+                                    <option value="Other">
+                                        Other
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="project_type"
+                                    class="form-label"
+                                >
+                                    Project Type
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    id="project_type"
+                                    name="project_type"
+                                >
+
+                                    <option value="">
+                                        Select project type
+                                    </option>
+
+                                    <option value="New Project">
+                                        New Project
+                                    </option>
+
+                                    <option value="Existing System">
+                                        Existing System
+                                    </option>
+
+                                    <option value="Redesign">
+                                        Redesign
+                                    </option>
+
+                                    <option value="Maintenance">
+                                        Maintenance / Support
+                                    </option>
+
+                                    <option value="Consultation">
+                                        Consultation
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- BUDGET + CONTACT METHOD -->
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="budget"
+                                    class="form-label"
+                                >
+                                    Estimated Budget
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    id="budget"
+                                    name="budget"
+                                >
+
+                                    <option value="">
+                                        Select budget range
+                                    </option>
+
+                                    <option value="Below ₦100,000">
+                                        Below ₦100,000
+                                    </option>
+
+                                    <option value="₦100,000 – ₦300,000">
+                                        ₦100,000 – ₦300,000
+                                    </option>
+
+                                    <option value="₦300,000 – ₦500,000">
+                                        ₦300,000 – ₦500,000
+                                    </option>
+
+                                    <option value="₦500,000 – ₦1,000,000">
+                                        ₦500,000 – ₦1,000,000
+                                    </option>
+
+                                    <option value="Above ₦1,000,000">
+                                        Above ₦1,000,000
+                                    </option>
+
+                                    <option value="Not Sure">
+                                        I'm not sure yet
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="preferred_contact"
+                                    class="form-label"
+                                >
+                                    Preferred Contact
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    id="preferred_contact"
+                                    name="preferred_contact"
+                                >
+
+                                    <option value="">
+                                        Select preference
+                                    </option>
+
+                                    <option value="Email">
+                                        Email
+                                    </option>
+
+                                    <option value="Phone">
+                                        Phone
+                                    </option>
+
+                                    <option value="WhatsApp">
+                                        WhatsApp
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- MESSAGE -->
+
+                        <div>
+
+                            <label
+                                for="message"
+                                class="form-label"
+                            >
+                                Tell Us About Your Project
+                                <span>*</span>
+                            </label>
+
+                            <textarea
+                                class="form-control"
+                                id="message"
+                                name="message"
+                                rows="6"
+                                placeholder="Tell us about your project, goals, requirements or the problem you want us to solve..."
+                                required
+                            ></textarea>
+
+                        </div>
+
+
+                        <!-- SUBMIT -->
+
+                        <div class="quote-submit">
+
+                            <div class="quote-note">
+
+                                <i class="bi bi-shield-check"></i>
+
+                                <span>
+                                    Your information will be
+                                    treated confidentially.
+                                </span>
+
+                            </div>
+
+                            <button
+                                type="submit"
+                                class="btn btn-efxion"
+                            >
+                                Send Enquiry
+                                <i class="bi bi-arrow-right"></i>
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FINAL CTA
+====================================================== -->
+
+<section class="contact-bottom-cta">
+
+    <div class="container">
+
+        <div class="contact-bottom-inner reveal">
+
+            <div>
+
+                <div class="section-label light">
+                    HAVE A QUESTION?
+                </div>
+
+                <h2>
+                    Let's start a
+                    <span>conversation.</span>
+                </h2>
+
+                <p>
+                    Not ready to request a quote?
+                    You can still reach out to us.
+                </p>
+
+            </div>
+
+            <a
+                href="mailto:efxiontechnolgysolutions@gmail.com"
+                class="btn btn-efxion-light"
+            >
+                <i class="bi bi-envelope"></i>
+                Email Efxion
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

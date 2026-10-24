@@ -1,0 +1,300 @@
+{% extends "base.html" %}
+
+{% block title %}
+Services | Efxion Technology Solutions
+{% endblock %}
+
+{% block content %}
+
+<section class="services-hero">
+
+    <div class="container">
+
+        <div class="row justify-content-center text-center">
+
+            <div class="col-lg-9 reveal">
+
+                <div class="section-label light">
+                    WHAT WE DO
+                </div>
+
+                <h1>
+                    Technology solutions
+                    <span>built around your needs.</span>
+                </h1>
+
+                <p>
+                    From websites and custom software to IT support
+                    and digital transformation, we provide practical
+                    technology services for individuals, startups,
+                    businesses and organizations.
+                </p>
+
+                <div class="services-hero-actions">
+
+                    <a
+                        href="{{ url_for('main.contact') }}"
+                        class="btn btn-efxion-light"
+                    >
+                        Request a Quote
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="services-section section-space">
+
+    <div class="container">
+
+        {% if categories %}
+
+            {% for category in categories %}
+
+                <div class="service-category-block reveal">
+
+                    <div class="service-category-heading">
+
+                        <div>
+
+                            <div class="section-label">
+                                SERVICES
+                            </div>
+
+                            <h2>
+                                {{ category.name }}
+                            </h2>
+
+                            {% if category.description %}
+                                <p>
+                                    {{ category.description }}
+                                </p>
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="row g-4">
+
+                        {% for service in category.services
+                            if service.is_active %}
+
+                            <div class="col-md-6 col-lg-4">
+
+                                <article class="service-card">
+
+                                    {% if service.is_featured %}
+
+                                        <div class="service-featured">
+                                            Featured
+                                        </div>
+
+                                    {% endif %}
+
+                                    <div class="service-icon">
+
+                                        <i class="bi
+                                            {{ service.icon or 'bi-code-slash' }}">
+                                        </i>
+
+                                    </div>
+
+                                    <h3>
+                                        {{ service.name }}
+                                    </h3>
+
+                                    {% if service.short_description %}
+
+                                        <p class="service-short">
+                                            {{ service.short_description }}
+                                        </p>
+
+                                    {% endif %}
+
+
+                                    {% if service.description %}
+
+                                        <p class="service-description">
+                                            {{ service.description }}
+                                        </p>
+
+                                    {% endif %}
+
+
+                                    <div class="service-card-footer">
+
+                                        {% if service.starting_price is not none %}
+
+                                            <div class="service-price">
+
+                                                <small>
+                                                    Starting from
+                                                </small>
+
+                                                <strong>
+                                                    ₦{{ "{:,.0f}".format(
+                                                        service.starting_price|float
+                                                    ) }}
+                                                </strong>
+
+                                            </div>
+
+                                        {% else %}
+
+                                            <div class="service-price">
+
+                                                <small>
+                                                    Pricing
+                                                </small>
+
+                                                <strong>
+                                                    Let's Discuss
+                                                </strong>
+
+                                            </div>
+
+                                        {% endif %}
+
+
+                                        <a
+                                            href="{{ url_for('main.contact') }}"
+                                            class="service-arrow"
+                                            aria-label="Request {{ service.name }}"
+                                        >
+                                            <i class="bi bi-arrow-up-right"></i>
+                                        </a>
+
+                                    </div>
+
+                                </article>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-services reveal">
+
+                <div class="empty-services-icon">
+                    <i class="bi bi-grid-3x3-gap"></i>
+                </div>
+
+                <h2>
+                    Services are being prepared.
+                </h2>
+
+                <p>
+                    Our service catalogue will be available shortly.
+                </p>
+
+                <a
+                    href="{{ url_for('main.contact') }}"
+                    class="btn btn-efxion"
+                >
+                    Contact Us
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<section class="pricing-note-section">
+
+    <div class="container">
+
+        <div class="pricing-note reveal">
+
+            <div class="pricing-note-icon">
+                <i class="bi bi-info-circle"></i>
+            </div>
+
+            <div>
+
+                <h3>
+                    Need something specific?
+                </h3>
+
+                <p>
+                    The prices shown are starting prices. Final pricing
+                    depends on the scope, complexity, features and
+                    requirements of each project.
+                </p>
+
+            </div>
+
+            <a
+                href="{{ url_for('main.contact') }}"
+                class="btn btn-efxion"
+            >
+                Request a Quote
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="services-cta">
+
+    <div class="container">
+
+        <div class="services-cta-inner reveal">
+
+            <div>
+
+                <div class="section-label light">
+                    HAVE A PROJECT?
+                </div>
+
+                <h2>
+                    Let's turn your idea
+                    into something useful.
+                </h2>
+
+                <p>
+                    Tell us what you need and we'll help you
+                    determine the right technology approach.
+                </p>
+
+            </div>
+
+            <a
+                href="{{ url_for('main.contact') }}"
+                class="btn btn-efxion-light"
+            >
+                Start a Project
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

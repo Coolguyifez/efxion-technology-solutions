@@ -1,0 +1,831 @@
+{% extends "base.html" %}
+
+{% if article %}
+    {% set page_heading = "Edit Insight Article" %}
+{% else %}
+    {% set page_heading = "Create Insight Article" %}
+{% endif %}
+
+{% block title %}
+{{ page_heading }} | Efxion Admin
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-management-page">
+
+    <div class="container">
+
+        <a
+            href="{{ url_for('admin.insights') }}"
+            class="admin-back-link"
+        >
+            <i class="bi bi-arrow-left"></i>
+            Insights
+        </a>
+
+        <div class="admin-form-header">
+
+            <span class="admin-label">
+                NEWS & INSIGHTS MANAGEMENT
+            </span>
+
+            <h1>
+                {{ page_heading }}
+            </h1>
+
+            <p>
+                {% if article %}
+
+                    Update this article's content,
+                    presentation and publication settings.
+
+                {% else %}
+
+                    Create a new article for the
+                    Efxion News & Insights section.
+
+                {% endif %}
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             FLASH MESSAGES
+        ================================================== -->
+
+        {% with messages = get_flashed_messages(
+            with_categories=true
+        ) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="alert alert-{{ category }}"
+                        role="alert"
+                    >
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <form
+            method="POST"
+            class="admin-insight-form"
+        >
+
+
+            <!-- =================================================
+                 BASIC INFORMATION
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+
+                        <i class="bi bi-newspaper"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Basic Information
+                        </h2>
+
+                        <p>
+                            Define the article's main information
+                            and classification.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row g-4">
+
+
+                    <!-- TITLE -->
+
+                    <div class="col-md-8">
+
+                        <label
+                            for="title"
+                            class="form-label"
+                        >
+                            Article Title
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            class="form-control"
+                            maxlength="250"
+                            required
+                            value="{{
+                                form_data.get('title')
+                                if form_data
+                                else (
+                                    article.title
+                                    if article
+                                    else ''
+                                )
+                            }}"
+                            placeholder="e.g. Why Businesses Need a Strong Digital Foundation"
+                        >
+
+                    </div>
+
+
+                    <!-- SLUG -->
+
+                    <div class="col-md-4">
+
+                        <label
+                            for="slug"
+                            class="form-label"
+                        >
+                            URL Slug
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="slug"
+                            name="slug"
+                            class="form-control"
+                            maxlength="250"
+                            required
+                            value="{{
+                                form_data.get('slug')
+                                if form_data
+                                else (
+                                    article.slug
+                                    if article
+                                    else ''
+                                )
+                            }}"
+                            placeholder="strong-digital-foundation"
+                        >
+
+                        <small class="admin-form-help">
+                            Use lowercase letters and hyphens.
+                        </small>
+
+                    </div>
+
+
+                    <!-- CATEGORY -->
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="category_id"
+                            class="form-label"
+                        >
+                            Insight Category
+                            <span>*</span>
+                        </label>
+
+                        {% set category_value =
+                            form_data.get('category_id')
+                            if form_data
+                            else (
+                                article.category_id
+                                if article
+                                else ''
+                            )
+                        %}
+
+                        <select
+                            id="category_id"
+                            name="category_id"
+                            class="form-select"
+                            required
+                        >
+
+                            <option value="">
+                                Select category
+                            </option>
+
+                            {% for category in categories %}
+
+                                <option
+                                    value="{{ category.id }}"
+                                    {% if category_value|string == category.id|string %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ category.name }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- AUTHOR -->
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="author"
+                            class="form-label"
+                        >
+                            Author
+                        </label>
+
+                        <input
+                            type="text"
+                            id="author"
+                            name="author"
+                            class="form-control"
+                            maxlength="150"
+                            value="{{
+                                form_data.get('author')
+                                if form_data
+                                else (
+                                    article.author
+                                    if article
+                                    else 'Efxion Technology Solutions'
+                                )
+                            }}"
+                            placeholder="Efxion Technology Solutions"
+                        >
+
+                    </div>
+
+
+                    <!-- READING TIME -->
+
+                    <div class="col-md-4">
+
+                        <label
+                            for="reading_time"
+                            class="form-label"
+                        >
+                            Reading Time
+                        </label>
+
+                        <input
+                            type="number"
+                            id="reading_time"
+                            name="reading_time"
+                            class="form-control"
+                            min="1"
+                            max="999"
+                            value="{{
+                                form_data.get('reading_time')
+                                if form_data
+                                else (
+                                    article.reading_time
+                                    if article
+                                    else 5
+                                )
+                            }}"
+                            placeholder="5"
+                        >
+
+                        <small class="admin-form-help">
+                            Estimated reading time in minutes.
+                        </small>
+
+                    </div>
+
+
+                    <!-- EXCERPT -->
+
+                    <div class="col-md-8">
+
+                        <label
+                            for="excerpt"
+                            class="form-label"
+                        >
+                            Article Excerpt
+                        </label>
+
+                        <input
+                            type="text"
+                            id="excerpt"
+                            name="excerpt"
+                            class="form-control"
+                            maxlength="500"
+                            value="{{
+                                form_data.get('excerpt')
+                                if form_data
+                                else (
+                                    article.excerpt
+                                    if article
+                                    else ''
+                                )
+                            }}"
+                            placeholder="A short summary displayed on article cards."
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 ARTICLE CONTENT
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+
+                        <i class="bi bi-file-text"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Article Content
+                        </h2>
+
+                        <p>
+                            Write the complete article content
+                            that visitors will read.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row g-4">
+
+                    <div class="col-12">
+
+                        <label
+                            for="content"
+                            class="form-label"
+                        >
+                            Full Article
+                            <span>*</span>
+                        </label>
+
+                        <textarea
+                            id="content"
+                            name="content"
+                            class="
+                                form-control
+                                admin-article-content
+                            "
+                            rows="16"
+                            required
+                            placeholder="Write the complete article here..."
+                        >{{ form_data.get('content') if form_data else (article.content if article else '') }}</textarea>
+
+                        <small class="admin-form-help">
+                            Your existing public article page can
+                            determine whether this content is rendered
+                            as plain text or trusted HTML.
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FEATURED IMAGE
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+
+                        <i class="bi bi-image"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Featured Image
+                        </h2>
+
+                        <p>
+                            Add an image to visually represent
+                            this article.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row g-4">
+
+
+                    <div class="col-md-8">
+
+                        <label
+                            for="featured_image"
+                            class="form-label"
+                        >
+                            Image URL
+                        </label>
+
+                        <input
+                            type="url"
+                            id="featured_image"
+                            name="featured_image"
+                            class="form-control"
+                            maxlength="255"
+                            value="{{
+                                form_data.get('featured_image')
+                                if form_data
+                                else (
+                                    article.featured_image
+                                    if article
+                                    else ''
+                                )
+                            }}"
+                            placeholder="https://example.com/article-image.jpg"
+                        >
+
+                        <small class="admin-form-help">
+                            Use a publicly accessible image URL.
+                        </small>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">
+                            Image Preview
+                        </label>
+
+                        <div
+                            class="admin-insight-image-preview"
+                            id="insightImagePreview"
+                        >
+
+                            {% if article and article.featured_image %}
+
+                                <img
+                                    src="{{ article.featured_image }}"
+                                    alt="{{ article.title }}"
+                                >
+
+                            {% else %}
+
+                                <div
+                                    class="
+                                        admin-insight-image-preview-placeholder
+                                    "
+                                >
+
+                                    <i class="bi bi-image"></i>
+
+                                    <span>
+                                        Image preview
+                                    </span>
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PUBLICATION SETTINGS
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+
+                        <i class="bi bi-eye"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Publication Settings
+                        </h2>
+
+                        <p>
+                            Control whether the article is
+                            published and featured.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                {% set published_value =
+                    form_data.get('is_published')
+                    if form_data
+                    else (
+                        article.is_published
+                        if article
+                        else True
+                    )
+                %}
+
+                {% set featured_value =
+                    form_data.get('is_featured')
+                    if form_data
+                    else (
+                        article.is_featured
+                        if article
+                        else False
+                    )
+                %}
+
+
+                <div class="admin-checkbox-grid">
+
+
+                    <label class="admin-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="is_published"
+                            {% if published_value %}
+                                checked
+                            {% endif %}
+                        >
+
+                        <span>
+
+                            <strong>
+                                Published Article
+                            </strong>
+
+                            <small>
+                                Make this article visible
+                                on the public website.
+                            </small>
+
+                        </span>
+
+                    </label>
+
+
+                    <label class="admin-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="is_featured"
+                            {% if featured_value %}
+                                checked
+                            {% endif %}
+                        >
+
+                        <span>
+
+                            <strong>
+                                Featured Article
+                            </strong>
+
+                            <small>
+                                Highlight this article in
+                                featured insight sections.
+                            </small>
+
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+                {% if article %}
+
+                    <div class="admin-publication-info">
+
+                        {% if article.is_published %}
+
+                            <i class="bi bi-check-circle"></i>
+
+                            <div>
+
+                                <strong>
+                                    Published
+                                </strong>
+
+                                <p>
+
+                                    {% if article.published_at %}
+
+                                        Published on
+                                        {{
+                                            article.published_at.strftime(
+                                                "%d %B %Y at %H:%M"
+                                            )
+                                        }}.
+
+                                    {% else %}
+
+                                        This article is currently
+                                        marked as published.
+
+                                    {% endif %}
+
+                                </p>
+
+                            </div>
+
+                        {% else %}
+
+                            <i class="bi bi-eye-slash"></i>
+
+                            <div>
+
+                                <strong>
+                                    Draft
+                                </strong>
+
+                                <p>
+                                    This article is not currently
+                                    visible on the public website.
+                                </p>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- =================================================
+                 FORM ACTIONS
+            ================================================== -->
+
+            <div class="admin-form-actions">
+
+                <a
+                    href="{{ url_for('admin.insights') }}"
+                    class="btn btn-outline-secondary"
+                >
+
+                    <i class="bi bi-x-lg"></i>
+
+                    Cancel
+
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-efxion"
+                >
+
+                    {% if article %}
+
+                        <i class="bi bi-check2-circle"></i>
+
+                        Save Changes
+
+                    {% else %}
+
+                        <i class="bi bi-plus-lg"></i>
+
+                        Create Article
+
+                    {% endif %}
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FEATURED IMAGE PREVIEW
+========================================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const imageInput =
+            document.getElementById(
+                "featured_image"
+            );
+
+        const preview =
+            document.getElementById(
+                "insightImagePreview"
+            );
+
+        if (!imageInput || !preview) {
+            return;
+        }
+
+        function updateImagePreview() {
+
+            const imageUrl =
+                imageInput.value.trim();
+
+            if (!imageUrl) {
+
+                preview.innerHTML = `
+                    <div
+                        class="
+                            admin-insight-image-preview-placeholder
+                        "
+                    >
+
+                        <i class="bi bi-image"></i>
+
+                        <span>
+                            Image preview
+                        </span>
+
+                    </div>
+                `;
+
+                return;
+            }
+
+            preview.innerHTML = `
+                <img
+                    src="${imageUrl}"
+                    alt="Article preview"
+                    onerror="
+                        this.style.display='none';
+                        this.parentElement.innerHTML = `
+                            <div
+                                class="
+                                    admin-insight-image-preview-placeholder
+                                "
+                            >
+
+                                <i class='bi bi-image'></i>
+
+                                <span>
+                                    Unable to load image
+                                </span>
+
+                            </div>
+                        `;
+                    "
+                >
+            `;
+
+        }
+
+        imageInput.addEventListener(
+            "input",
+            updateImagePreview
+        );
+
+    }
+);
+
+</script>
+
+{% endblock %}

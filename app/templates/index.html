@@ -1,0 +1,1221 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Efxion Technology Solutions | Digital & Technology Solutions
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- =================================================
+                       HERO
+================================================== -->
+
+
+<section class="hero-section">
+
+    <div class="hero-grid"></div>
+
+    <div class="hero-glow hero-glow-one"></div>
+
+    <div class="hero-glow hero-glow-two"></div>
+
+
+    <div class="container position-relative">
+
+        <div class="row align-items-center min-vh-100 py-5">
+
+
+            <!-- Hero content -->
+
+            <div class="col-lg-7">
+
+                <div class="hero-content">
+
+
+                    <div class="hero-badge reveal">
+
+                        <span class="status-dot"></span>
+
+                        Technology built for real business
+
+                    </div>
+
+
+                    <h1 class="hero-title reveal">
+
+                        Technology That
+
+                        <span>
+                            Moves Business
+                        </span>
+
+                        Forward.
+
+                    </h1>
+
+
+                    <p class="hero-description reveal">
+
+                        Efxion Technology Solutions designs and delivers
+                        modern software, web applications, intelligent
+                        systems and IT solutions that help businesses
+                        work smarter, scale faster and compete digitally.
+
+                    </p>
+
+
+                    <div class="hero-actions reveal">
+
+                        <a
+                            href="{{ url_for('main.services') }}"
+                            class="btn btn-efxion-primary"
+                        >
+
+                            Explore Our Services
+
+                            <i class="bi bi-arrow-right"></i>
+
+                        </a>
+
+
+                        <a
+                            href="{{ url_for('main.contact') }}"
+                            class="btn btn-efxion-outline"
+                        >
+
+                            Request a Quote
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="hero-trust reveal">
+
+                        <div>
+
+                            <strong>
+                                Web
+                            </strong>
+
+                            <span>
+                                Solutions
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                AI
+                            </strong>
+
+                            <span>
+                                Innovation
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                IT
+                            </strong>
+
+                            <span>
+                                Support
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Digital
+                            </strong>
+
+                            <span>
+                                Transformation
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- Hero visual -->
+
+            <div class="col-lg-5 d-none d-lg-block">
+
+                <div class="hero-visual reveal">
+
+
+                    <div class="tech-orbit">
+
+                        <div class="orbit orbit-one"></div>
+
+                        <div class="orbit orbit-two"></div>
+
+                        <div class="orbit orbit-three"></div>
+
+
+                        <div class="tech-core">
+
+                            <div class="core-logo">
+                                <img
+                                    src="{{ url_for('static', filename='images/my logo.png') }}"
+                                    alt="Efxion Technology Solutions Logo"
+                                    class="brand-logo"
+                                >
+                            </div>
+
+                            <span>
+                                EFXION
+                            </span>
+
+                        </div>
+
+
+                        <div class="floating-tech tech-one">
+
+                            <i class="bi bi-code-slash"></i>
+
+                            <span>Development</span>
+
+                        </div>
+
+
+                        <div class="floating-tech tech-two">
+
+                            <i class="bi bi-cpu"></i>
+
+                            <span>AI Solutions</span>
+
+                        </div>
+
+
+                        <div class="floating-tech tech-three">
+
+                            <i class="bi bi-cloud"></i>
+
+                            <span>Cloud</span>
+
+                        </div>
+
+
+                        <div class="floating-tech tech-four">
+
+                            <i class="bi bi-shield-check"></i>
+
+                            <span>IT Systems</span>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <a
+        href="#services"
+        class="scroll-indicator"
+        aria-label="Scroll down"
+    >
+
+        <span>Explore</span>
+
+        <i class="bi bi-arrow-down"></i>
+
+    </a>
+
+</section>
+
+
+
+<!-- =================================================
+                    INTRODUCTION
+================================================== -->
+
+
+<section class="intro-section section-padding">
+
+    <div class="container">
+
+        <div class="row align-items-center gy-5">
+
+
+            <div class="col-lg-5 reveal">
+
+                <div class="section-label">
+                    WHO WE ARE
+                </div>
+
+                <h2 class="section-title">
+
+                    Technology should solve problems,
+
+                    <span>
+                        not create more.
+                    </span>
+
+                </h2>
+
+            </div>
+
+
+            <div class="col-lg-6 offset-lg-1 reveal">
+
+                <p class="intro-text">
+
+                    Efxion Technology Solutions helps organizations,
+                    entrepreneurs and growing businesses transform ideas
+                    and operational challenges into reliable digital
+                    solutions.
+
+                </p>
+
+
+                <p class="intro-secondary">
+
+                    From custom web applications and business systems
+                    to IT infrastructure, artificial intelligence and
+                    technical consulting, we focus on practical
+                    technology that creates measurable value.
+
+                </p>
+
+
+                <a
+                    href="{{ url_for('main.about') }}"
+                    class="text-link"
+                >
+
+                    Discover Efxion
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =================================================
+                     SERVICES
+================================================== -->
+
+
+<section
+    id="services"
+    class="services-section section-padding"
+>
+
+    <div class="container">
+
+
+        <div class="section-heading reveal">
+
+            <div>
+
+                <div class="section-label">
+                    WHAT WE DO
+                </div>
+
+                <h2 class="section-title">
+
+                    Solutions designed around
+
+                    <span>
+                        your business.
+                    </span>
+
+                </h2>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('main.services') }}"
+                class="text-link d-none d-md-inline-flex"
+            >
+
+                View all services
+
+                <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+
+
+        <div class="row g-4 mt-3">
+
+
+            <!-- Service 1 -->
+
+            <div class="col-md-6 col-xl-3 reveal">
+
+                <div class="service-card">
+
+                    <div class="service-number">
+                        01
+                    </div>
+
+                    <div class="service-icon">
+
+                        <i class="bi bi-code-square"></i>
+
+                    </div>
+
+                    <h3>
+                        Software & Web
+                    </h3>
+
+                    <p>
+
+                        Responsive websites, web applications,
+                        business platforms and custom software
+                        built around real operational needs.
+
+                    </p>
+
+                    <a href="{{ url_for('main.services') }}">
+
+                        Explore
+
+                        <i class="bi bi-arrow-up-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Service 2 -->
+
+            <div class="col-md-6 col-xl-3 reveal">
+
+                <div class="service-card">
+
+                    <div class="service-number">
+                        02
+                    </div>
+
+                    <div class="service-icon">
+
+                        <i class="bi bi-cpu"></i>
+
+                    </div>
+
+                    <h3>
+                        AI & Automation
+                    </h3>
+
+                    <p>
+
+                        Intelligent applications, AI integration
+                        and automation designed to improve
+                        decision-making and productivity.
+
+                    </p>
+
+                    <a href="{{ url_for('main.services') }}">
+
+                        Explore
+
+                        <i class="bi bi-arrow-up-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Service 3 -->
+
+            <div class="col-md-6 col-xl-3 reveal">
+
+                <div class="service-card">
+
+                    <div class="service-number">
+                        03
+                    </div>
+
+                    <div class="service-icon">
+
+                        <i class="bi bi-hdd-network"></i>
+
+                    </div>
+
+                    <h3>
+                        IT & Infrastructure
+                    </h3>
+
+                    <p>
+
+                        Technical support, networking, system
+                        maintenance and technology infrastructure
+                        for modern organizations.
+
+                    </p>
+
+                    <a href="{{ url_for('main.services') }}">
+
+                        Explore
+
+                        <i class="bi bi-arrow-up-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Service 4 -->
+
+            <div class="col-md-6 col-xl-3 reveal">
+
+                <div class="service-card">
+
+                    <div class="service-number">
+                        04
+                    </div>
+
+                    <div class="service-icon">
+
+                        <i class="bi bi-lightbulb"></i>
+
+                    </div>
+
+                    <h3>
+                        Technology Consulting
+                    </h3>
+
+                    <p>
+
+                        Practical guidance that helps businesses
+                        select, implement and improve the
+                        technology supporting their operations.
+
+                    </p>
+
+                    <a href="{{ url_for('main.services') }}">
+
+                        Explore
+
+                        <i class="bi bi-arrow-up-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =================================================
+                    WHY EFXION
+================================================== -->
+
+
+<section class="why-section section-padding">
+
+    <div class="container">
+
+        <div class="row align-items-center gy-5">
+
+
+            <div class="col-lg-6 reveal">
+
+                <div class="why-visual">
+
+                    <div class="visual-window">
+
+                        <div class="window-top">
+
+                            <div class="window-dots">
+
+                                <span></span>
+                                <span></span>
+                                <span></span>
+
+                            </div>
+
+                            <span>
+                                efxion://solutions
+                            </span>
+
+                        </div>
+
+
+                        <div class="window-content">
+
+                            <div class="code-line line-short"></div>
+
+                            <div class="code-line"></div>
+
+                            <div class="code-line line-medium"></div>
+
+                            <div class="code-line"></div>
+
+                            <div class="code-line line-short"></div>
+
+
+                            <div class="system-card">
+
+                                <i class="bi bi-check-circle-fill"></i>
+
+                                <div>
+
+                                    <strong>
+                                        Solution Ready
+                                    </strong>
+
+                                    <span>
+                                        Built for performance & growth
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-5 offset-lg-1 reveal">
+
+                <div class="section-label">
+                    WHY EFXION
+                </div>
+
+                <h2 class="section-title">
+
+                    Built with purpose.
+
+                    <span>
+                        Delivered with precision.
+                    </span>
+
+                </h2>
+
+
+                <p class="why-description">
+
+                    We combine technical knowledge with an
+                    understanding of business challenges to build
+                    solutions that are practical, scalable and
+                    maintainable.
+
+                </p>
+
+
+                <div class="why-list">
+
+
+                    <div class="why-item">
+
+                        <div class="why-icon">
+                            <i class="bi bi-check2"></i>
+                        </div>
+
+                        <div>
+
+                            <h4>
+                                Business-focused development
+                            </h4>
+
+                            <p>
+                                Technology designed around actual
+                                goals rather than unnecessary complexity.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="why-item">
+
+                        <div class="why-icon">
+                            <i class="bi bi-check2"></i>
+                        </div>
+
+                        <div>
+
+                            <h4>
+                                Modern technology
+                            </h4>
+
+                            <p>
+                                Current tools and scalable architectures
+                                designed for long-term use.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="why-item">
+
+                        <div class="why-icon">
+                            <i class="bi bi-check2"></i>
+                        </div>
+
+                        <div>
+
+                            <h4>
+                                Continuous support
+                            </h4>
+
+                            <p>
+                                Technology relationships that continue
+                                beyond initial project delivery.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =================================================
+                  FEATURED WORK
+================================================== -->
+
+
+<section class="portfolio-preview section-padding">
+
+    <div class="container">
+
+
+        <div class="section-heading reveal">
+
+            <div>
+
+                <div class="section-label">
+                    SELECTED WORK
+                </div>
+
+                <h2 class="section-title">
+
+                    Ideas transformed into
+
+                    <span>
+                        working technology.
+                    </span>
+
+                </h2>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('main.portfolio') }}"
+                class="text-link d-none d-md-inline-flex"
+            >
+
+                View portfolio
+
+                <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+
+
+        <div class="featured-project reveal">
+
+            <div class="row align-items-center g-0">
+
+
+                <div class="col-lg-6">
+
+                    <div class="project-content">
+
+                        <div class="project-type">
+                            BUSINESS SOFTWARE
+                        </div>
+
+                        <h3>
+                            Building smarter digital systems
+                            for modern operations.
+                        </h3>
+
+                        <p>
+
+                            Explore selected software, web,
+                            artificial intelligence and technology
+                            projects developed to solve practical
+                            business and user challenges.
+
+                        </p>
+
+
+                        <div class="project-tags">
+
+                            <span>
+                                Web Applications
+                            </span>
+
+                            <span>
+                                Business Systems
+                            </span>
+
+                            <span>
+                                AI
+                            </span>
+
+                        </div>
+
+
+                        <a
+                            href="{{ url_for('main.portfolio') }}"
+                            class="btn btn-efxion-dark"
+                        >
+
+                            Explore Our Work
+
+                            <i class="bi bi-arrow-right"></i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-lg-6">
+
+                    <div class="project-visual">
+
+                        <div class="dashboard-mockup">
+
+                            <div class="mock-sidebar">
+
+                                <div class="mock-logo">
+                                    E
+                                </div>
+
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+
+                            </div>
+
+
+                            <div class="mock-main">
+
+                                <div class="mock-header">
+
+                                    <div></div>
+
+                                    <span></span>
+
+                                </div>
+
+
+                                <div class="mock-stats">
+
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+
+                                </div>
+
+
+                                <div class="mock-chart">
+
+                                    <div class="chart-bar bar-1"></div>
+                                    <div class="chart-bar bar-2"></div>
+                                    <div class="chart-bar bar-3"></div>
+                                    <div class="chart-bar bar-4"></div>
+                                    <div class="chart-bar bar-5"></div>
+                                    <div class="chart-bar bar-6"></div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =================================================
+     INSIGHTS
+================================================== -->
+
+<section class="insights-preview section-padding">
+
+    <div class="container">
+
+
+        <div class="section-heading reveal">
+
+            <div>
+
+                <div class="section-label">
+                    NEWS & INSIGHTS
+                </div>
+
+                <h2 class="section-title">
+
+                    Ideas, technology and
+
+                    <span>
+                        industry perspectives.
+                    </span>
+
+                </h2>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('main.insights') }}"
+                class="text-link d-none d-md-inline-flex"
+            >
+
+                All insights
+
+                <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+
+        {% if insights %}
+
+            <div class="row g-4 mt-3">
+
+                {% for insight in insights %}
+
+                    <div class="col-lg-4 reveal">
+
+                        <article class="insight-card">
+
+
+                            <!-- =================================================
+                                 INSIGHT IMAGE
+                            ================================================== -->
+
+                            <div class="insight-image">
+
+                                {% if insight.featured_image %}
+
+                                    <img
+                                        src="{{ insight.featured_image }}"
+                                        alt="{{ insight.title }}"
+                                        loading="lazy"
+                                    >
+
+                                {% else %}
+
+                                    <div class="insight-image-placeholder">
+
+                                        {% if insight.category %}
+
+                                            {% set category_name =
+                                                insight.category.name|lower
+                                            %}
+
+                                            {% if "artificial" in category_name
+                                                or "ai" in category_name %}
+
+                                                <i class="bi bi-robot"></i>
+
+                                            {% elif "software" in category_name
+                                                or "development" in category_name %}
+
+                                                <i class="bi bi-window-stack"></i>
+
+                                            {% elif "cyber" in category_name
+                                                or "security" in category_name %}
+
+                                                <i class="bi bi-shield-lock"></i>
+
+                                            {% else %}
+
+                                                <i class="bi bi-lightbulb"></i>
+
+                                            {% endif %}
+
+                                        {% else %}
+
+                                            <i class="bi bi-lightbulb"></i>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- =================================================
+                                 INSIGHT CONTENT
+                            ================================================== -->
+
+                            <div class="insight-content">
+
+
+                                <div class="insight-meta">
+
+                                    {% if insight.category %}
+
+                                        {{ insight.category.name }}
+
+                                    {% else %}
+
+                                        NEWS & INSIGHTS
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <h3>
+
+                                    {{ insight.title }}
+
+                                </h3>
+
+
+                                {% if insight.excerpt %}
+
+                                    <p class="insight-preview-excerpt">
+
+                                        {{ insight.excerpt }}
+
+                                    </p>
+
+                                {% endif %}
+
+
+                                <a
+                                    href="{{ url_for(
+                                        'main.insight_detail',
+                                        slug=insight.slug
+                                    ) }}"
+                                >
+
+                                    Read Insight
+
+                                    <i class="bi bi-arrow-right"></i>
+
+                                </a>
+
+
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- =================================================
+                 EMPTY STATE
+            ================================================== -->
+
+            <div class="insights-empty-state reveal">
+
+                <div class="insights-empty-icon">
+
+                    <i class="bi bi-journal-text"></i>
+
+                </div>
+
+                <h3>
+                    Insights Coming Soon
+                </h3>
+
+                <p>
+                    We are preparing useful perspectives on
+                    technology, software, artificial intelligence
+                    and digital business.
+                </p>
+
+                <a
+                    href="{{ url_for('main.contact') }}"
+                    class="btn btn-efxion"
+                >
+
+                    Talk to Us
+
+                    <i class="bi bi-arrow-right ms-1"></i>
+
+                </a>
+
+            </div>
+
+
+        {% endif %}
+
+
+        <!-- =================================================
+             MOBILE ALL INSIGHTS LINK
+        ================================================== -->
+
+        <div class="text-center mt-4 d-md-none">
+
+            <a
+                href="{{ url_for('main.insights') }}"
+                class="text-link"
+            >
+
+                All insights
+
+                <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =================================================
+                        CTA
+================================================== -->
+
+
+<section class="cta-section">
+
+    <div class="cta-grid"></div>
+
+    <div class="container position-relative">
+
+        <div class="cta-content reveal">
+
+
+            <div class="section-label light">
+                START A CONVERSATION
+            </div>
+
+
+            <h2>
+
+                Have an idea?
+
+                <span>
+                    Let's build what comes next.
+                </span>
+
+            </h2>
+
+
+            <p>
+
+                Tell us about your project, business challenge
+                or technology requirement and let's explore
+                the right solution together.
+
+            </p>
+
+
+            <a
+                href="{{ url_for('main.contact') }}"
+                class="btn btn-efxion-light"
+            >
+
+                Start Your Project
+
+                <i class="bi bi-arrow-up-right"></i>
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+{% endblock %}

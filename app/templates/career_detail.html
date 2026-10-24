@@ -1,0 +1,406 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ position.title }} | Careers | Efxion Technology Solutions
+{% endblock %}
+
+{% block content %}
+
+<!-- =====================================================
+     CAREER DETAIL HERO
+====================================================== -->
+
+<section class="career-detail-hero">
+
+    <div class="container">
+
+        <div class="career-detail-heading reveal">
+
+            <a
+                href="{{ url_for('main.careers') }}"
+                class="career-back"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Back to Careers
+            </a>
+
+            {% if position.department %}
+
+                <div class="section-label light">
+                    {{ position.department }}
+                </div>
+
+            {% endif %}
+
+            <h1>
+                {{ position.title }}
+            </h1>
+
+            {% if position.short_description %}
+
+                <p>
+                    {{ position.short_description }}
+                </p>
+
+            {% endif %}
+
+            <div class="career-detail-meta">
+
+                {% if position.employment_type %}
+
+                    <span>
+                        <i class="bi bi-clock"></i>
+                        {{ position.employment_type }}
+                    </span>
+
+                {% endif %}
+
+                {% if position.work_mode %}
+
+                    <span>
+                        <i class="bi bi-laptop"></i>
+                        {{ position.work_mode }}
+                    </span>
+
+                {% endif %}
+
+                {% if position.location %}
+
+                    <span>
+                        <i class="bi bi-geo-alt"></i>
+                        {{ position.location }}
+                    </span>
+
+                {% endif %}
+
+                {% if position.experience_required %}
+
+                    <span>
+                        <i class="bi bi-person-badge"></i>
+                        {{ position.experience_required }}
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CAREER CONTENT
+====================================================== -->
+
+<section class="career-detail-section">
+
+    <div class="container">
+
+        <div class="row g-5">
+
+            <!-- =============================================
+                 MAIN CONTENT
+            ============================================== -->
+
+            <div class="col-lg-8">
+
+                <div class="career-content">
+
+                    <div class="career-content-block reveal">
+
+                        <div class="section-label">
+                            ABOUT THE ROLE
+                        </div>
+
+                        <h2>
+                            The
+                            <span>Opportunity</span>
+                        </h2>
+
+                        <div class="career-rich-text">
+                            {{ position.description | safe }}
+                        </div>
+
+                    </div>
+
+
+                    {% if position.responsibilities %}
+
+                        <div class="career-content-block reveal">
+
+                            <div class="section-label">
+                                WHAT YOU'LL DO
+                            </div>
+
+                            <h2>
+                                Responsibilities
+                            </h2>
+
+                            <div class="career-rich-text">
+                                {{ position.responsibilities | safe }}
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if position.requirements %}
+
+                        <div class="career-content-block reveal">
+
+                            <div class="section-label">
+                                WHAT WE'RE LOOKING FOR
+                            </div>
+
+                            <h2>
+                                Requirements
+                            </h2>
+
+                            <div class="career-rich-text">
+                                {{ position.requirements | safe }}
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if position.qualifications %}
+
+                        <div class="career-content-block reveal">
+
+                            <div class="section-label">
+                                QUALIFICATIONS
+                            </div>
+
+                            <h2>
+                                Education &
+                                <span>Qualifications</span>
+                            </h2>
+
+                            <div class="career-rich-text">
+                                {{ position.qualifications | safe }}
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if position.skills %}
+
+                        <div class="career-content-block reveal">
+
+                            <div class="section-label">
+                                SKILLS
+                            </div>
+
+                            <h2>
+                                Skills &
+                                <span>Competencies</span>
+                            </h2>
+
+                            <div class="career-rich-text">
+                                {{ position.skills | safe }}
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 SIDEBAR
+            ============================================== -->
+
+            <div class="col-lg-4">
+
+                <aside class="career-sidebar">
+
+                    <div class="career-side-card reveal">
+
+                        <div class="section-label">
+                            POSITION DETAILS
+                        </div>
+
+                        {% if position.department %}
+
+                            <div class="career-side-item">
+
+                                <span>
+                                    Department
+                                </span>
+
+                                <strong>
+                                    {{ position.department }}
+                                </strong>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if position.employment_type %}
+
+                            <div class="career-side-item">
+
+                                <span>
+                                    Employment
+                                </span>
+
+                                <strong>
+                                    {{ position.employment_type }}
+                                </strong>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if position.work_mode %}
+
+                            <div class="career-side-item">
+
+                                <span>
+                                    Work Mode
+                                </span>
+
+                                <strong>
+                                    {{ position.work_mode }}
+                                </strong>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if position.location %}
+
+                            <div class="career-side-item">
+
+                                <span>
+                                    Location
+                                </span>
+
+                                <strong>
+                                    {{ position.location }}
+                                </strong>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if position.experience_required %}
+
+                            <div class="career-side-item">
+
+                                <span>
+                                    Experience
+                                </span>
+
+                                <strong>
+                                    {{ position.experience_required }}
+                                </strong>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if position.salary %}
+
+                            <div class="career-side-item">
+
+                                <span>
+                                    Compensation
+                                </span>
+
+                                <strong>
+                                    {{ position.salary }}
+                                </strong>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if position.application_deadline %}
+
+                            <div class="career-side-item">
+
+                                <span>
+                                    Application Deadline
+                                </span>
+
+                                <strong>
+                                    {{ position.application_deadline.strftime('%d %B %Y') }}
+                                </strong>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- APPLY -->
+
+                    <div class="career-apply-card reveal">
+
+                        <div class="career-apply-icon">
+                            <i class="bi bi-send"></i>
+                        </div>
+
+                        <h3>
+                            Ready to apply?
+                        </h3>
+
+                        <p>
+                            If this position matches your skills
+                            and experience, we'd love to hear from
+                            you.
+                        </p>
+
+
+                        {% if not position.is_closed %}
+
+                            <a
+                                href="{{ url_for(
+                                    'main.career_apply',
+                                    slug=position.slug
+                                ) }}"
+                                class="btn btn-efxion text-secondary"
+                            >
+                                <i class="bi bi-send-fill"></i>
+                                Apply Now
+                            </a>
+
+                        {% else %}
+
+                            <span class="career-closed-label">
+                                Applications Closed
+                            </span>
+
+                        {% endif %}
+                    </div>
+
+                </aside>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

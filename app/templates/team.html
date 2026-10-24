@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+
+{% block title %}
+Our Team | Efxion Technology Solutions
+{% endblock %}
+
+{% block content %}
+
+<!-- =====================================================
+     TEAM HERO
+====================================================== -->
+
+<section class="team-hero">
+
+    <div class="container">
+
+        <div class="team-hero-content reveal">
+
+            <div class="section-label light">
+                THE PEOPLE BEHIND EFXION
+            </div>
+
+            <h1>
+                Meet Our
+                <span>Team.</span>
+            </h1>
+
+            <p>
+                Efxion Technology Solutions brings together
+                people with different skills, experiences and
+                perspectives to build practical technology
+                solutions.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     TEAM MEMBERS
+====================================================== -->
+
+<section class="team-section">
+
+    <div class="container">
+
+        <div class="section-heading centered reveal">
+
+            <div class="section-label">
+                OUR PEOPLE
+            </div>
+
+            <h2>
+                Technology is built
+                <span>by people.</span>
+            </h2>
+
+            <p>
+                Get to know the professionals contributing to
+                Efxion's technology, business and creative
+                capabilities.
+            </p>
+
+        </div>
+
+
+        {% if staff %}
+
+            <div class="row g-4">
+
+                {% for member in staff %}
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <article class="team-card reveal">
+
+                            <div class="team-image">
+
+                                {% if member.profile_image %}
+
+                                    <img
+                                        src="{{ member.profile_image }}"
+                                        alt="{{ member.full_name }}"
+                                        loading="lazy"
+                                    >
+
+                                {% else %}
+
+                                    <div class="team-placeholder">
+
+                                        <i class="bi bi-person"></i>
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="team-body">
+
+                                {% if member.department %}
+
+                                    <div class="team-department">
+                                        {{ member.department }}
+                                    </div>
+
+                                {% endif %}
+
+                                <h3>
+                                    {{ member.full_name }}
+                                </h3>
+
+                                <div class="team-title">
+                                    {{ member.job_title }}
+                                </div>
+
+                                {% if member.short_bio %}
+
+                                    <p>
+                                        {{ member.short_bio }}
+                                    </p>
+
+                                {% endif %}
+
+                                <a
+                                    href="{{ url_for(
+                                        'main.team_profile',
+                                        slug=member.slug
+                                    ) }}"
+                                    class="team-link"
+                                >
+                                    View Profile
+                                    <i class="bi bi-arrow-up-right"></i>
+                                </a>
+
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="team-empty">
+
+                <div class="team-empty-icon">
+                    <i class="bi bi-people"></i>
+                </div>
+
+                <h3>
+                    Our team profiles are coming soon.
+                </h3>
+
+                <p>
+                    We're currently preparing our professional
+                    team profiles.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     TEAM CTA
+====================================================== -->
+
+<section class="team-cta">
+
+    <div class="container">
+
+        <div class="team-cta-inner reveal">
+
+            <div>
+
+                <div class="section-label light">
+                    WANT TO WORK WITH US?
+                </div>
+
+                <h2>
+                    Explore opportunities
+                    <span>at Efxion.</span>
+                </h2>
+
+                <p>
+                    We're interested in people who are passionate
+                    about technology, learning and solving
+                    meaningful problems.
+                </p>
+
+            </div>
+
+            <a
+                href="{{ url_for('main.careers') }}"
+                class="btn btn-efxion-light"
+            >
+                View Careers
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

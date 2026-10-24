@@ -1,0 +1,373 @@
+{% extends "base.html" %}
+
+{% block title %}
+Admin Dashboard | Efxion Technology Solutions
+{% endblock %}
+
+
+{% block content %}
+
+<section class="admin-dashboard-page">
+
+    <div class="container">
+
+        <!-- =========================================
+             HEADER
+        ========================================== -->
+
+        <div class="admin-dashboard-header">
+
+            <div>
+
+                <span class="admin-label">
+                    EFXION ADMIN
+                </span>
+
+                <h1>
+                    Dashboard
+                </h1>
+
+                <p>
+                    Welcome back,
+                    <strong>
+                        {{ current_user.full_name }}
+                    </strong>.
+                </p>
+
+            </div>
+
+
+            <div class="admin-header-actions">
+
+                <a
+                    href="{{ url_for('main.home') }}"
+                    class="btn btn-outline-efxion"
+                    target="_blank"
+                >
+                    <i class="bi bi-globe2"></i>
+                    View Website
+                </a>
+
+                <a
+                    href="{{ url_for('admin.logout') }}"
+                    class="btn btn-efxion"
+                >
+                    <i class="bi bi-box-arrow-right"></i>
+                    Logout
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             STATISTICS
+        ========================================== -->
+
+        <div class="admin-stat-grid">
+
+            <div class="admin-stat-card">
+
+                <div class="admin-stat-icon">
+                    <i class="bi bi-briefcase"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        Open Careers
+                    </span>
+
+                    <strong>
+                        {{ open_positions }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('admin.applications') }}"
+                class="admin-stat-card admin-stat-link"
+            >
+
+                <div class="admin-stat-icon">
+                    <i class="bi bi-people"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        Applications
+                    </span>
+
+                    <strong>
+                        {{ total_applications }}
+                    </strong>
+
+                    {% if new_applications %}
+
+                        <small>
+                            {{ new_applications }} new
+                        </small>
+
+                    {% endif %}
+
+                </div>
+
+            </a>
+
+
+            <div class="admin-stat-card">
+
+                <div class="admin-stat-icon">
+                    <i class="bi bi-chat-left-text"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        Enquiries
+                    </span>
+
+                    <strong>
+                        {{ total_enquiries }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-stat-card">
+
+                <div class="admin-stat-icon">
+                    <i class="bi bi-newspaper"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        Published Insights
+                    </span>
+
+                    <strong>
+                        {{ published_insights }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             WELCOME
+        ========================================== -->
+
+        <div class="admin-dashboard-content">
+
+            <div class="admin-welcome-card">
+
+                <div class="admin-welcome-icon">
+                    <i class="bi bi-speedometer2"></i>
+                </div>
+
+                <div>
+
+                    <h2>
+                        Efxion Administration
+                    </h2>
+
+                    <p>
+                        Manage the Efxion Technology Solutions
+                        website, recruitment activity, business
+                        enquiries and published content from one
+                        central administration area.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 MODULES
+            ========================================== -->
+
+            <div class="admin-module-grid">
+
+                <a
+                    href="{{ url_for('admin.services') }}"
+                    class="admin-module-card"
+                >
+                    <i class="bi bi-kanban"></i>
+
+                    <div>
+                        <h3>Services</h3>
+
+                        <p>
+                             Manage services, pricing and visibility.
+                        </p>
+                    </div>
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin.portfolio') }}"
+                    class="admin-module-card"
+                >
+                    <i class="bi bi-folder2-open"></i>
+
+                    <div>
+                        <h3>Portfolio</h3>
+
+                        <p>
+                            Manage projects and case studies.
+                        </p>
+                    </div>
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin.team') }}"
+                    class="admin-module-card"
+                >
+                    <i class="bi bi-people"></i>
+
+                    <div>
+                        <h3>Team</h3>
+
+                        <p>
+                            Manage staff profiles.
+                        </p>
+                    </div>
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin.careers') }}"
+                    class="admin-module-card"
+                >
+                    <i class="bi bi-briefcase"></i>
+
+                    <div>
+                        <h3>
+                            Careers
+                        </h3>
+
+                        <p>
+                            Create and manage vacancies.
+                        </p>
+                    </div>
+                </a>
+
+                <a
+                    href="{{ url_for('admin.applications') }}"
+                    class="admin-module-card"
+                >
+                    <i class="bi bi-file-earmark-person"></i>
+
+                    <div>
+
+                        <h3>
+                            Applications
+                        </h3>
+
+                        <p>
+                            Review and manage job applicants.
+                        </p>
+
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin.insights') }}"
+                    class="admin-module-card"
+                    target="_blank"
+                >
+                    <i class="bi bi-newspaper"></i>
+
+                    <div>
+
+                        <h3>
+                            Insights
+                        </h3>
+
+                        <p>
+                            View published articles.
+                        </p>
+
+                    </div>
+
+                </a>
+
+                <a
+                    href="{{ url_for('admin.messages') }}"
+                    class="admin-module-card"
+                >
+                    <i class="bi bi-chat-left-text"></i>
+
+                    <div>
+                        <h3>
+                            Contact Messages
+                        </h3>
+
+                        <p>
+                            Manage website enquiries and client messages.
+                        </p>
+                    </div>
+                </a>
+
+                <a
+                    href="{{ url_for('admin.faq') }}"
+                    class="admin-module-card"
+                >
+                    <i class="bi bi-question-circle"></i>
+
+                    <div>
+                        <h3>
+                            FAQ
+                        </h3>
+
+                        <p>
+                            Manage frequently asked questions and answers.
+                        </p>
+                    </div>
+                </a>
+
+                {% if current_user.id == 1 %}
+
+                    <a
+                        href="{{ url_for('admin.users') }}"
+                        class="admin-module-card"
+                    >
+                        <i class="bi bi-shield-lock"></i>
+
+                        <div>
+                            <h3>
+                                Admin Users
+                            </h3>
+
+                            <p>
+                                Create and manage administrator accounts and access.
+                            </p>
+                        </div>
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,521 @@
+{% extends "base.html" %}
+
+{% block title %}
+Contact Messages | Efxion Admin
+{% endblock %}
+
+
+{% block content %}
+
+<section class="admin-management-page">
+
+    <div class="container">
+
+        <div class="admin-management-top">
+
+            <div>
+
+                <a
+                    href="{{ url_for('admin.dashboard') }}"
+                    class="admin-back-link"
+                >
+                    <i class="bi bi-arrow-left"></i>
+                    Dashboard
+                </a>
+
+                <span class="admin-label">
+                    CONTACT & ENQUIRIES
+                </span>
+
+                <h1>
+                    Contact Messages
+                </h1>
+
+                <p>
+                    Manage enquiries and messages submitted
+                    through the Efxion website.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             FLASH MESSAGES
+        ================================================== -->
+
+        {% with messages = get_flashed_messages(
+            with_categories=true
+        ) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="alert alert-{{ category }}"
+                        role="alert"
+                    >
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- =================================================
+             MESSAGE SUMMARY
+        ================================================== -->
+
+        <div class="admin-message-summary">
+
+            <div class="admin-message-summary-card">
+
+                <div class="admin-message-summary-icon">
+                    <i class="bi bi-chat-left-text"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        Total Messages
+                    </span>
+
+                    <strong>
+                        {{ total_messages }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-message-summary-card">
+
+                <div class="admin-message-summary-icon">
+                    <i class="bi bi-envelope-exclamation"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        New
+                    </span>
+
+                    <strong>
+                        {{ new_messages }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-message-summary-card">
+
+                <div class="admin-message-summary-icon">
+                    <i class="bi bi-envelope-open"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        Read
+                    </span>
+
+                    <strong>
+                        {{ read_messages }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-message-summary-card">
+
+                <div class="admin-message-summary-icon">
+                    <i class="bi bi-reply"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        Replied
+                    </span>
+
+                    <strong>
+                        {{ replied_messages }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-message-summary-card">
+
+                <div class="admin-message-summary-icon">
+                    <i class="bi bi-check2-circle"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        Closed
+                    </span>
+
+                    <strong>
+                        {{ closed_messages }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             MESSAGE LIST
+        ================================================== -->
+
+        {% if messages %}
+
+            <div class="admin-message-grid">
+
+                {% for message in messages %}
+
+                    <article
+                        class="
+                            admin-message-card
+                            {% if message.status == 'new' %}
+                                admin-message-new
+                            {% endif %}
+                        "
+                    >
+
+                        <div class="admin-message-card-top">
+
+                            <div class="admin-message-sender">
+
+                                <div class="admin-message-avatar">
+
+                                    {{ message.name[:1]|upper }}
+
+                                </div>
+
+                                <div>
+
+                                    <h2>
+                                        {{ message.name }}
+                                    </h2>
+
+                                    <a
+                                        href="mailto:{{ message.email }}"
+                                    >
+                                        {{ message.email }}
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+
+                            <div>
+
+                                {% if message.status == "new" %}
+
+                                    <span
+                                        class="
+                                            admin-status-badge
+                                            status-new
+                                        "
+                                    >
+                                        New
+                                    </span>
+
+                                {% elif message.status == "read" %}
+
+                                    <span
+                                        class="
+                                            admin-status-badge
+                                            status-read
+                                        "
+                                    >
+                                        Read
+                                    </span>
+
+                                {% elif message.status == "replied" %}
+
+                                    <span
+                                        class="
+                                            admin-status-badge
+                                            status-replied
+                                        "
+                                    >
+                                        Replied
+                                    </span>
+
+                                {% elif message.status == "closed" %}
+
+                                    <span
+                                        class="
+                                            admin-status-badge
+                                            status-closed
+                                        "
+                                    >
+                                        Closed
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="admin-message-subject">
+
+                            {% if message.service %}
+
+                                <span>
+                                    <i class="bi bi-briefcase"></i>
+                                    {{ message.service }}
+                                </span>
+
+                            {% endif %}
+
+
+                            {% if message.project_type %}
+
+                                <span>
+                                    <i class="bi bi-diagram-3"></i>
+                                    {{ message.project_type }}
+                                </span>
+
+                            {% endif %}
+
+
+                            {% if message.company %}
+
+                                <span>
+                                    <i class="bi bi-building"></i>
+                                    {{ message.company }}
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <p class="admin-message-preview">
+
+                            {{ message.message[:260] }}
+
+                            {% if message.message|length > 260 %}
+                                ...
+                            {% endif %}
+
+                        </p>
+
+
+                        <div class="admin-message-meta">
+
+                            <span>
+                                <i class="bi bi-calendar3"></i>
+
+                                {{
+                                    message.created_at.strftime(
+                                        "%d %b %Y"
+                                    )
+                                }}
+
+                            </span>
+
+
+                            <span>
+                                <i class="bi bi-clock"></i>
+
+                                {{
+                                    message.created_at.strftime(
+                                        "%I:%M %p"
+                                    )
+                                }}
+
+                            </span>
+
+
+                            {% if message.preferred_contact %}
+
+                                <span>
+                                    <i class="bi bi-person-lines-fill"></i>
+
+                                    {{ message.preferred_contact }}
+
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="admin-message-actions">
+
+                            <a
+                                href="{{ url_for(
+                                    'admin.message_detail',
+                                    message_id=message.id
+                                ) }}"
+                                class="btn btn-efxion"
+                            >
+                                <i class="bi bi-eye"></i>
+                                View Message
+                            </a>
+
+                        </div>
+
+
+                        <div class="admin-message-secondary-actions">
+
+                            {% if message.status != "read" %}
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin.update_message_status',
+                                        message_id=message.id,
+                                        status='read'
+                                    ) }}"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="admin-text-button"
+                                    >
+                                        <i class="bi bi-envelope-open"></i>
+                                        Mark Read
+                                    </button>
+
+                                </form>
+
+                            {% endif %}
+
+
+                            {% if message.status != "replied" %}
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin.update_message_status',
+                                        message_id=message.id,
+                                        status='replied'
+                                    ) }}"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="admin-text-button"
+                                    >
+                                        <i class="bi bi-reply"></i>
+                                        Replied
+                                    </button>
+
+                                </form>
+
+                            {% endif %}
+
+
+                            {% if message.status != "closed" %}
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin.update_message_status',
+                                        message_id=message.id,
+                                        status='closed'
+                                    ) }}"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="admin-text-button"
+                                    >
+                                        <i class="bi bi-check2-circle"></i>
+                                        Close
+                                    </button>
+
+                                </form>
+
+                            {% endif %}
+
+
+                            <form
+                                method="POST"
+                                action="{{ url_for(
+                                    'admin.delete_message',
+                                    message_id=message.id
+                                ) }}"
+                                onsubmit="
+                                    return confirm(
+                                        'Delete this contact message permanently?'
+                                    );
+                                "
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="
+                                        admin-text-button
+                                        admin-text-danger
+                                    "
+                                >
+                                    <i class="bi bi-trash"></i>
+                                    Delete
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+            <!-- =============================================
+                 EMPTY STATE
+            ============================================== -->
+
+            <div class="admin-empty-state">
+
+                <div class="admin-empty-icon">
+                    <i class="bi bi-chat-left-text"></i>
+                </div>
+
+                <h2>
+                    No Contact Messages Yet
+                </h2>
+
+                <p>
+                    Messages submitted through your website's
+                    contact form will appear here.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

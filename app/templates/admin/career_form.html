@@ -1,0 +1,839 @@
+{% extends "base.html" %}
+
+{% if position %}
+    {% set page_heading = "Edit Vacancy" %}
+{% else %}
+    {% set page_heading = "Create Vacancy" %}
+{% endif %}
+
+
+{% block title %}
+{{ page_heading }} | Efxion Admin
+{% endblock %}
+
+
+{% block content %}
+
+<section class="admin-management-page">
+
+    <div class="container">
+
+        <a
+            href="{{ url_for('admin.careers') }}"
+            class="admin-back-link"
+        >
+            <i class="bi bi-arrow-left"></i>
+            Careers
+        </a>
+
+
+        <div class="admin-form-header">
+
+            <span class="admin-label">
+                RECRUITMENT
+            </span>
+
+            <h1>
+                {{ page_heading }}
+            </h1>
+
+            <p>
+                {% if position %}
+                    Update this vacancy's information and
+                    publication settings.
+                {% else %}
+                    Create a new vacancy for the Efxion
+                    careers portal.
+                {% endif %}
+            </p>
+
+        </div>
+
+
+        {% with messages = get_flashed_messages(
+            with_categories=true
+        ) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="alert alert-{{ category }}"
+                        role="alert"
+                    >
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <form
+            method="POST"
+            class="admin-career-form"
+        >
+
+            <!-- =========================================
+                 BASIC INFORMATION
+            ========================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+                        <i class="bi bi-briefcase"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Basic Information
+                        </h2>
+
+                        <p>
+                            Define the main details of the vacancy.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row g-4">
+
+                    <div class="col-md-8">
+
+                        <label
+                            for="title"
+                            class="form-label"
+                        >
+                            Job Title
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            class="form-control"
+                            required
+                            value="{{
+                                form_data.get('title')
+                                if form_data
+                                else (
+                                    position.title
+                                    if position
+                                    else ''
+                                )
+                            }}"
+                            placeholder="e.g. Frontend Developer"
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label
+                            for="slug"
+                            class="form-label"
+                        >
+                            URL Slug
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="slug"
+                            name="slug"
+                            class="form-control"
+                            required
+                            value="{{
+                                form_data.get('slug')
+                                if form_data
+                                else (
+                                    position.slug
+                                    if position
+                                    else ''
+                                )
+                            }}"
+                            placeholder="frontend-developer"
+                        >
+
+                        <small class="admin-form-help">
+                            Use lowercase letters and hyphens.
+                        </small>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label
+                            for="department"
+                            class="form-label"
+                        >
+                            Department
+                        </label>
+
+                        <input
+                            type="text"
+                            id="department"
+                            name="department"
+                            class="form-control"
+                            value="{{
+                                form_data.get('department')
+                                if form_data
+                                else (
+                                    position.department
+                                    if position
+                                    else ''
+                                )
+                            }}"
+                            placeholder="Technology"
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label
+                            for="location"
+                            class="form-label"
+                        >
+                            Location
+                        </label>
+
+                        <input
+                            type="text"
+                            id="location"
+                            name="location"
+                            class="form-control"
+                            value="{{
+                                form_data.get('location')
+                                if form_data
+                                else (
+                                    position.location
+                                    if position
+                                    else ''
+                                )
+                            }}"
+                            placeholder="Nigeria"
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label
+                            for="employment_type"
+                            class="form-label"
+                        >
+                            Employment Type
+                        </label>
+
+                        <select
+                            id="employment_type"
+                            name="employment_type"
+                            class="form-select"
+                        >
+
+                            {% set employment_value =
+                                form_data.get('employment_type')
+                                if form_data
+                                else (
+                                    position.employment_type
+                                    if position
+                                    else ''
+                                )
+                            %}
+
+                            <option value="">
+                                Select type
+                            </option>
+
+                            <option
+                                value="Full-time"
+                                {% if employment_value == "Full-time" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Full-time
+                            </option>
+
+                            <option
+                                value="Part-time"
+                                {% if employment_value == "Part-time" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Part-time
+                            </option>
+
+                            <option
+                                value="Contract"
+                                {% if employment_value == "Contract" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Contract
+                            </option>
+
+                            <option
+                                value="Internship"
+                                {% if employment_value == "Internship" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Internship
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label
+                            for="work_mode"
+                            class="form-label"
+                        >
+                            Work Mode
+                        </label>
+
+                        {% set work_mode_value =
+                            form_data.get('work_mode')
+                            if form_data
+                            else (
+                                position.work_mode
+                                if position
+                                else ''
+                            )
+                        %}
+
+                        <select
+                            id="work_mode"
+                            name="work_mode"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                Select work mode
+                            </option>
+
+                            <option
+                                value="On-site"
+                                {% if work_mode_value == "On-site" %}
+                                    selected
+                                {% endif %}
+                            >
+                                On-site
+                            </option>
+
+                            <option
+                                value="Hybrid"
+                                {% if work_mode_value == "Hybrid" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Hybrid
+                            </option>
+
+                            <option
+                                value="Remote"
+                                {% if work_mode_value == "Remote" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Remote
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label
+                            for="salary"
+                            class="form-label"
+                        >
+                            Salary
+                        </label>
+
+                        <input
+                            type="text"
+                            id="salary"
+                            name="salary"
+                            class="form-control"
+                            value="{{
+                                form_data.get('salary')
+                                if form_data
+                                else (
+                                    position.salary
+                                    if position
+                                    else ''
+                                )
+                            }}"
+                            placeholder="Competitive"
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label
+                            for="experience_required"
+                            class="form-label"
+                        >
+                            Experience Required
+                        </label>
+
+                        <input
+                            type="text"
+                            id="experience_required"
+                            name="experience_required"
+                            class="form-control"
+                            value="{{
+                                form_data.get(
+                                    'experience_required'
+                                )
+                                if form_data
+                                else (
+                                    position.experience_required
+                                    if position
+                                    else ''
+                                )
+                            }}"
+                            placeholder="1–3 years"
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 DESCRIPTION
+            ========================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+                        <i class="bi bi-file-text"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Job Description
+                        </h2>
+
+                        <p>
+                            Explain what the role involves.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mb-4">
+
+                    <label
+                        for="short_description"
+                        class="form-label"
+                    >
+                        Short Description
+                    </label>
+
+                    <textarea
+                        id="short_description"
+                        name="short_description"
+                        class="form-control"
+                        rows="3"
+                        maxlength="500"
+                    >{{ form_data.get('short_description') if form_data else (position.short_description if position else '') }}</textarea>
+
+                </div>
+
+
+                <div>
+
+                    <label
+                        for="description"
+                        class="form-label"
+                    >
+                        Full Description
+                        <span>*</span>
+                    </label>
+
+                    <textarea
+                        id="description"
+                        name="description"
+                        class="form-control"
+                        rows="8"
+                        required
+                    >{{ form_data.get('description') if form_data else (position.description if position else '') }}</textarea>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 REQUIREMENTS
+            ========================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+                        <i class="bi bi-list-check"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Role Requirements
+                        </h2>
+
+                        <p>
+                            Define responsibilities, requirements,
+                            qualifications and skills.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mb-4">
+
+                    <label
+                        for="responsibilities"
+                        class="form-label"
+                    >
+                        Responsibilities
+                    </label>
+
+                    <textarea
+                        id="responsibilities"
+                        name="responsibilities"
+                        class="form-control"
+                        rows="8"
+                        placeholder="Enter HTML list markup or formatted content..."
+                    >{{ form_data.get('responsibilities') if form_data else (position.responsibilities if position else '') }}</textarea>
+
+                </div>
+
+
+                <div class="mb-4">
+
+                    <label
+                        for="requirements"
+                        class="form-label"
+                    >
+                        Requirements
+                    </label>
+
+                    <textarea
+                        id="requirements"
+                        name="requirements"
+                        class="form-control"
+                        rows="8"
+                    >{{ form_data.get('requirements') if form_data else (position.requirements if position else '') }}</textarea>
+
+                </div>
+
+
+                <div class="mb-4">
+
+                    <label
+                        for="qualifications"
+                        class="form-label"
+                    >
+                        Qualifications
+                    </label>
+
+                    <textarea
+                        id="qualifications"
+                        name="qualifications"
+                        class="form-control"
+                        rows="6"
+                    >{{ form_data.get('qualifications') if form_data else (position.qualifications if position else '') }}</textarea>
+
+                </div>
+
+
+                <div>
+
+                    <label
+                        for="skills"
+                        class="form-label"
+                    >
+                        Skills
+                    </label>
+
+                    <textarea
+                        id="skills"
+                        name="skills"
+                        class="form-control"
+                        rows="6"
+                    >{{ form_data.get('skills') if form_data else (position.skills if position else '') }}</textarea>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 APPLICATION SETTINGS
+            ========================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+                        <i class="bi bi-sliders"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Application Settings
+                        </h2>
+
+                        <p>
+                            Control how and when candidates can apply.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row g-4">
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="application_email"
+                            class="form-label"
+                        >
+                            Application Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="application_email"
+                            name="application_email"
+                            class="form-control"
+                            value="{{
+                                form_data.get(
+                                    'application_email'
+                                )
+                                if form_data
+                                else (
+                                    position.application_email
+                                    if position
+                                    else ''
+                                )
+                            }}"
+                            placeholder="Optional"
+                        >
+
+                        <small class="admin-form-help">
+                            Optional. The current application
+                            system stores applications internally.
+                        </small>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="application_deadline"
+                            class="form-label"
+                        >
+                            Application Deadline
+                        </label>
+
+                        <input
+                            type="date"
+                            id="application_deadline"
+                            name="application_deadline"
+                            class="form-control"
+                            value="{{
+                                form_data.get(
+                                    'application_deadline'
+                                )
+                                if form_data
+                                else (
+                                    position.application_deadline.isoformat()
+                                    if position and position.application_deadline
+                                    else ''
+                                )
+                            }}"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-checkbox-grid">
+
+                    <label class="admin-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="is_featured"
+                            {% if (
+                                form_data
+                                and form_data.get('is_featured')
+                            ) or (
+                                not form_data
+                                and position
+                                and position.is_featured
+                            ) %}
+                                checked
+                            {% endif %}
+                        >
+
+                        <span>
+                            <strong>
+                                Featured Vacancy
+                            </strong>
+
+                            <small>
+                                Highlight this vacancy on
+                                the careers page.
+                            </small>
+                        </span>
+
+                    </label>
+
+
+                    <label class="admin-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="is_published"
+                            {% if (
+                                form_data
+                                and form_data.get('is_published')
+                            ) or (
+                                not form_data
+                                and (
+                                    not position
+                                    or position.is_published
+                                )
+                            ) %}
+                                checked
+                            {% endif %}
+                        >
+
+                        <span>
+                            <strong>
+                                Published
+                            </strong>
+
+                            <small>
+                                Make this vacancy visible
+                                on the public website.
+                            </small>
+                        </span>
+
+                    </label>
+
+
+                    <label class="admin-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="is_closed"
+                            {% if (
+                                form_data
+                                and form_data.get('is_closed')
+                            ) or (
+                                not form_data
+                                and position
+                                and position.is_closed
+                            ) %}
+                                checked
+                            {% endif %}
+                        >
+
+                        <span>
+                            <strong>
+                                Closed
+                            </strong>
+
+                            <small>
+                                Stop new applications for
+                                this vacancy.
+                            </small>
+                        </span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 ACTIONS
+            ========================================== -->
+
+            <div class="admin-form-actions">
+
+                <a
+                    href="{{ url_for('admin.careers') }}"
+                    class="btn btn-outline-efxion"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn btn-efxion"
+                >
+
+                    <i class="bi bi-check2-circle"></i>
+
+                    {% if position %}
+                        Save Changes
+                    {% else %}
+                        Create Vacancy
+                    {% endif %}
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}

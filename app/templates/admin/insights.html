@@ -1,0 +1,510 @@
+{% extends "base.html" %}
+
+{% block title %}
+Insights Management | Efxion Admin
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-management-page">
+
+    <div class="container">
+
+        <!-- =================================================
+             PAGE HEADER
+        ================================================== -->
+
+        <div class="admin-management-top">
+
+            <div>
+
+                <a
+                    href="{{ url_for('admin.dashboard') }}"
+                    class="admin-back-link"
+                >
+                    <i class="bi bi-arrow-left"></i>
+                    Dashboard
+                </a>
+
+                <span class="admin-label">
+                    NEWS & INSIGHTS
+                </span>
+
+                <h1>
+                    Insights
+                </h1>
+
+                <p>
+                    Create and manage articles, technology
+                    insights and business publications.
+                </p>
+
+            </div>
+
+            <a
+                href="{{ url_for('admin.insight_create') }}"
+                class="btn btn-efxion"
+            >
+                <i class="bi bi-plus-lg"></i>
+                Create Article
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             FLASH MESSAGES
+        ================================================== -->
+
+        {% with messages = get_flashed_messages(
+            with_categories=true
+        ) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="alert alert-{{ category }}"
+                        role="alert"
+                    >
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- =================================================
+             CATEGORY SUMMARY
+        ================================================== -->
+
+        {% if categories %}
+
+            <div class="admin-category-summary">
+
+                {% for category in categories %}
+
+                    <div class="admin-category-summary-card">
+
+                        <div class="admin-category-summary-icon">
+
+                            <i class="bi bi-folder2-open"></i>
+
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                {{ category.name }}
+                            </strong>
+
+                            <span>
+
+                                {{
+                                    category.articles
+                                    | length
+                                }}
+
+                                article{{
+                                    ""
+                                    if category.articles|length == 1
+                                    else "s"
+                                }}
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- =================================================
+             ARTICLES
+        ================================================== -->
+
+        {% if articles %}
+
+            <div class="admin-insight-grid">
+
+                {% for article in articles %}
+
+                    <div class="admin-insight-card">
+
+
+                        <!-- =====================================
+                             FEATURED IMAGE
+                        ====================================== -->
+
+                        {% if article.featured_image %}
+
+                            <div class="admin-insight-image">
+
+                                <img
+                                    src="{{ article.featured_image }}"
+                                    alt="{{ article.title }}"
+                                    loading="lazy"
+                                >
+
+                            </div>
+
+                        {% else %}
+
+                            <div
+                                class="
+                                    admin-insight-image
+                                    admin-insight-image-placeholder
+                                "
+                            >
+
+                                <i class="bi bi-newspaper"></i>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- =====================================
+                             CARD BODY
+                        ====================================== -->
+
+                        <div class="admin-insight-card-body">
+
+                            <div class="admin-insight-card-top">
+
+                                <div>
+
+                                    {% if article.is_featured %}
+
+                                        <span class="admin-featured-badge">
+
+                                            <i class="bi bi-star-fill"></i>
+
+                                            Featured
+
+                                        </span>
+
+                                    {% endif %}
+
+                                    <h2>
+                                        {{ article.title }}
+                                    </h2>
+
+                                    <p>
+
+                                        {{ article.category.name }}
+
+                                        {% if article.author %}
+
+                                            · {{ article.author }}
+
+                                        {% endif %}
+
+                                    </p>
+
+                                </div>
+
+
+                                <!-- STATUS -->
+
+                                <div>
+
+                                    {% if article.is_published %}
+
+                                        <span
+                                            class="
+                                                application-badge
+                                                status-hired
+                                            "
+                                        >
+                                            Published
+                                        </span>
+
+                                    {% else %}
+
+                                        <span
+                                            class="
+                                                application-badge
+                                                status-reviewing
+                                            "
+                                        >
+                                            Draft
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =================================
+                                 EXCERPT
+                            ================================== -->
+
+                            <p class="admin-insight-description">
+
+                                {% if article.excerpt %}
+
+                                    {{ article.excerpt }}
+
+                                {% else %}
+
+                                    {{
+                                        article.content
+                                        | striptags
+                                        | truncate(180)
+                                    }}
+
+                                {% endif %}
+
+                            </p>
+
+
+                            <!-- =================================
+                                 ARTICLE META
+                            ================================== -->
+
+                            <div class="admin-insight-meta">
+
+                                {% if article.reading_time %}
+
+                                    <span>
+
+                                        <i class="bi bi-clock"></i>
+
+                                        {{ article.reading_time }}
+                                        min read
+
+                                    </span>
+
+                                {% endif %}
+
+
+                                {% if article.published_at %}
+
+                                    <span>
+
+                                        <i class="bi bi-calendar-event"></i>
+
+                                        {{
+                                            article.published_at.strftime(
+                                                "%d %b %Y"
+                                            )
+                                        }}
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span>
+
+                                        <i class="bi bi-file-earmark"></i>
+
+                                        Not published
+
+                                    </span>
+
+                                {% endif %}
+
+
+                                <span>
+
+                                    <i class="bi bi-link-45deg"></i>
+
+                                    {{ article.slug }}
+
+                                </span>
+
+                            </div>
+
+
+                            <!-- =================================
+                                 PRIMARY ACTIONS
+                            ================================== -->
+
+                            <div class="admin-insight-actions">
+
+                                <a
+                                    href="{{ url_for(
+                                        'admin.insight_edit',
+                                        article_id=article.id
+                                    ) }}"
+                                    class="btn btn-efxion"
+                                >
+
+                                    <i class="bi bi-pencil-square"></i>
+
+                                    Edit
+
+                                </a>
+
+
+                                <!-- PUBLISH / UNPUBLISH -->
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin.insight_toggle_published',
+                                        article_id=article.id
+                                    ) }}"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-outline-secondary"
+                                    >
+
+                                        {% if article.is_published %}
+
+                                            <i class="bi bi-eye-slash"></i>
+
+                                            Unpublish
+
+                                        {% else %}
+
+                                            <i class="bi bi-eye"></i>
+
+                                            Publish
+
+                                        {% endif %}
+
+                                    </button>
+
+                                </form>
+
+
+                                <!-- FEATURE / UNFEATURE -->
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin.insight_toggle_featured',
+                                        article_id=article.id
+                                    ) }}"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-outline-secondary"
+                                    >
+
+                                        {% if article.is_featured %}
+
+                                            <i class="bi bi-star"></i>
+
+                                            Unfeature
+
+                                        {% else %}
+
+                                            <i class="bi bi-star"></i>
+
+                                            Feature
+
+                                        {% endif %}
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+
+                            <!-- =================================
+                                 SECONDARY ACTIONS
+                            ================================== -->
+
+                            <div class="admin-insight-secondary-actions">
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin.insight_delete',
+                                        article_id=article.id
+                                    ) }}"
+                                    onsubmit="
+                                        return confirm(
+                                            'Are you sure you want to delete this insight article? This action cannot be undone.'
+                                        );
+                                    "
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="
+                                            admin-text-button
+                                            admin-delete-button
+                                        "
+                                    >
+
+                                        <i class="bi bi-trash3"></i>
+
+                                        Delete article
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+        <!-- =================================================
+             EMPTY STATE
+        ================================================== -->
+
+        {% else %}
+
+            <div class="admin-form-card text-center">
+
+                <div class="admin-form-icon mx-auto mb-3">
+
+                    <i class="bi bi-newspaper"></i>
+
+                </div>
+
+                <h2>
+                    No Insight Articles Found
+                </h2>
+
+                <p class="text-muted">
+                    No news or insight articles have been
+                    created yet.
+                </p>
+
+                <a
+                    href="{{ url_for('admin.insight_create') }}"
+                    class="btn btn-efxion"
+                >
+
+                    <i class="bi bi-plus-lg"></i>
+
+                    Create Article
+
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

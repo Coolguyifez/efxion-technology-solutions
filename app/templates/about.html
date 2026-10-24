@@ -1,0 +1,800 @@
+{% extends "base.html" %}
+
+{% block title %}
+About Us | Efxion Technology Solutions
+{% endblock %}
+
+{% block content %}
+
+<!-- =========================================================
+     ABOUT HERO
+========================================================= -->
+
+<section class="about-hero">
+    <div class="container">
+        <div class="row align-items-center g-5">
+
+            <div class="col-lg-7 reveal">
+
+                <div class="section-label">
+                    EFXION TECHNOLOGY SOLUTIONS
+                </div>
+
+                <h1 class="about-title">
+                    Building technology
+                    <span>that works for people.</span>
+                </h1>
+
+                <p class="about-lead">
+                    Efxion Technology Solutions is a technology-focused
+                    business providing practical digital solutions,
+                    IT services and software development support for
+                    individuals, startups, businesses and organizations.
+                </p>
+
+                <div class="about-actions">
+                    <a
+                        href="{{ url_for('main.services') }}"
+                        class="btn btn-efxion text-secondary"
+                    >
+                        Explore Our Services
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+
+                    <a
+                        href="{{ url_for('main.contact') }}"
+                        class="btn btn-outline-efxion"
+                    >
+                        Talk to Us
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="col-lg-5 reveal">
+
+                <div class="about-visual">
+
+                    <div class="about-visual-glow"></div>
+
+                    <div class="about-visual-card">
+
+                        <div class="about-logo-mark">
+                            <img
+                                src="{{ url_for('static', filename='images/my logo.png') }}"
+                                alt="Efxion Technology Solutions Logo"
+                                class="brand-logo"
+                            >
+                        </div>
+
+                        <div>
+                            <span>
+                                EFXION
+                            </span>
+
+                            <strong>
+                                TECHNOLOGY
+                                <br>
+                                SOLUTIONS
+                            </strong>
+                        </div>
+
+                    </div>
+
+                    <div class="about-floating-card about-floating-one">
+                        <i class="bi bi-code-slash"></i>
+                        <span>Software</span>
+                    </div>
+
+                    <div class="about-floating-card about-floating-two">
+                        <i class="bi bi-diagram-3"></i>
+                        <span>IT Solutions</span>
+                    </div>
+
+                    <div class="about-floating-card about-floating-three">
+                        <i class="bi bi-lightbulb"></i>
+                        <span>Innovation</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- =========================================================
+     COMPANY INTRODUCTION
+========================================================= -->
+
+<section class="about-introduction section-space">
+
+    <div class="container">
+
+        <div class="row g-5 align-items-center">
+
+            <div class="col-lg-6 reveal">
+
+                <div class="section-label">
+                    WHO WE ARE
+                </div>
+
+                <h2 class="section-title">
+                    Technology should solve problems,
+                    not create more of them.
+                </h2>
+
+                <p class="section-text">
+                    At Efxion Technology Solutions, our approach is
+                    simple: understand the problem first, then build
+                    the right technology around it.
+                </p>
+
+                <p class="section-text">
+                    We combine software development, information
+                    technology, digital tools and practical business
+                    thinking to help our clients improve how they
+                    work, communicate and serve their customers.
+                </p>
+
+                <p class="section-text">
+                    Whether the requirement is a business website,
+                    custom software, IT support, digital transformation
+                    or a technology consultation, our goal is to
+                    deliver solutions that are useful, scalable and
+                    easy to maintain.
+                </p>
+
+            </div>
+
+
+            <div class="col-lg-6 reveal">
+
+                <div class="about-principles">
+
+                    <div class="principle-card">
+
+                        <div class="principle-icon">
+                            <i class="bi bi-bullseye"></i>
+                        </div>
+
+                        <div>
+                            <h3>Purpose Driven</h3>
+
+                            <p>
+                                We focus on technology that addresses
+                                real business and user needs.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="principle-card">
+
+                        <div class="principle-icon">
+                            <i class="bi bi-layers"></i>
+                        </div>
+
+                        <div>
+                            <h3>Practical Solutions</h3>
+
+                            <p>
+                                We prioritize solutions that can
+                                actually be implemented and used.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="principle-card">
+
+                        <div class="principle-icon">
+                            <i class="bi bi-arrow-up-right-circle"></i>
+                        </div>
+
+                        <div>
+                            <h3>Continuous Growth</h3>
+
+                            <p>
+                                We continuously learn, improve and
+                                adapt to new technologies.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="principle-card">
+
+                        <div class="principle-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+
+                        <div>
+                            <h3>Client Focused</h3>
+
+                            <p>
+                                Every project begins with understanding
+                                the people and business behind it.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     WHAT WE DO
+========================================================= -->
+
+<section class="about-capabilities">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-8 text-center reveal">
+
+                <div class="section-label light">
+                    WHAT WE DO
+                </div>
+
+                <h2 class="section-title light">
+                    Digital expertise with a
+                    practical mindset.
+                </h2>
+
+                <p class="section-text light-muted">
+                    Our capabilities are designed around the technology
+                    needs of modern individuals, businesses and
+                    organizations.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="row g-4 mt-4">
+
+            <div class="col-md-6 col-lg-4 reveal">
+
+                <div class="capability-card">
+
+                    <div class="capability-icon">
+                        <i class="bi bi-window-stack"></i>
+                    </div>
+
+                    <h3>
+                        Web Development
+                    </h3>
+
+                    <p>
+                        Modern, responsive websites and web
+                        applications designed for performance,
+                        usability and growth.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-lg-4 reveal">
+
+                <div class="capability-card">
+
+                    <div class="capability-icon">
+                        <i class="bi bi-code-square"></i>
+                    </div>
+
+                    <h3>
+                        Software Solutions
+                    </h3>
+
+                    <p>
+                        Custom digital systems designed around
+                        specific operational and business
+                        requirements.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-lg-4 reveal">
+
+                <div class="capability-card">
+
+                    <div class="capability-icon">
+                        <i class="bi bi-pc-display"></i>
+                    </div>
+
+                    <h3>
+                        IT Support
+                    </h3>
+
+                    <p>
+                        Practical technical support covering
+                        systems, networks, software and everyday
+                        technology challenges.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-lg-4 reveal">
+
+                <div class="capability-card">
+
+                    <div class="capability-icon">
+                        <i class="bi bi-bar-chart"></i>
+                    </div>
+
+                    <h3>
+                        Digital Transformation
+                    </h3>
+
+                    <p>
+                        Helping businesses replace inefficient
+                        manual processes with better digital
+                        workflows.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-lg-4 reveal">
+
+                <div class="capability-card">
+
+                    <div class="capability-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+
+                    <h3>
+                        Technology Advisory
+                    </h3>
+
+                    <p>
+                        Technology guidance to help clients make
+                        informed decisions about digital products,
+                        systems and infrastructure.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-lg-4 reveal">
+
+                <div class="capability-card">
+
+                    <div class="capability-icon">
+                        <i class="bi bi-stars"></i>
+                    </div>
+
+                    <h3>
+                        Digital Innovation
+                    </h3>
+
+                    <p>
+                        Exploring emerging technologies and
+                        practical ways they can create value for
+                        businesses and users.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     SOLE PROPRIETOR PROFILE
+========================================================= -->
+
+<section class="proprietor-section section-space">
+
+    <div class="container">
+
+        <div class="row align-items-center g-5">
+
+            <div class="col-lg-5 reveal">
+
+                <div class="profile-card">
+
+                    
+
+                    <div class="profile-avatar">
+                        <img
+                            src="{{ url_for('static', filename='images/Ify1.png') }}"
+                            alt="EI"
+                            class="brand-logo"
+                        >
+                    </div>
+
+                    <div class="profile-company">
+                        EFXION TECHNOLOGY SOLUTIONS
+                    </div>
+
+                    <h2>
+                        Emmanuel Ifeanyichukwu Ikukaiwe
+                    </h2>
+
+                    <p class="profile-role">
+                        Founder & Technology Professional
+                    </p>
+
+                    <div class="profile-line"></div>
+
+                    <div class="profile-tags">
+
+                        <span>
+                            <i class="bi bi-code-slash"></i>
+                            Software
+                        </span>
+
+                        <span>
+                            <i class="bi bi-hdd-network"></i>
+                            IT
+                        </span>
+
+                        <span>
+                            <i class="bi bi-globe2"></i>
+                            Digital
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-7 reveal">
+
+                <div class="section-label">
+                    THE PROFESSIONAL BEHIND EFXION
+                </div>
+
+                <h2 class="section-title">
+                    Built from experience,
+                    driven by technology.
+                </h2>
+
+                <p class="section-text">
+                    Efxion Technology Solutions is led by a technology
+                    professional with experience spanning software,
+                    information technology, networking, digital tools
+                    and business-oriented technology solutions.
+                </p>
+
+                <p class="section-text">
+                    The business was established to bring together
+                    practical technical experience and a strong
+                    interest in building useful digital products.
+                </p>
+
+                <p class="section-text">
+                    Through professional roles, contract engagements,
+                    independent projects and continuous learning,
+                    the focus has remained on using technology to
+                    solve practical problems.
+                </p>
+
+
+                <div class="profile-highlights">
+
+                    <div>
+                        <strong>
+                            <i class="bi bi-check-circle-fill"></i>
+                            Technology Experience
+                        </strong>
+
+                        <span>
+                            Practical exposure to software and IT
+                            environments.
+                        </span>
+                    </div>
+
+                    <div>
+                        <strong>
+                            <i class="bi bi-check-circle-fill"></i>
+                            Business Thinking
+                        </strong>
+
+                        <span>
+                            Technology designed around actual
+                            operational needs.
+                        </span>
+                    </div>
+
+                    <div>
+                        <strong>
+                            <i class="bi bi-check-circle-fill"></i>
+                            Continuous Learning
+                        </strong>
+
+                        <span>
+                            Constant development of technical and
+                            professional capabilities.
+                        </span>
+                    </div>
+
+                </div>
+
+                <a
+                    href="{{ url_for('main.portfolio') }}"
+                    class="btn btn-efxion mt-4"
+                >
+                    View Professional Portfolio
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     EXPERIENCE
+========================================================= -->
+
+<section class="experience-section">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-8 text-center reveal">
+
+                <div class="section-label">
+                    PROFESSIONAL EXPERIENCE
+                </div>
+
+                <h2 class="section-title">
+                    Experience that informs
+                    the work we do.
+                </h2>
+
+                <p class="section-text">
+                    The Efxion approach is shaped by experience gained
+                    through employment, contract work, internships,
+                    independent projects and continuous professional
+                    development.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="timeline mt-5">
+
+            <div class="timeline-item reveal">
+
+                <div class="timeline-dot"></div>
+
+                <div class="timeline-content">
+
+                    <span class="timeline-label">
+                        PROFESSIONAL EXPERIENCE
+                    </span>
+
+                    <h3>
+                        Information Technology & Software
+                    </h3>
+
+                    <p>
+                        Experience working with software,
+                        computer systems, networking, technical
+                        support and digital technologies.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="timeline-item reveal">
+
+                <div class="timeline-dot"></div>
+
+                <div class="timeline-content">
+
+                    <span class="timeline-label">
+                        CONTRACT & INDEPENDENT WORK
+                    </span>
+
+                    <h3>
+                        Technology Solutions & Client Support
+                    </h3>
+
+                    <p>
+                        Supporting individuals and businesses with
+                        practical technology solutions, digital
+                        tools and technical requirements.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="timeline-item reveal">
+
+                <div class="timeline-dot"></div>
+
+                <div class="timeline-content">
+
+                    <span class="timeline-label">
+                        CONTINUOUS DEVELOPMENT
+                    </span>
+
+                    <h3>
+                        Research, Learning & Product Development
+                    </h3>
+
+                    <p>
+                        Continuing to explore software engineering,
+                        artificial intelligence, cybersecurity,
+                        digital business systems and emerging
+                        technologies.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     MISSION / VISION
+========================================================= -->
+
+<section class="mission-section section-space">
+
+    <div class="container">
+
+        <div class="row g-4">
+
+            <div class="col-lg-6 reveal">
+
+                <div class="mission-card">
+
+                    <div class="mission-icon">
+                        <i class="bi bi-eye"></i>
+                    </div>
+
+                    <div class="section-label">
+                        OUR VISION
+                    </div>
+
+                    <h2>
+                        To build technology that creates
+                        meaningful digital value.
+                    </h2>
+
+                    <p>
+                        We envision a future where businesses and
+                        individuals can access practical technology
+                        that improves productivity, creates
+                        opportunities and makes everyday work easier.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-6 reveal">
+
+                <div class="mission-card dark">
+
+                    <div class="mission-icon">
+                        <i class="bi bi-compass"></i>
+                    </div>
+
+                    <div class="section-label light">
+                        OUR MISSION
+                    </div>
+
+                    <h2>
+                        To deliver reliable and practical
+                        technology solutions.
+                    </h2>
+
+                    <p>
+                        We aim to understand our clients' needs,
+                        apply appropriate technology and deliver
+                        solutions that provide measurable practical
+                        value.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CTA
+========================================================= -->
+
+<section class="about-cta">
+
+    <div class="container">
+
+        <div class="about-cta-inner reveal">
+
+            <div>
+
+                <div class="section-label light">
+                    LET'S BUILD SOMETHING
+                </div>
+
+                <h2>
+                    Have a technology challenge?
+                </h2>
+
+                <p>
+                    Tell us what you are trying to achieve and
+                    let's explore the right solution.
+                </p>
+
+            </div>
+
+            <a
+                href="{{ url_for('main.contact') }}"
+                class="btn btn-efxion-light"
+            >
+                Start a Conversation
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

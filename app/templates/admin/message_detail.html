@@ -1,0 +1,507 @@
+{% extends "base.html" %}
+
+{% block title %}
+Message Details | Efxion Admin
+{% endblock %}
+
+
+{% block content %}
+
+<section class="admin-management-page">
+
+    <div class="container">
+
+        <div class="admin-form-header">
+
+            <a
+                href="{{ url_for('admin.messages') }}"
+                class="admin-back-link"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Contact Messages
+            </a>
+
+            <span class="admin-label">
+                CONTACT ENQUIRY
+            </span>
+
+            <h1>
+                Message Details
+            </h1>
+
+            <p>
+                Review the enquiry and manage its current status.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             SENDER INFORMATION
+        ================================================== -->
+
+        <div class="admin-message-detail">
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+                        <i class="bi bi-person"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Contact Information
+                        </h2>
+
+                        <p>
+                            Information provided by the prospective client.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-contact-grid">
+
+                    <div class="admin-contact-item">
+
+                        <span>
+                            Full Name
+                        </span>
+
+                        <strong>
+                            {{ contact_message.name }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="admin-contact-item">
+
+                        <span>
+                            Email Address
+                        </span>
+
+                        <a
+                            href="mailto:{{ contact_message.email }}"
+                        >
+                            {{ contact_message.email }}
+                        </a>
+
+                    </div>
+
+
+                    {% if contact_message.phone %}
+
+                        <div class="admin-contact-item">
+
+                            <span>
+                                Phone
+                            </span>
+
+                            <strong>
+                                {{ contact_message.phone }}
+                            </strong>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if contact_message.company %}
+
+                        <div class="admin-contact-item">
+
+                            <span>
+                                Company
+                            </span>
+
+                            <strong>
+                                {{ contact_message.company }}
+                            </strong>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if contact_message.preferred_contact %}
+
+                        <div class="admin-contact-item">
+
+                            <span>
+                                Preferred Contact
+                            </span>
+
+                            <strong>
+                                {{ contact_message.preferred_contact }}
+                            </strong>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="admin-contact-item">
+
+                        <span>
+                            Submitted
+                        </span>
+
+                        <strong>
+
+                            {{
+                                contact_message.created_at.strftime(
+                                    "%d %B %Y at %I:%M %p"
+                                )
+                            }}
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PROJECT INFORMATION
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+                        <i class="bi bi-briefcase"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Project Information
+                        </h2>
+
+                        <p>
+                            Details about the requested service or project.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-contact-grid">
+
+                    {% if contact_message.service %}
+
+                        <div class="admin-contact-item">
+
+                            <span>
+                                Service
+                            </span>
+
+                            <strong>
+                                {{ contact_message.service }}
+                            </strong>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if contact_message.project_type %}
+
+                        <div class="admin-contact-item">
+
+                            <span>
+                                Project Type
+                            </span>
+
+                            <strong>
+                                {{ contact_message.project_type }}
+                            </strong>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if contact_message.budget %}
+
+                        <div class="admin-contact-item">
+
+                            <span>
+                                Budget
+                            </span>
+
+                            <strong>
+                                {{ contact_message.budget }}
+                            </strong>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 CLIENT MESSAGE
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+                        <i class="bi bi-chat-left-text"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Client Message
+                        </h2>
+
+                        <p>
+                            The full enquiry submitted through the website.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-message-content">
+
+                    {{ contact_message.message }}
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 STATUS MANAGEMENT
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+                        <i class="bi bi-gear"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Message Status
+                        </h2>
+
+                        <p>
+                            Update the progress of this enquiry.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-status-management">
+
+                    <div>
+
+                        <span class="admin-detail-label">
+                            Current Status
+                        </span>
+
+
+                        {% if contact_message.status == "new" %}
+
+                            <span
+                                class="
+                                    admin-status-badge
+                                    status-new
+                                "
+                            >
+                                New
+                            </span>
+
+                        {% elif contact_message.status == "read" %}
+
+                            <span
+                                class="
+                                    admin-status-badge
+                                    status-read
+                                "
+                            >
+                                Read
+                            </span>
+
+                        {% elif contact_message.status == "replied" %}
+
+                            <span
+                                class="
+                                    admin-status-badge
+                                    status-replied
+                                "
+                            >
+                                Replied
+                            </span>
+
+                        {% elif contact_message.status == "closed" %}
+
+                            <span
+                                class="
+                                    admin-status-badge
+                                    status-closed
+                                "
+                            >
+                                Closed
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="admin-status-actions">
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'admin.update_message_status',
+                                message_id=contact_message.id,
+                                status='new'
+                            ) }}"
+                        >
+
+                            <button
+                                type="submit"
+                                class="btn btn-outline-efxion"
+                            >
+                                Mark New
+                            </button>
+
+                        </form>
+
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'admin.update_message_status',
+                                message_id=contact_message.id,
+                                status='read'
+                            ) }}"
+                        >
+
+                            <button
+                                type="submit"
+                                class="btn btn-outline-efxion"
+                            >
+                                Mark Read
+                            </button>
+
+                        </form>
+
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'admin.update_message_status',
+                                message_id=contact_message.id,
+                                status='replied'
+                            ) }}"
+                        >
+
+                            <button
+                                type="submit"
+                                class="btn btn-efxion"
+                            >
+                                Mark Replied
+                            </button>
+
+                        </form>
+
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'admin.update_message_status',
+                                message_id=contact_message.id,
+                                status='closed'
+                            ) }}"
+                        >
+
+                            <button
+                                type="submit"
+                                class="btn btn-outline-efxion"
+                            >
+                                Close Message
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 ACTIONS
+            ================================================== -->
+
+            <div class="admin-form-actions">
+
+                <a
+                    href="mailto:{{ contact_message.email }}"
+                    class="btn btn-efxion"
+                >
+                    <i class="bi bi-envelope"></i>
+                    Reply by Email
+                </a>
+
+
+                <form
+                    method="POST"
+                    action="{{ url_for(
+                        'admin.delete_message',
+                        message_id=contact_message.id
+                    ) }}"
+                    onsubmit="
+                        return confirm(
+                            'Delete this message permanently?'
+                        );
+                    "
+                >
+
+                    <button
+                        type="submit"
+                        class="btn btn-danger"
+                    >
+                        <i class="bi bi-trash"></i>
+                        Delete Message
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

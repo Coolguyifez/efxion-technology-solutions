@@ -1,0 +1,997 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if staff %}
+Edit Team Member | Efxion Admin
+{% else %}
+Add Team Member | Efxion Admin
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-management-page">
+
+    <div class="container">
+
+        <!-- =================================================
+             FORM HEADER
+        ================================================== -->
+
+        <div class="admin-form-header">
+
+            <a
+                href="{{ url_for('admin.team') }}"
+                class="admin-back-link"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Back to Team
+            </a>
+
+            <span class="admin-label">
+                TEAM & STAFF
+            </span>
+
+            <h1>
+                {% if staff %}
+                    Edit Team Member
+                {% else %}
+                    Add Team Member
+                {% endif %}
+            </h1>
+
+            <p>
+                {% if staff %}
+                    Update this team member's professional profile,
+                    contact information and visibility settings.
+                {% else %}
+                    Create a professional profile for a new team member.
+                {% endif %}
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             FLASH MESSAGES
+        ================================================== -->
+
+        {% with messages = get_flashed_messages(
+            with_categories=true
+        ) %}
+
+            {% if messages %}
+
+                <div class="admin-flash-wrapper">
+
+                    {% for category, message in messages %}
+
+                        <div
+                            class="alert alert-{{ category }}
+                                   alert-dismissible fade show"
+                            role="alert"
+                        >
+
+                            {{ message }}
+
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert"
+                                aria-label="Close"
+                            ></button>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- =================================================
+             FORM
+        ================================================== -->
+
+        <form
+            method="POST"
+            class="admin-team-form"
+        >
+
+            <!-- =================================================
+                 BASIC INFORMATION
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+                        <i class="bi bi-person-badge"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Basic Information
+                        </h2>
+
+                        <p>
+                            The core professional information displayed
+                            on the team directory.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row g-4">
+
+                    <!-- FULL NAME -->
+
+                    <div class="col-md-8">
+
+                        <label
+                            for="full_name"
+                            class="form-label"
+                        >
+                            Full Name
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="full_name"
+                            name="full_name"
+                            value="{{ staff.full_name if staff else '' }}"
+                            placeholder="e.g. Emmanuel Ifeanyi Ikukaiwe"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- DISPLAY ORDER -->
+
+                    <div class="col-md-4">
+
+                        <label
+                            for="display_order"
+                            class="form-label"
+                        >
+                            Display Order
+                        </label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            id="display_order"
+                            name="display_order"
+                            value="{{ staff.display_order if staff else 0 }}"
+                            min="0"
+                            step="1"
+                            placeholder="0"
+                        >
+
+                        <div class="admin-form-help">
+                            Lower numbers appear first.
+                        </div>
+
+                    </div>
+
+
+                    <!-- SLUG -->
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="slug"
+                            class="form-label"
+                        >
+                            Profile Slug
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="slug"
+                            name="slug"
+                            value="{{ staff.slug if staff else '' }}"
+                            placeholder="e.g. emmanuel-ifeanyi-ikukaiwe"
+                            required
+                        >
+
+                        <div class="admin-form-help">
+                            Used for the public profile URL.
+                        </div>
+
+                    </div>
+
+
+                    <!-- JOB TITLE -->
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="job_title"
+                            class="form-label"
+                        >
+                            Job Title
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="job_title"
+                            name="job_title"
+                            value="{{ staff.job_title if staff else '' }}"
+                            placeholder="e.g. Founder & Technology Professional"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- DEPARTMENT -->
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="department"
+                            class="form-label"
+                        >
+                            Department
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="department"
+                            name="department"
+                            value="{{ staff.department if staff else '' }}"
+                            placeholder="e.g. Technology & Innovation"
+                        >
+
+                    </div>
+
+
+                    <!-- DATE JOINED -->
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="date_joined"
+                            class="form-label"
+                        >
+                            Date Joined
+                        </label>
+
+                        <input
+                            type="date"
+                            class="form-control"
+                            id="date_joined"
+                            name="date_joined"
+                            value="{{
+                                staff.date_joined.strftime('%Y-%m-%d')
+                                if staff and staff.date_joined
+                                else ''
+                            }}"
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PROFILE IMAGE
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+                        <i class="bi bi-image"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Profile Image
+                        </h2>
+
+                        <p>
+                            Add a URL for the team member's professional
+                            profile image.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <label
+                    for="profile_image"
+                    class="form-label"
+                >
+                    Profile Image URL
+                </label>
+
+                <input
+                    type="url"
+                    class="form-control"
+                    id="profile_image"
+                    name="profile_image"
+                    value="{{ staff.profile_image if staff else '' }}"
+                    placeholder="https://example.com/profile-image.jpg"
+                >
+
+                <div class="admin-form-help">
+                    Use a publicly accessible image URL.
+                    A square or portrait-oriented professional image
+                    is recommended.
+                </div>
+
+
+                <!-- IMAGE PREVIEW -->
+
+                <div
+                    id="teamImagePreview"
+                    class="admin-team-image-preview"
+                    {% if not staff or not staff.profile_image %}
+                        style="display: none;"
+                    {% endif %}
+                >
+
+                    <img
+                        id="teamPreviewImage"
+                        src="{{ staff.profile_image if staff else '' }}"
+                        alt="Profile image preview"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 SHORT BIO
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+                        <i class="bi bi-card-text"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Professional Summary
+                        </h2>
+
+                        <p>
+                            A concise introduction used on team cards
+                            and profile previews.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <label
+                    for="short_bio"
+                    class="form-label"
+                >
+                    Short Biography
+                </label>
+
+                <textarea
+                    class="form-control"
+                    id="short_bio"
+                    name="short_bio"
+                    rows="4"
+                    maxlength="500"
+                    placeholder="Write a concise professional introduction..."
+                >{{ staff.short_bio if staff else '' }}</textarea>
+
+                <div class="admin-form-help">
+                    Maximum 500 characters.
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 BIOGRAPHY
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+                        <i class="bi bi-file-earmark-person"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Biography
+                        </h2>
+
+                        <p>
+                            Provide the full professional biography
+                            displayed on the team member's profile.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <label
+                    for="biography"
+                    class="form-label"
+                >
+                    Full Biography
+                </label>
+
+                <textarea
+                    class="form-control admin-team-textarea"
+                    id="biography"
+                    name="biography"
+                    rows="9"
+                    placeholder="Write the team member's professional biography..."
+                >{{ staff.biography if staff else '' }}</textarea>
+
+            </div>
+
+
+            <!-- =================================================
+                 EXPERIENCE & EDUCATION
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+                        <i class="bi bi-mortarboard"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Experience & Education
+                        </h2>
+
+                        <p>
+                            Add professional experience and educational
+                            background.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row g-4">
+
+                    <!-- EXPERIENCE -->
+
+                    <div class="col-lg-6">
+
+                        <label
+                            for="experience"
+                            class="form-label"
+                        >
+                            Experience
+                        </label>
+
+                        <textarea
+                            class="form-control admin-team-textarea"
+                            id="experience"
+                            name="experience"
+                            rows="10"
+                            placeholder="Describe relevant professional experience..."
+                        >{{ staff.experience if staff else '' }}</textarea>
+
+                    </div>
+
+
+                    <!-- EDUCATION -->
+
+                    <div class="col-lg-6">
+
+                        <label
+                            for="education"
+                            class="form-label"
+                        >
+                            Education
+                        </label>
+
+                        <textarea
+                            class="form-control admin-team-textarea"
+                            id="education"
+                            name="education"
+                            rows="10"
+                            placeholder="List relevant academic qualifications and training..."
+                        >{{ staff.education if staff else '' }}</textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 SKILLS & EXPERTISE
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+                        <i class="bi bi-stars"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Skills & Expertise
+                        </h2>
+
+                        <p>
+                            Highlight the team member's technical skills,
+                            professional capabilities and areas of expertise.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row g-4">
+
+                    <!-- SKILLS -->
+
+                    <div class="col-lg-6">
+
+                        <label
+                            for="skills"
+                            class="form-label"
+                        >
+                            Skills
+                        </label>
+
+                        <textarea
+                            class="form-control admin-team-textarea"
+                            id="skills"
+                            name="skills"
+                            rows="8"
+                            placeholder="e.g. Python, Flask, JavaScript, Networking, AI..."
+                        >{{ staff.skills if staff else '' }}</textarea>
+
+                        <div class="admin-form-help">
+                            Separate skills with commas or line breaks.
+                        </div>
+
+                    </div>
+
+
+                    <!-- EXPERTISE -->
+
+                    <div class="col-lg-6">
+
+                        <label
+                            for="expertise"
+                            class="form-label"
+                        >
+                            Areas of Expertise
+                        </label>
+
+                        <textarea
+                            class="form-control admin-team-textarea"
+                            id="expertise"
+                            name="expertise"
+                            rows="8"
+                            placeholder="e.g. Software Development, AI, Cybersecurity..."
+                        >{{ staff.expertise if staff else '' }}</textarea>
+
+                        <div class="admin-form-help">
+                            Describe the person's primary areas of professional
+                            expertise.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 CONTACT & SOCIAL
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+                        <i class="bi bi-link-45deg"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Contact & Professional Links
+                        </h2>
+
+                        <p>
+                            Add contact information and professional
+                            online profiles.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row g-4">
+
+                    <!-- EMAIL -->
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="email"
+                            class="form-label"
+                        >
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            class="form-control"
+                            id="email"
+                            name="email"
+                            value="{{ staff.email if staff else '' }}"
+                            placeholder="name@example.com"
+                        >
+
+                    </div>
+
+
+                    <!-- LINKEDIN -->
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="linkedin_url"
+                            class="form-label"
+                        >
+                            LinkedIn URL
+                        </label>
+
+                        <input
+                            type="url"
+                            class="form-control"
+                            id="linkedin_url"
+                            name="linkedin_url"
+                            value="{{ staff.linkedin_url if staff else '' }}"
+                            placeholder="https://www.linkedin.com/in/..."
+                        >
+
+                    </div>
+
+
+                    <!-- GITHUB -->
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="github_url"
+                            class="form-label"
+                        >
+                            GitHub URL
+                        </label>
+
+                        <input
+                            type="url"
+                            class="form-control"
+                            id="github_url"
+                            name="github_url"
+                            value="{{ staff.github_url if staff else '' }}"
+                            placeholder="https://github.com/..."
+                        >
+
+                    </div>
+
+
+                    <!-- PORTFOLIO -->
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="portfolio_url"
+                            class="form-label"
+                        >
+                            Portfolio URL
+                        </label>
+
+                        <input
+                            type="url"
+                            class="form-control"
+                            id="portfolio_url"
+                            name="portfolio_url"
+                            value="{{ staff.portfolio_url if staff else '' }}"
+                            placeholder="https://example.com/..."
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 VISIBILITY SETTINGS
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+                        <i class="bi bi-sliders"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Visibility Settings
+                        </h2>
+
+                        <p>
+                            Control whether this team member appears
+                            publicly on the website.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-checkbox-grid">
+
+                    <!-- ACTIVE -->
+
+                    <label class="admin-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="is_active"
+                            {% if not staff or staff.is_active %}
+                                checked
+                            {% endif %}
+                        >
+
+                        <span>
+
+                            <strong>
+                                Active Profile
+                            </strong>
+
+                            <small>
+                                Display this team member on the
+                                public team directory.
+                            </small>
+
+                        </span>
+
+                    </label>
+
+
+                    <!-- FEATURED -->
+
+                    <label class="admin-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="is_featured"
+                            {% if staff and staff.is_featured %}
+                                checked
+                            {% endif %}
+                        >
+
+                        <span>
+
+                            <strong>
+                                Featured Member
+                            </strong>
+
+                            <small>
+                                Highlight this person in featured
+                                team sections.
+                            </small>
+
+                        </span>
+
+                    </label>
+
+
+                    <!-- ORDER -->
+
+                    <div class="admin-checkbox admin-team-order-info">
+
+                        <i class="bi bi-sort-numeric-down"></i>
+
+                        <span>
+
+                            <strong>
+                                Display Order
+                            </strong>
+
+                            <small>
+                                Current order:
+                                {{ staff.display_order if staff else 0 }}
+                            </small>
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FORM ACTIONS
+            ================================================== -->
+
+            <div class="admin-form-actions">
+
+                <a
+                    href="{{ url_for('admin.team') }}"
+                    class="btn btn-outline-efxion"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn btn-efxion"
+                >
+
+                    {% if staff %}
+
+                        <i class="bi bi-check2-circle"></i>
+                        Save Changes
+
+                    {% else %}
+
+                        <i class="bi bi-person-plus"></i>
+                        Create Team Member
+
+                    {% endif %}
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const imageInput =
+            document.getElementById(
+                "profile_image"
+            );
+
+        const previewContainer =
+            document.getElementById(
+                "teamImagePreview"
+            );
+
+        const previewImage =
+            document.getElementById(
+                "teamPreviewImage"
+            );
+
+
+        if (
+            !imageInput ||
+            !previewContainer ||
+            !previewImage
+        ) {
+            return;
+        }
+
+
+        function updateImagePreview() {
+
+            const imageUrl =
+                imageInput.value.trim();
+
+
+            if (!imageUrl) {
+
+                previewContainer.style.display =
+                    "none";
+
+                previewImage.removeAttribute(
+                    "src"
+                );
+
+                return;
+            }
+
+
+            previewImage.onload =
+                function () {
+
+                    previewContainer.style.display =
+                        "block";
+
+                };
+
+
+            previewImage.onerror =
+                function () {
+
+                    previewContainer.style.display =
+                        "none";
+
+                };
+
+
+            previewImage.src =
+                imageUrl;
+        }
+
+
+        imageInput.addEventListener(
+            "input",
+            updateImagePreview
+        );
+
+        updateImagePreview();
+
+    }
+);
+
+</script>
+
+{% endblock %}

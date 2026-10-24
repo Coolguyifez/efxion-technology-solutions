@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+
+{% block title %}
+News & Insights | Efxion Technology Solutions
+{% endblock %}
+
+{% block content %}
+
+<!-- =========================================================
+     INSIGHTS HERO
+========================================================= -->
+
+<section class="insights-hero">
+
+    <div class="container">
+
+        <div class="row justify-content-center text-center">
+
+            <div class="col-lg-9 reveal">
+
+                <div class="section-label light">
+                    NEWS & INSIGHTS
+                </div>
+
+                <h1>
+                    Ideas, technology
+                    <span>& perspectives.</span>
+                </h1>
+
+                <p>
+                    Explore technology insights, business ideas,
+                    software development perspectives and useful
+                    information from Efxion Technology Solutions.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ARTICLES
+========================================================= -->
+
+<section class="insights-section section-space">
+
+    <div class="container">
+
+        {% if categories %}
+
+        <div class="insight-category-nav reveal">
+
+            <a
+                href="{{ url_for('main.insights') }}"
+                class="active"
+            >
+                All
+            </a>
+
+            {% for category in categories %}
+
+                <span>
+                    {{ category.name }}
+                </span>
+
+            {% endfor %}
+
+        </div>
+
+        {% endif %}
+
+
+        {% if articles %}
+
+            <div class="row g-4">
+
+                {% for article in articles %}
+
+                    <div class="col-md-6 col-lg-4 reveal">
+
+                        <article class="insight-card">
+
+                            <div class="insight-image">
+
+                                {% if article.featured_image %}
+
+                                    <img
+                                        src="{{ article.featured_image }}"
+                                        alt="{{ article.title }}"
+                                        loading="lazy"
+                                    >
+
+                                {% else %}
+
+                                    <div class="insight-placeholder">
+
+                                        <i class="bi bi-journal-text"></i>
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="insight-body">
+
+                                <div class="insight-meta">
+
+                                    <span>
+                                        {{ article.category.name }}
+                                    </span>
+
+                                    {% if article.reading_time %}
+
+                                        <span>
+                                            {{ article.reading_time }}
+                                            min read
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <h2>
+                                    {{ article.title }}
+                                </h2>
+
+
+                                {% if article.excerpt %}
+
+                                    <p>
+                                        {{ article.excerpt }}
+                                    </p>
+
+                                {% endif %}
+
+
+                                <div class="insight-footer">
+
+                                    {% if article.published_at %}
+
+                                        <small>
+                                            {{ article.published_at.strftime(
+                                                "%d %b %Y"
+                                            ) }}
+                                        </small>
+
+                                    {% endif %}
+
+                                    <a
+                                        href="{{ url_for(
+                                            'main.insight_detail',
+                                            slug=article.slug
+                                        ) }}"
+                                    >
+                                        Read Article
+                                        <i class="bi bi-arrow-up-right"></i>
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="insights-empty reveal">
+
+                <div class="insights-empty-icon">
+                    <i class="bi bi-journal-richtext"></i>
+                </div>
+
+                <h2>
+                    Insights are coming soon.
+                </h2>
+
+                <p>
+                    We're preparing useful articles and technology
+                    insights for our readers.
+                </p>
+
+                <a
+                    href="{{ url_for('main.contact') }}"
+                    class="btn btn-efxion"
+                >
+                    Contact Efxion
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     NEWSLETTER / CTA
+========================================================= -->
+
+<section class="insights-cta">
+
+    <div class="container">
+
+        <div class="insights-cta-inner reveal">
+
+            <div>
+
+                <div class="section-label light">
+                    STAY INFORMED
+                </div>
+
+                <h2>
+                    Technology is always moving.
+                </h2>
+
+                <p>
+                    Keep exploring new ideas, tools and opportunities
+                    with Efxion Technology Solutions.
+                </p>
+
+            </div>
+
+            <a
+                href="{{ url_for('main.contact') }}"
+                class="btn btn-efxion-light"
+            >
+                Talk to Us
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,308 @@
+{% extends "base.html" %}
+
+{% block title %}
+Admin Users Management | Efxion Admin
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-management-page">
+
+    <div class="container">
+
+        <div class="admin-management-top">
+
+            <div>
+
+                <a
+                    href="{{ url_for('admin.dashboard') }}"
+                    class="admin-back-link"
+                >
+                    <i class="bi bi-arrow-left"></i>
+                    Dashboard
+                </a>
+
+                <span class="admin-label">
+                    ADMINISTRATION
+                </span>
+
+                <h1>
+                    Admin Users
+                </h1>
+
+                <p>
+                    Create and manage administrators who have
+                    access to the Efxion administration portal.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('admin.new_user') }}"
+                class="btn btn-efxion"
+            >
+                <i class="bi bi-plus-lg"></i>
+                Create Administrator
+            </a>
+
+        </div>
+
+
+        {% with messages = get_flashed_messages(
+            with_categories=true
+        ) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="alert alert-{{ category }}"
+                        role="alert"
+                    >
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        {% if admin_users %}
+
+            <div class="admin-career-grid">
+
+                {% for admin in admin_users %}
+
+                    <div class="admin-career-card">
+
+                        <div class="admin-career-card-top">
+
+                            <div>
+
+                                <span class="admin-featured-badge">
+                                    <i class="bi bi-shield-check"></i>
+                                    Administrator
+                                </span>
+
+                                <h2>
+                                    {{ admin.full_name }}
+                                </h2>
+
+                                <p>
+                                    @{{ admin.username }}
+                                </p>
+
+                            </div>
+
+
+                            <div>
+
+                                {% if admin.is_active %}
+
+                                    <span
+                                        class="
+                                            application-badge
+                                            status-hired
+                                        "
+                                    >
+                                        Active
+                                    </span>
+
+                                {% else %}
+
+                                    <span
+                                        class="
+                                            application-badge
+                                            status-rejected
+                                        "
+                                    >
+                                        Inactive
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <p class="admin-career-description">
+
+                            <i class="bi bi-envelope"></i>
+
+                            {{ admin.email }}
+
+                        </p>
+
+
+                        <div class="admin-career-meta">
+
+                            <span>
+                                <i class="bi bi-person-badge"></i>
+                                Username:
+                                {{ admin.username }}
+                            </span>
+
+
+                            {% if admin.created_at %}
+
+                                <span>
+                                    <i class="bi bi-calendar-event"></i>
+
+                                    Created:
+                                    {{
+                                        admin.created_at.strftime(
+                                            "%d %b %Y"
+                                        )
+                                    }}
+
+                                </span>
+
+                            {% endif %}
+
+
+                            {% if admin.id == current_user.id %}
+
+                                <span>
+                                    <i class="bi bi-person-check"></i>
+                                    Current Account
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="admin-career-actions">
+
+                            <a
+                                href="{{ url_for(
+                                    'admin.edit_user',
+                                    user_id=admin.id
+                                ) }}"
+                                class="btn btn-outline-efxion"
+                            >
+                                <i class="bi bi-pencil"></i>
+                                Edit
+                            </a>
+
+
+                            {% if admin.id != current_user.id %}
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin.toggle_user_active',
+                                        user_id=admin.id
+                                    ) }}"
+                                    style="display: inline;"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-outline-efxion"
+                                    >
+
+                                        {% if admin.is_active %}
+
+                                            <i class="bi bi-person-x"></i>
+                                            Deactivate
+
+                                        {% else %}
+
+                                            <i class="bi bi-person-check"></i>
+                                            Activate
+
+                                        {% endif %}
+
+                                    </button>
+
+                                </form>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="admin-career-secondary-actions">
+
+                            {% if admin.id != current_user.id %}
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin.delete_user',
+                                        user_id=admin.id
+                                    ) }}"
+                                    onsubmit="
+                                        return confirm(
+                                            'Delete this administrator account?'
+                                        );
+                                    "
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="admin-text-button"
+                                    >
+                                        <i class="bi bi-trash"></i>
+                                        Delete Administrator
+                                    </button>
+
+                                </form>
+
+                            {% else %}
+
+                                <span class="admin-text-button disabled">
+                                    <i class="bi bi-shield-check"></i>
+                                    Your Account
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="admin-empty-state">
+
+                <div class="admin-empty-icon">
+                    <i class="bi bi-people"></i>
+                </div>
+
+                <h2>
+                    No Administrators Found
+                </h2>
+
+                <p>
+                    Create the first administrator account
+                    to begin managing the administration portal.
+                </p>
+
+                <a
+                    href="{{ url_for('admin.new_user') }}"
+                    class="btn btn-efxion"
+                >
+                    <i class="bi bi-plus-lg"></i>
+                    Create Administrator
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,295 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ member.full_name }} | Efxion Technology Solutions
+{% endblock %}
+
+{% block content %}
+
+<!-- =====================================================
+     PROFILE HERO
+====================================================== -->
+
+<section class="profile-hero">
+
+    <div class="container">
+
+        <div class="profile-hero-grid reveal">
+
+            <div class="profile-image">
+
+                {% if member.profile_image %}
+
+                    <img
+                        src="{{ member.profile_image }}"
+                        alt="{{ member.full_name }}"
+                    >
+
+                {% else %}
+
+                    <div class="profile-placeholder">
+                        <i class="bi bi-person"></i>
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="profile-intro">
+
+                <div class="section-label light">
+                    EFXION TEAM
+                </div>
+
+                <h1>
+                    {{ member.full_name }}
+                </h1>
+
+                <h2>
+                    {{ member.job_title }}
+                </h2>
+
+                {% if member.department %}
+
+                    <div class="profile-department">
+                        <i class="bi bi-building"></i>
+                        {{ member.department }}
+                    </div>
+
+                {% endif %}
+
+                {% if member.short_bio %}
+
+                    <p>
+                        {{ member.short_bio }}
+                    </p>
+
+                {% endif %}
+
+                <div class="profile-socials">
+
+                    {% if member.linkedin_url %}
+
+                        <a
+                            href="{{ member.linkedin_url }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="LinkedIn"
+                        >
+                            <i class="bi bi-linkedin"></i>
+                        </a>
+
+                    {% endif %}
+
+                    {% if member.github_url %}
+
+                        <a
+                            href="{{ member.github_url }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="GitHub"
+                        >
+                            <i class="bi bi-github"></i>
+                        </a>
+
+                    {% endif %}
+
+                    {% if member.portfolio_url %}
+
+                        <a
+                            href="{{ member.portfolio_url }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Portfolio"
+                        >
+                            <i class="bi bi-globe2"></i>
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PROFILE DETAILS
+====================================================== -->
+
+<section class="profile-section">
+
+    <div class="container">
+
+        <div class="row g-5">
+
+            <div class="col-lg-8">
+
+                {% if member.biography %}
+
+                    <div class="profile-block reveal">
+
+                        <div class="section-label">
+                            ABOUT
+                        </div>
+
+                        <h2>
+                            Professional
+                            <span>Profile</span>
+                        </h2>
+
+                        <div class="profile-text">
+                            {{ member.biography | safe }}
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+
+                {% if member.experience %}
+
+                    <div class="profile-block reveal">
+
+                        <div class="section-label">
+                            EXPERIENCE
+                        </div>
+
+                        <h2>
+                            Professional
+                            <span>Experience</span>
+                        </h2>
+
+                        <div class="profile-text">
+                            {{ member.experience | safe }}
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+
+                {% if member.education %}
+
+                    <div class="profile-block reveal">
+
+                        <div class="section-label">
+                            EDUCATION
+                        </div>
+
+                        <h2>
+                            Education &
+                            <span>Background</span>
+                        </h2>
+
+                        <div class="profile-text">
+                            {{ member.education | safe }}
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- =============================================
+                 PROFILE SIDEBAR
+            ============================================== -->
+
+            <div class="col-lg-4">
+
+                <aside class="profile-sidebar">
+
+                    {% if member.skills %}
+
+                        <div class="profile-side-card reveal">
+
+                            <div class="section-label">
+                                SKILLS
+                            </div>
+
+                            <div class="profile-list">
+                                {{ member.skills | safe }}
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if member.expertise %}
+
+                        <div class="profile-side-card reveal">
+
+                            <div class="section-label">
+                                EXPERTISE
+                            </div>
+
+                            <div class="profile-list">
+                                {{ member.expertise | safe }}
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if member.email %}
+
+                        <div class="profile-side-card reveal">
+
+                            <div class="section-label">
+                                CONTACT
+                            </div>
+
+                            <a
+                                href="mailto:{{ member.email }}"
+                                class="profile-email"
+                            >
+                                <i class="bi bi-envelope"></i>
+                                {{ member.email }}
+                            </a>
+
+                        </div>
+
+                    {% endif %}
+
+                </aside>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     BACK TO TEAM
+====================================================== -->
+
+<section class="profile-bottom">
+
+    <div class="container">
+
+        <a
+            href="{{ url_for('main.team') }}"
+            class="btn btn-efxion"
+        >
+            <i class="bi bi-arrow-left"></i>
+            Back to Our Team
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

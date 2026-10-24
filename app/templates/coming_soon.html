@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+{{ page_title }} | Efxion Technology Solutions
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="page-placeholder">
+
+    <div class="container">
+
+        <div class="placeholder-content">
+
+            <div class="section-label light">
+                EFXION TECHNOLOGY SOLUTIONS
+            </div>
+
+            <h1>
+                {{ page_title }}
+            </h1>
+
+            <p>
+
+                We're currently building this section
+                of the Efxion digital experience.
+
+            </p>
+
+            <a
+                href="{{ url_for('main.home') }}"
+                class="btn btn-efxion-light"
+            >
+
+                <i class="bi bi-arrow-left"></i>
+
+                Back Home
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+{% endblock %}

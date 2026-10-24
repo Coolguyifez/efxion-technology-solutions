@@ -1,0 +1,404 @@
+{% extends "base.html" %}
+
+{% block title %}
+Careers Management | Efxion Admin
+{% endblock %}
+
+
+{% block content %}
+
+<section class="admin-management-page">
+
+    <div class="container">
+
+        <div class="admin-management-top">
+
+            <div>
+
+                <a
+                    href="{{ url_for('admin.dashboard') }}"
+                    class="admin-back-link"
+                >
+                    <i class="bi bi-arrow-left"></i>
+                    Dashboard
+                </a>
+
+                <span class="admin-label">
+                    RECRUITMENT
+                </span>
+
+                <h1>
+                    Careers
+                </h1>
+
+                <p>
+                    Create and manage vacancies published
+                    on the Efxion careers portal.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('admin.career_create') }}"
+                class="btn btn-efxion"
+            >
+                <i class="bi bi-plus-lg"></i>
+                Create Vacancy
+            </a>
+
+        </div>
+
+
+        {% with messages = get_flashed_messages(
+            with_categories=true
+        ) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="alert alert-{{ category }}"
+                        role="alert"
+                    >
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        {% if positions %}
+
+            <div class="admin-career-grid">
+
+                {% for position in positions %}
+
+                    <div class="admin-career-card">
+
+                        <div class="admin-career-card-top">
+
+                            <div>
+
+                                {% if position.is_featured %}
+
+                                    <span class="admin-featured-badge">
+                                        <i class="bi bi-star-fill"></i>
+                                        Featured
+                                    </span>
+
+                                {% endif %}
+
+                                <h2>
+                                    {{ position.title }}
+                                </h2>
+
+                                <p>
+                                    {{ position.department or "General" }}
+                                    {% if position.location %}
+                                        · {{ position.location }}
+                                    {% endif %}
+                                </p>
+
+                            </div>
+
+
+                            <div>
+
+                                {% if position.is_closed %}
+
+                                    <span
+                                        class="
+                                            application-badge
+                                            status-rejected
+                                        "
+                                    >
+                                        Closed
+                                    </span>
+
+                                {% elif position.is_published %}
+
+                                    <span
+                                        class="
+                                            application-badge
+                                            status-hired
+                                        "
+                                    >
+                                        Published
+                                    </span>
+
+                                {% else %}
+
+                                    <span
+                                        class="
+                                            application-badge
+                                            status-reviewing
+                                        "
+                                    >
+                                        Unpublished
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <p class="admin-career-description">
+
+                            {{
+                                position.short_description
+                                or position.description
+                                | striptags
+                                | truncate(180)
+                            }}
+
+                        </p>
+
+
+                        <div class="admin-career-meta">
+
+                            {% if position.employment_type %}
+
+                                <span>
+                                    <i class="bi bi-briefcase"></i>
+                                    {{ position.employment_type }}
+                                </span>
+
+                            {% endif %}
+
+
+                            {% if position.work_mode %}
+
+                                <span>
+                                    <i class="bi bi-laptop"></i>
+                                    {{ position.work_mode }}
+                                </span>
+
+                            {% endif %}
+
+
+                            {% if position.application_deadline %}
+
+                                <span>
+                                    <i class="bi bi-calendar-event"></i>
+
+                                    Deadline:
+                                    {{
+                                        position.application_deadline.strftime(
+                                            "%d %b %Y"
+                                        )
+                                    }}
+
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="admin-career-stats">
+
+                            <a
+                                href="{{ url_for(
+                                    'admin.applications',
+                                    position=position.id
+                                ) }}"
+                            >
+
+                                <i class="bi bi-people"></i>
+
+                                {{
+                                    position.applications
+                                    | length
+                                }}
+
+                                applicant{{ 
+                                    "" if
+                                    position.applications|length == 1
+                                    else "s"
+                                }}
+
+                            </a>
+
+                        </div>
+
+
+                        <div class="admin-career-actions">
+
+                            <a
+                                href="{{ url_for(
+                                    'admin.career_edit',
+                                    position_id=position.id
+                                ) }}"
+                                class="btn btn-outline-efxion"
+                            >
+                                <i class="bi bi-pencil"></i>
+                                Edit
+                            </a>
+
+
+                            <a
+                                href="{{ url_for(
+                                    'main.career_detail',
+                                    slug=position.slug
+                                ) }}"
+                                class="btn btn-outline-efxion"
+                                target="_blank"
+                            >
+                                <i class="bi bi-eye"></i>
+                                View
+                            </a>
+
+
+                            <a
+                                href="{{ url_for(
+                                    'admin.applications',
+                                    position=position.id
+                                ) }}"
+                                class="btn btn-outline-efxion"
+                            >
+                                <i class="bi bi-people"></i>
+                                Applicants
+                            </a>
+
+                        </div>
+
+
+                        <div class="admin-career-secondary-actions">
+
+                            <form
+                                method="POST"
+                                action="{{ url_for(
+                                    'admin.career_toggle_publish',
+                                    position_id=position.id
+                                ) }}"
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="admin-text-button"
+                                >
+
+                                    {% if position.is_published %}
+
+                                        <i class="bi bi-eye-slash"></i>
+                                        Unpublish
+
+                                    {% else %}
+
+                                        <i class="bi bi-eye"></i>
+                                        Publish
+
+                                    {% endif %}
+
+                                </button>
+
+                            </form>
+
+
+                            <form
+                                method="POST"
+                                action="{{ url_for(
+                                    'admin.career_toggle_status',
+                                    position_id=position.id
+                                ) }}"
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="admin-text-button"
+                                >
+
+                                    {% if position.is_closed %}
+
+                                        <i class="bi bi-unlock"></i>
+                                        Reopen
+
+                                    {% else %}
+
+                                        <i class="bi bi-lock"></i>
+                                        Close
+
+                                    {% endif %}
+
+                                </button>
+
+                            </form>
+
+
+                            {% if position.applications|length == 0 %}
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin.career_delete',
+                                        position_id=position.id
+                                    ) }}"
+                                    onsubmit="
+                                        return confirm(
+                                            'Delete this vacancy?'
+                                        );
+                                    "
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="
+                                            admin-text-button
+                                            admin-delete-button
+                                        "
+                                    >
+                                        <i class="bi bi-trash"></i>
+                                        Delete
+                                    </button>
+
+                                </form>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="admin-empty-state">
+
+                <i class="bi bi-briefcase"></i>
+
+                <h2>
+                    No vacancies yet
+                </h2>
+
+                <p>
+                    Create your first vacancy to begin
+                    recruiting through the Efxion website.
+                </p>
+
+                <a
+                    href="{{ url_for('admin.career_create') }}"
+                    class="btn btn-efxion mt-3"
+                >
+                    <i class="bi bi-plus-lg"></i>
+                    Create First Vacancy
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}
