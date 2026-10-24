@@ -230,7 +230,6 @@ def setup_admin():
             request.form
             .get("username", "")
             .strip()
-            .lower()
         )
 
         email = (
@@ -892,7 +891,7 @@ def new_user():
             request.form
             .get("username", "")
             .strip()
-            .lower()
+            
         )
 
         email = (
@@ -1082,7 +1081,7 @@ def edit_user(user_id):
             request.form
             .get("username", "")
             .strip()
-            .lower()
+            
         )
 
         email = (
