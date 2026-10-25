@@ -1,0 +1,901 @@
+{% extends "base.html" %}
+
+{% if project %}
+    {% set page_heading = "Edit Portfolio Project" %}
+{% else %}
+    {% set page_heading = "Create Portfolio Project" %}
+{% endif %}
+
+{% block title %}
+{{ page_heading }} | Efxion Admin
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-management-page">
+
+    <div class="container">
+
+        <a
+            href="{{ url_for('admin.portfolio') }}"
+            class="admin-back-link"
+        >
+            <i class="bi bi-arrow-left"></i>
+            Portfolio
+        </a>
+
+        <div class="admin-form-header">
+
+            <span class="admin-label">
+                PORTFOLIO MANAGEMENT
+            </span>
+
+            <h1>
+                {{ page_heading }}
+            </h1>
+
+            <p>
+                {% if project %}
+
+                    Update this project's information,
+                    presentation and visibility settings.
+
+                {% else %}
+
+                    Add a new project to the Efxion
+                    portfolio.
+
+                {% endif %}
+            </p>
+
+        </div>
+
+        {% with messages = get_flashed_messages(
+            with_categories=true
+        ) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="alert alert-{{ category }}"
+                        role="alert"
+                    >
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+        <form
+            method="POST"
+            class="admin-portfolio-form"
+        >
+
+            <!-- =================================================
+                 BASIC INFORMATION
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+
+                        <i class="bi bi-grid-1x2"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Basic Information
+                        </h2>
+
+                        <p>
+                            Define the main details of the
+                            portfolio project.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="row g-4">
+
+                    <!-- PROJECT TITLE -->
+
+                    <div class="col-md-8">
+
+                        <label
+                            for="title"
+                            class="form-label"
+                        >
+                            Project Title
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            class="form-control"
+                            required
+                            value="{{
+                                form_data.get('title')
+                                if form_data
+                                else (
+                                    project.title
+                                    if project
+                                    else ''
+                                )
+                            }}"
+                            placeholder="e.g. BizTrace IMS"
+                        >
+
+                    </div>
+
+
+                    <!-- SLUG -->
+
+                    <div class="col-md-4">
+
+                        <label
+                            for="slug"
+                            class="form-label"
+                        >
+                            URL Slug
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="slug"
+                            name="slug"
+                            class="form-control"
+                            required
+                            value="{{
+                                form_data.get('slug')
+                                if form_data
+                                else (
+                                    project.slug
+                                    if project
+                                    else ''
+                                )
+                            }}"
+                            placeholder="biztrace-ims"
+                        >
+
+                        <small class="admin-form-help">
+                            Use lowercase letters and hyphens.
+                        </small>
+
+                    </div>
+
+
+                    <!-- CATEGORY -->
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="category_id"
+                            class="form-label"
+                        >
+                            Portfolio Category
+                            <span>*</span>
+                        </label>
+
+                        {% set category_value =
+                            form_data.get('category_id')
+                            if form_data
+                            else (
+                                project.category_id
+                                if project
+                                else ''
+                            )
+                        %}
+
+                        <select
+                            id="category_id"
+                            name="category_id"
+                            class="form-select"
+                            required
+                        >
+
+                            <option value="">
+                                Select category
+                            </option>
+
+                            {% for category in categories %}
+
+                                <option
+                                    value="{{ category.id }}"
+                                    {% if category_value|string == category.id|string %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ category.name }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- CLIENT -->
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="client_name"
+                            class="form-label"
+                        >
+                            Client / Organization
+                        </label>
+
+                        <input
+                            type="text"
+                            id="client_name"
+                            name="client_name"
+                            class="form-control"
+                            value="{{
+                                form_data.get('client_name')
+                                if form_data
+                                else (
+                                    project.client_name
+                                    if project
+                                    else ''
+                                )
+                            }}"
+                            placeholder="e.g. Efxion Technology Solutions"
+                        >
+
+                    </div>
+
+
+                    <!-- YEAR -->
+
+                    <div class="col-md-4">
+
+                        <label
+                            for="year"
+                            class="form-label"
+                        >
+                            Project Year
+                        </label>
+
+                        <input
+                            type="number"
+                            id="year"
+                            name="year"
+                            class="form-control"
+                            min="1900"
+                            max="2100"
+                            value="{{
+                                form_data.get('year')
+                                if form_data
+                                else (
+                                    project.year
+                                    if project
+                                    else ''
+                                )
+                            }}"
+                            placeholder="2026"
+                        >
+
+                    </div>
+
+
+                    <!-- SHORT DESCRIPTION -->
+
+                    <div class="col-md-8">
+
+                        <label
+                            for="short_description"
+                            class="form-label"
+                        >
+                            Short Description
+                        </label>
+
+                        <input
+                            type="text"
+                            id="short_description"
+                            name="short_description"
+                            class="form-control"
+                            maxlength="500"
+                            value="{{
+                                form_data.get('short_description')
+                                if form_data
+                                else (
+                                    project.short_description
+                                    if project
+                                    else ''
+                                )
+                            }}"
+                            placeholder="Briefly describe the project."
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PROJECT DESCRIPTION
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+
+                        <i class="bi bi-file-text"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Project Description
+                        </h2>
+
+                        <p>
+                            Explain the project, its purpose,
+                            solution and outcome.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="row g-4">
+
+                    <div class="col-12">
+
+                        <label
+                            for="description"
+                            class="form-label"
+                        >
+                            Full Description
+                        </label>
+
+                        <textarea
+                            id="description"
+                            name="description"
+                            class="form-control"
+                            rows="9"
+                            placeholder="Describe the project, the problem it addressed, the solution developed and the value it provides."
+                        >{{ form_data.get('description') if form_data else (project.description if project else '') }}</textarea>
+
+                        <small class="admin-form-help">
+                            You can use plain text or HTML if your
+                            public portfolio page supports formatted
+                            descriptions.
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 TECHNOLOGIES
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+
+                        <i class="bi bi-code-slash"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Technologies & Tools
+                        </h2>
+
+                        <p>
+                            List the technologies used to build
+                            or deliver the project.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="row g-4">
+
+                    <div class="col-12">
+
+                        <label
+                            for="technologies"
+                            class="form-label"
+                        >
+                            Technologies
+                        </label>
+
+                        <input
+                            type="text"
+                            id="technologies"
+                            name="technologies"
+                            class="form-control"
+                            value="{{
+                                form_data.get('technologies')
+                                if form_data
+                                else (
+                                    project.technologies
+                                    if project
+                                    else ''
+                                )
+                            }}"
+                            placeholder="Flask, PostgreSQL, Bootstrap, JavaScript"
+                        >
+
+                        <small class="admin-form-help">
+                            Separate technologies with commas.
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PROJECT LINKS
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+
+                        <i class="bi bi-link-45deg"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Project Links
+                        </h2>
+
+                        <p>
+                            Add links where visitors can learn
+                            more about or access the project.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="row g-4">
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="project_url"
+                            class="form-label"
+                        >
+                            Live Project URL
+                        </label>
+
+                        <input
+                            type="url"
+                            id="project_url"
+                            name="project_url"
+                            class="form-control"
+                            value="{{
+                                form_data.get('project_url')
+                                if form_data
+                                else (
+                                    project.project_url
+                                    if project
+                                    else ''
+                                )
+                            }}"
+                            placeholder="https://example.com"
+                        >
+
+                        <small class="admin-form-help">
+                            Full URL including https://
+                        </small>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="github_url"
+                            class="form-label"
+                        >
+                            GitHub Repository
+                        </label>
+
+                        <input
+                            type="url"
+                            id="github_url"
+                            name="github_url"
+                            class="form-control"
+                            value="{{
+                                form_data.get('github_url')
+                                if form_data
+                                else (
+                                    project.github_url
+                                    if project
+                                    else ''
+                                )
+                            }}"
+                            placeholder="https://github.com/username/project"
+                        >
+
+                        <small class="admin-form-help">
+                            Leave blank if the repository is private
+                            or unavailable.
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PROJECT IMAGE
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+
+                        <i class="bi bi-image"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Project Image
+                        </h2>
+
+                        <p>
+                            Provide an image URL to represent
+                            this project.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="row g-4">
+
+                    <div class="col-md-8">
+
+                        <label
+                            for="image"
+                            class="form-label"
+                        >
+                            Image URL
+                        </label>
+
+                        <input
+                            type="url"
+                            id="image"
+                            name="image"
+                            class="form-control"
+                            value="{{
+                                form_data.get('image')
+                                if form_data
+                                else (
+                                    project.image
+                                    if project
+                                    else ''
+                                )
+                            }}"
+                            placeholder="https://example.com/project-image.jpg"
+                        >
+
+                        <small class="admin-form-help">
+                            Use a publicly accessible image URL.
+                        </small>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">
+                            Image Preview
+                        </label>
+
+                        <div
+                            class="admin-portfolio-image-preview"
+                            id="portfolioImagePreview"
+                        >
+
+                            {% if project and project.image %}
+
+                                <img
+                                    src="{{ project.image }}"
+                                    alt="{{ project.title }}"
+                                    id="portfolioPreviewImage"
+                                >
+
+                            {% else %}
+
+                                <div
+                                    class="
+                                        admin-portfolio-image-preview-placeholder
+                                    "
+                                    id="portfolioImagePlaceholder"
+                                >
+
+                                    <i class="bi bi-image"></i>
+
+                                    <span>
+                                        Image preview
+                                    </span>
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 VISIBILITY SETTINGS
+            ================================================== -->
+
+            <div class="admin-form-card">
+
+                <div class="admin-form-card-heading">
+
+                    <div class="admin-form-icon">
+
+                        <i class="bi bi-eye"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Visibility Settings
+                        </h2>
+
+                        <p>
+                            Control how this project appears
+                            on the public website.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                {% set active_value =
+                    form_data.get('is_active')
+                    if form_data
+                    else (
+                        project.is_active
+                        if project
+                        else True
+                    )
+                %}
+
+                {% set featured_value =
+                    form_data.get('is_featured')
+                    if form_data
+                    else (
+                        project.is_featured
+                        if project
+                        else False
+                    )
+                %}
+
+                <div class="admin-checkbox-grid">
+
+                    <label class="admin-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="is_active"
+                            {% if active_value %}
+                                checked
+                            {% endif %}
+                        >
+
+                        <span>
+
+                            <strong>
+                                Active Project
+                            </strong>
+
+                            <small>
+                                Make this project available
+                                on the public portfolio.
+                            </small>
+
+                        </span>
+
+                    </label>
+
+
+                    <label class="admin-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="is_featured"
+                            {% if featured_value %}
+                                checked
+                            {% endif %}
+                        >
+
+                        <span>
+
+                            <strong>
+                                Featured Project
+                            </strong>
+
+                            <small>
+                                Highlight this project in
+                                featured portfolio sections.
+                            </small>
+
+                        </span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FORM ACTIONS
+            ================================================== -->
+
+            <div class="admin-form-actions">
+
+                <a
+                    href="{{ url_for('admin.portfolio') }}"
+                    class="btn btn-outline-secondary"
+                >
+
+                    <i class="bi bi-x-lg"></i>
+
+                    Cancel
+
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn btn-efxion"
+                >
+
+                    {% if project %}
+
+                        <i class="bi bi-check2-circle"></i>
+
+                        Save Changes
+
+                    {% else %}
+
+                        <i class="bi bi-plus-lg"></i>
+
+                        Create Project
+
+                    {% endif %}
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const imageInput =
+            document.getElementById("image");
+
+        const preview =
+            document.getElementById(
+                "portfolioImagePreview"
+            );
+
+        if (!imageInput || !preview) {
+            return;
+        }
+
+        function updateImagePreview() {
+
+            const imageUrl =
+                imageInput.value.trim();
+
+            if (!imageUrl) {
+
+                preview.innerHTML = `
+                    <div
+                        class="
+                            admin-portfolio-image-preview-placeholder
+                        "
+                    >
+                        <i class="bi bi-image"></i>
+
+                        <span>
+                            Image preview
+                        </span>
+                    </div>
+                `;
+
+                return;
+            }
+
+            preview.innerHTML = `
+                <img
+                    src="${imageUrl}"
+                    alt="Project preview"
+                    onerror="
+                        this.style.display='none';
+                        this.parentElement.innerHTML = `
+                            <div
+                                class="
+                                    admin-portfolio-image-preview-placeholder
+                                "
+                            >
+                                <i class='bi bi-image'></i>
+                                <span>
+                                    Unable to load image
+                                </span>
+                            </div>
+                        `;
+                    "
+                >
+            `;
+
+        }
+
+        imageInput.addEventListener(
+            "input",
+            updateImagePreview
+        );
+
+    }
+);
+
+</script>
+
+{% endblock %}
